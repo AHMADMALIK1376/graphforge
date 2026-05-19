@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import "./App.css";
 import HomePage from "./pages/HomePage";
-import GraphCalculator from "./pages/GraphCalculator";
+import ChartPage from "./pages/ChartPage";
 
 function App() {
-  const [selectedChart, setSelectedChart] = useState(null);
+  const [currentPage, setCurrentPage] = useState("home");
+  const [selectedChartId, setSelectedChartId] = useState(null);
 
-  const handleSelectChart = (chartType) => {
-    setSelectedChart(chartType);
+  const handleSelectChart = (chartId) => {
+    setSelectedChartId(chartId);
+    setCurrentPage("chart");
   };
 
   const handleBackToHome = () => {
-    setSelectedChart(null);
+    setCurrentPage("home");
+    setSelectedChartId(null);
   };
 
   return (
     <div className="App">
-      {selectedChart ? (
-        <GraphCalculator chartType={selectedChart} onBack={handleBackToHome} />
-      ) : (
-        <HomePage onSelectChart={handleSelectChart} />
+      {currentPage === "home" && <HomePage onSelectChart={handleSelectChart} />}
+      {currentPage === "chart" && (
+        <ChartPage chartId={selectedChartId} onBack={handleBackToHome} />
       )}
     </div>
   );
