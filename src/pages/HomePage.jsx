@@ -21,7 +21,6 @@ const HomePage = ({ onSelectChart }) => {
     });
   }, [searchTerm, activeCategory, allCharts]);
 
-  // Group by category for display
   const groupedCharts = useMemo(() => {
     const groups = {};
     filteredCharts.forEach((chart) => {
@@ -44,45 +43,56 @@ const HomePage = ({ onSelectChart }) => {
       <div style={contentStyle}>
         {/* Hero Section */}
         <div style={heroStyle}>
-          <h2 style={heroTitleStyle}>FORGE YOUR DATA</h2>
+          <h2 style={heroTitleStyle}>📊 FORGE YOUR DATA</h2>
           <p style={heroSubtitleStyle}>
-            Select from <span style={countStyle}>{allCharts.length}</span> chart
-            types across <span style={countStyle}>5</span> categories
+            Choose from <span style={countStyle}>{allCharts.length}</span> chart
+            types
           </p>
 
-          {/* Search */}
-          <div style={searchContainerStyle}>
-            <span style={searchIconStyle}>⌕</span>
-            <input
-              type="text"
-              placeholder="SEARCH CHARTS..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={searchInputStyle}
-            />
+          {/* Search Bar - Folder Style */}
+          <div style={searchWrapperStyle}>
+            <div style={searchTabStyle}>
+              <div style={searchDotStyle("#ff6b6b")} />
+              <div style={searchDotStyle("#ffd93d")} />
+              <div style={searchDotStyle("#6bcb77")} />
+            </div>
+            <div style={searchContainerStyle}>
+              <span style={searchIconStyle}>⌕</span>
+              <input
+                type="text"
+                placeholder="SEARCH CHARTS..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={searchInputStyle}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Category Filters */}
-        <div style={filterContainerStyle}>
-          <button
-            onClick={() => setActiveCategory("all")}
-            style={filterBtnStyle(
-              activeCategory === "all",
-              theme.colors.text.heading,
-            )}
-          >
-            ALL [{allCharts.length}]
-          </button>
-          {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
+        {/* Category Filters - Folder Style Buttons */}
+        <div style={filterWrapperStyle}>
+          <div style={filterTabStyle("all", activeCategory === "all")}>
+            <div style={filterDotStyle} />
+            <div style={filterDotStyle} />
+            <div style={filterDotStyle} />
+          </div>
+          <div style={filterContainerStyle}>
             <button
-              key={key}
-              onClick={() => setActiveCategory(key)}
-              style={filterBtnStyle(activeCategory === key, cat.color)}
+              onClick={() => setActiveCategory("all")}
+              style={filterBtnStyle(activeCategory === "all", "#ffffff")}
             >
-              {cat.label} [{Object.keys(cat.charts).length}]
+              📂 ALL [{allCharts.length}]
             </button>
-          ))}
+            {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
+              <button
+                key={key}
+                onClick={() => setActiveCategory(key)}
+                style={filterBtnStyle(activeCategory === key, cat.color)}
+              >
+                {cat.label} [{Object.keys(cat.charts).length}]
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Charts Grid */}
@@ -92,8 +102,11 @@ const HomePage = ({ onSelectChart }) => {
               <div style={sectionHeaderStyle}>
                 <span
                   style={{
-                    ...sectionDotStyle,
+                    width: "10px",
+                    height: "10px",
                     background: group.categoryColor,
+                    borderRadius: "2px",
+                    display: "inline-block",
                   }}
                 />
                 <h3 style={sectionTitleStyle}>{group.categoryName}</h3>
@@ -117,7 +130,7 @@ const HomePage = ({ onSelectChart }) => {
         {/* Empty State */}
         {filteredCharts.length === 0 && (
           <div style={emptyStyle}>
-            <span style={{ fontSize: "48px" }}>⌕</span>
+            <span style={{ fontSize: "48px" }}>📂</span>
             <p style={{ color: theme.colors.text.muted }}>NO CHARTS FOUND</p>
           </div>
         )}
@@ -128,152 +141,198 @@ const HomePage = ({ onSelectChart }) => {
 
 // ===== STYLES =====
 const pageStyle = {
-  background: theme.colors.mainBg,
+  background: "#0a0e14",
   minHeight: "100vh",
-  fontFamily: theme.typography.fontFamily.primary,
+  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
 };
 
 const contentStyle = {
   maxWidth: "1400px",
   margin: "0 auto",
-  padding: theme.spacing.xl,
+  padding: "32px 24px",
 };
 
 const heroStyle = {
   textAlign: "center",
-  padding: `${theme.spacing.xxl} 0`,
-  borderBottom: `1px solid ${theme.colors.border.light}`,
-  marginBottom: theme.spacing.xl,
+  padding: "40px 0 48px",
 };
 
 const heroTitleStyle = {
-  color: theme.colors.text.heading,
-  fontSize: theme.typography.fontSize.hero,
-  fontWeight: theme.typography.fontWeight.bold,
+  color: "#f0f6fc",
+  fontSize: "32px",
+  fontWeight: 700,
   letterSpacing: "4px",
   margin: "0 0 12px 0",
 };
 
 const heroSubtitleStyle = {
-  color: theme.colors.text.muted,
-  fontSize: theme.typography.fontSize.md,
+  color: "#8b949e",
+  fontSize: "14px",
   letterSpacing: "1px",
   margin: "0 0 32px 0",
 };
 
 const countStyle = {
-  color: theme.colors.charts[0],
-  fontWeight: theme.typography.fontWeight.bold,
+  color: "#58a6ff",
+  fontWeight: 700,
 };
+
+// Search Bar - Folder Style
+const searchWrapperStyle = {
+  maxWidth: "520px",
+  margin: "0 auto",
+  position: "relative",
+};
+
+const searchTabStyle = {
+  position: "absolute",
+  top: "-10px",
+  left: "0",
+  width: "40%",
+  height: "10px",
+  background: "#21262d",
+  borderRadius: "3px 3px 0 0",
+  display: "flex",
+  alignItems: "center",
+  padding: "0 10px",
+  gap: "4px",
+};
+
+const searchDotStyle = (color) => ({
+  width: "5px",
+  height: "5px",
+  background: color,
+  borderRadius: "50%",
+});
 
 const searchContainerStyle = {
   position: "relative",
-  maxWidth: "500px",
-  margin: "0 auto",
+  border: "1px solid #30363d",
+  borderRadius: "0 6px 6px 6px",
+  background: "#161b22",
+  overflow: "hidden",
 };
 
 const searchIconStyle = {
   position: "absolute",
-  left: "16px",
+  left: "14px",
   top: "50%",
   transform: "translateY(-50%)",
-  color: theme.colors.text.muted,
-  fontSize: "20px",
+  color: "#8b949e",
+  fontSize: "18px",
 };
 
 const searchInputStyle = {
   width: "100%",
-  padding: "14px 16px 14px 44px",
-  background: theme.colors.inputBg,
-  border: `1px solid ${theme.colors.border.default}`,
-  borderRadius: theme.borderRadius.sharp,
-  color: theme.colors.text.body,
-  fontSize: theme.typography.fontSize.base,
-  fontFamily: theme.typography.fontFamily.primary,
+  padding: "14px 16px 14px 40px",
+  background: "transparent",
+  border: "none",
+  color: "#c9d1d9",
+  fontSize: "13px",
+  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
   letterSpacing: "1px",
   outline: "none",
   boxSizing: "border-box",
 };
 
+// Category Filters - Folder Style
+const filterWrapperStyle = {
+  marginBottom: "40px",
+  position: "relative",
+};
+
+const filterTabStyle = (cat, isActive) => ({
+  position: "absolute",
+  top: "-10px",
+  left: "0",
+  width: "30%",
+  maxWidth: "200px",
+  height: "10px",
+  background: isActive ? "#58a6ff" : "#21262d",
+  borderRadius: "3px 3px 0 0",
+  display: "flex",
+  alignItems: "center",
+  padding: "0 10px",
+  gap: "4px",
+});
+
+const filterDotStyle = {
+  width: "4px",
+  height: "4px",
+  background: "rgba(255,255,255,0.5)",
+  borderRadius: "50%",
+};
+
 const filterContainerStyle = {
   display: "flex",
-  gap: theme.spacing.sm,
+  gap: "8px",
   flexWrap: "wrap",
-  marginBottom: theme.spacing.xl,
   justifyContent: "center",
+  border: "1px solid #30363d",
+  borderRadius: "0 6px 6px 6px",
+  background: "#161b22",
+  padding: "16px",
 };
 
 const filterBtnStyle = (isActive, color) => ({
-  padding: `${theme.spacing.sm} ${theme.spacing.md}`,
-  background: isActive ? color + "20" : "transparent",
-  border: isActive
-    ? `1px solid ${color}`
-    : `1px solid ${theme.colors.border.default}`,
-  borderRadius: theme.borderRadius.sharp,
-  color: isActive ? color : theme.colors.text.muted,
+  padding: "8px 16px",
+  background: isActive ? `${color}20` : "transparent",
+  border: isActive ? `1px solid ${color}` : "1px solid #21262d",
+  borderRadius: "3px",
+  color: isActive ? color : "#8b949e",
   cursor: "pointer",
-  fontSize: theme.typography.fontSize.sm,
-  fontFamily: theme.typography.fontFamily.primary,
-  fontWeight: isActive
-    ? theme.typography.fontWeight.bold
-    : theme.typography.fontWeight.normal,
+  fontSize: "11px",
+  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
+  fontWeight: isActive ? 700 : 400,
   letterSpacing: "1px",
-  transition: theme.transitions.fast,
+  transition: "all 0.15s ease",
   textTransform: "uppercase",
 });
 
+// Grid
 const gridContainerStyle = {
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing.xxl,
+  gap: "40px",
 };
 
-const sectionStyle = {
-  // Each category section
-};
+const sectionStyle = {};
 
 const sectionHeaderStyle = {
   display: "flex",
   alignItems: "center",
-  gap: theme.spacing.sm,
-  marginBottom: theme.spacing.lg,
-  paddingBottom: theme.spacing.sm,
-  borderBottom: `1px solid ${theme.colors.border.light}`,
-};
-
-const sectionDotStyle = {
-  width: "8px",
-  height: "8px",
-  borderRadius: theme.borderRadius.sharp,
+  gap: "10px",
+  marginBottom: "20px",
+  paddingBottom: "8px",
+  borderBottom: "1px solid #21262d",
 };
 
 const sectionTitleStyle = {
-  color: theme.colors.text.heading,
-  fontSize: theme.typography.fontSize.lg,
-  fontWeight: theme.typography.fontWeight.bold,
+  color: "#f0f6fc",
+  fontSize: "15px",
+  fontWeight: 700,
   letterSpacing: "2px",
   margin: 0,
   textTransform: "uppercase",
 };
 
 const sectionCountStyle = {
-  color: theme.colors.text.muted,
-  fontSize: theme.typography.fontSize.xs,
+  color: "#484f58",
+  fontSize: "10px",
   letterSpacing: "1px",
 };
 
 const gridStyle = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-  gap: theme.spacing.md,
+  gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+  gap: "20px",
+  paddingTop: "12px",
 };
 
 const emptyStyle = {
   textAlign: "center",
   padding: "80px 0",
-  color: theme.colors.text.muted,
-  fontSize: theme.typography.fontSize.lg,
-  letterSpacing: "2px",
+  color: "#8b949e",
 };
 
 export default HomePage;
