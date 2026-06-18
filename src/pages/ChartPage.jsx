@@ -6,7 +6,7 @@ import ExportMenu from "../components/common/ExportMenu";
 import { exportChartWithData } from "../utils/exportUtils";
 
 // ============================================
-// DIRECT CHART IMPORTS - All 22 Comparison Charts
+// COMPARISON CHARTS - 22 Charts (Blue)
 // ============================================
 import BarChartComponent from "../components/charts/comparison/BarChart";
 import ColumnChartComponent from "../components/charts/comparison/ColumnChart";
@@ -31,7 +31,21 @@ import TableChartComponent from "../components/charts/comparison/TableChart";
 import CategoricalScatterComponent from "../components/charts/comparison/CategoricalScatter";
 import QuadrantChartComponent from "../components/charts/comparison/QuadrantChart";
 
+// ============================================
+// CORRELATION CHARTS - 6 Charts (Green)
+// ============================================
+import ScatterPlotComponent from "../components/charts/correlation/ScatterPlot";
+import BubbleChartComponent from "../components/charts/correlation/BubbleChart";
+import HeatmapComponent from "../components/charts/correlation/Heatmap";
+import ConnectedScatterComponent from "../components/charts/correlation/ConnectedScatter";
+import ContourPlotComponent from "../components/charts/correlation/ContourPlot";
+import HexagonalBinningComponent from "../components/charts/correlation/HexagonalBinning";
+
+// ============================================
+// CHART COMPONENT MAP
+// ============================================
 const chartComponents = {
+  // Comparison (22)
   barChart: BarChartComponent,
   columnChart: ColumnChartComponent,
   groupedBar: GroupedBarChartComponent,
@@ -54,6 +68,13 @@ const chartComponents = {
   table: TableChartComponent,
   categoricalScatter: CategoricalScatterComponent,
   quadrant: QuadrantChartComponent,
+  // Correlation (6)
+  scatter: ScatterPlotComponent,
+  bubble: BubbleChartComponent,
+  heatmap: HeatmapComponent,
+  connectedScatter: ConnectedScatterComponent,
+  contour: ContourPlotComponent,
+  hexagonalBinning: HexagonalBinningComponent,
 };
 
 const ChartPage = ({ chartId, onBack }) => {
@@ -155,7 +176,6 @@ const ChartPage = ({ chartId, onBack }) => {
             </div>
           </div>
 
-          {/* Two Separate Export Buttons */}
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <ExportMenu
               type="chart"
