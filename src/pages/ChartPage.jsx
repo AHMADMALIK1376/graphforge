@@ -79,23 +79,23 @@ import OneDHeatmapComponent from "../components/charts/distribution/OneDHeatmap"
 import BeeswarmChartComponent from "../components/charts/distribution/BeeswarmChart";
 
 // ============================================
-// TEMPORAL CHARTS - 12 Charts (Purple) - COMING SOON
+// TEMPORAL CHARTS - 12 Charts (Purple)
 // ============================================
-// import AreaChartComponent from "../components/charts/temporal/AreaChart";
-// import StackedAreaChartComponent from "../components/charts/temporal/StackedAreaChart";
-// import StreamGraphComponent from "../components/charts/temporal/StreamGraph";
-// import BumpChartComponent from "../components/charts/temporal/BumpChart";
-// import BumpAreaChartComponent from "../components/charts/temporal/BumpAreaChart";
-// import LineChartComponent from "../components/charts/temporal/LineChart";
-// import SplineChartComponent from "../components/charts/temporal/SplineChart";
-// import StepLineChartComponent from "../components/charts/temporal/StepLineChart";
-// import CandlestickChartComponent from "../components/charts/temporal/CandlestickChart";
-// import GanttChartComponent from "../components/charts/temporal/GanttChart";
-// import BarcodeChartComponent from "../components/charts/temporal/BarcodeChart";
-// import OHLCChartComponent from "../components/charts/temporal/OHLCChart";
+import LineChartComponent from "../components/charts/temporal/LineChart";
+import AreaChartComponent from "../components/charts/temporal/AreaChart";
+import StackedAreaChartComponent from "../components/charts/temporal/StackedAreaChart";
+import SplineChartComponent from "../components/charts/temporal/SplineChart";
+import StepLineChartComponent from "../components/charts/temporal/StepLineChart";
+import StreamGraphComponent from "../components/charts/temporal/StreamGraph";
+import BumpChartComponent from "../components/charts/temporal/BumpChart";
+import BumpAreaChartComponent from "../components/charts/temporal/BumpAreaChart";
+import CandlestickChartComponent from "../components/charts/temporal/CandlestickChart";
+import OHLCChartComponent from "../components/charts/temporal/OHLCChart";
+import GanttChartComponent from "../components/charts/temporal/GanttChart";
+import BarcodeChartComponent from "../components/charts/temporal/BarcodeChart";
 
 // ============================================
-// CHART COMPONENT MAP
+// CHART COMPONENT MAP - ALL 69 CHARTS
 // ============================================
 const chartComponents = {
   // Comparison (22)
@@ -163,19 +163,19 @@ const chartComponents = {
   oneDHeatmap: OneDHeatmapComponent,
   beeswarm: BeeswarmChartComponent,
 
-  // Temporal (12) - COMING SOON
-  // area: AreaChartComponent,
-  // stackedArea: StackedAreaChartComponent,
-  // streamGraph: StreamGraphComponent,
-  // bump: BumpChartComponent,
-  // bumpArea: BumpAreaChartComponent,
-  // line: LineChartComponent,
-  // spline: SplineChartComponent,
-  // stepLine: StepLineChartComponent,
-  // candlestick: CandlestickChartComponent,
-  // gantt: GanttChartComponent,
-  // barcode: BarcodeChartComponent,
-  // ohlc: OHLCChartComponent,
+  // Temporal (12)
+  line: LineChartComponent,
+  area: AreaChartComponent,
+  stackedArea: StackedAreaChartComponent,
+  spline: SplineChartComponent,
+  stepLine: StepLineChartComponent,
+  streamGraph: StreamGraphComponent,
+  bump: BumpChartComponent,
+  bumpArea: BumpAreaChartComponent,
+  candlestick: CandlestickChartComponent,
+  ohlc: OHLCChartComponent,
+  gantt: GanttChartComponent,
+  barcode: BarcodeChartComponent,
 };
 
 const ChartPage = ({ chartId, onBack }) => {
