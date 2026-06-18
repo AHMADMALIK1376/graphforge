@@ -42,6 +42,21 @@ import ContourPlotComponent from "../components/charts/correlation/ContourPlot";
 import HexagonalBinningComponent from "../components/charts/correlation/HexagonalBinning";
 
 // ============================================
+// DISTRIBUTION CHARTS - 11 Charts (Orange)
+// ============================================
+import HistogramComponent from "../components/charts/distribution/Histogram";
+import BoxChartComponent from "../components/charts/distribution/BoxChart";
+import ViolinPlotComponent from "../components/charts/distribution/ViolinPlot";
+import DensityPlotComponent from "../components/charts/distribution/DensityPlot";
+import RidgelinePlotComponent from "../components/charts/distribution/RidgelinePlot";
+import HorizonChartComponent from "../components/charts/distribution/HorizonChart";
+import RadialHistogramComponent from "../components/charts/distribution/RadialHistogram";
+import StripPlotComponent from "../components/charts/distribution/StripPlot";
+import JitterPlotComponent from "../components/charts/distribution/JitterPlot";
+import OneDHeatmapComponent from "../components/charts/distribution/OneDHeatmap";
+import BeeswarmChartComponent from "../components/charts/distribution/BeeswarmChart";
+
+// ============================================
 // CHART COMPONENT MAP
 // ============================================
 const chartComponents = {
@@ -75,6 +90,18 @@ const chartComponents = {
   connectedScatter: ConnectedScatterComponent,
   contour: ContourPlotComponent,
   hexagonalBinning: HexagonalBinningComponent,
+  // Distribution (11)
+  histogram: HistogramComponent,
+  box: BoxChartComponent,
+  violin: ViolinPlotComponent,
+  density: DensityPlotComponent,
+  ridgeline: RidgelinePlotComponent,
+  horizon: HorizonChartComponent,
+  radialHistogram: RadialHistogramComponent,
+  strip: StripPlotComponent,
+  jitter: JitterPlotComponent,
+  oneDHeatmap: OneDHeatmapComponent,
+  beeswarm: BeeswarmChartComponent,
 };
 
 const ChartPage = ({ chartId, onBack }) => {
