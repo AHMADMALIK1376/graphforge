@@ -42,6 +42,28 @@ import ContourPlotComponent from "../components/charts/correlation/ContourPlot";
 import HexagonalBinningComponent from "../components/charts/correlation/HexagonalBinning";
 
 // ============================================
+// PART-TO-WHOLE CHARTS - 18 Charts (Red)
+// ============================================
+import PieChartComponent from "../components/charts/partToWhole/PieChart";
+import DonutChartComponent from "../components/charts/partToWhole/DonutChart";
+import StackedBarChartComponent from "../components/charts/partToWhole/StackedBarChart";
+import FunnelPyramidComponent from "../components/charts/partToWhole/FunnelPyramid";
+import WaffleChartComponent from "../components/charts/partToWhole/WaffleChart";
+import SemiCircleDonutComponent from "../components/charts/partToWhole/SemiCircleDonut";
+import CircularGaugeComponent from "../components/charts/partToWhole/CircularGauge";
+import PopulationPyramidComponent from "../components/charts/partToWhole/PopulationPyramid";
+import IconArrayComponent from "../components/charts/partToWhole/IconArray";
+import VennDiagramComponent from "../components/charts/partToWhole/VennDiagram";
+import DivergingBarChartComponent from "../components/charts/partToWhole/DivergingBarChart";
+import TreemapComponent from "../components/charts/partToWhole/Treemap";
+import CircularTreemapComponent from "../components/charts/partToWhole/CircularTreemap";
+import ConvexTreemapComponent from "../components/charts/partToWhole/ConvexTreemap";
+import SunburstChartComponent from "../components/charts/partToWhole/SunburstChart";
+import DendrogramComponent from "../components/charts/partToWhole/Dendrogram";
+import EulerDiagramComponent from "../components/charts/partToWhole/EulerDiagram";
+import MarimekkoChartComponent from "../components/charts/partToWhole/MarimekkoChart";
+
+// ============================================
 // DISTRIBUTION CHARTS - 11 Charts (Orange)
 // ============================================
 import HistogramComponent from "../components/charts/distribution/Histogram";
@@ -55,6 +77,22 @@ import StripPlotComponent from "../components/charts/distribution/StripPlot";
 import JitterPlotComponent from "../components/charts/distribution/JitterPlot";
 import OneDHeatmapComponent from "../components/charts/distribution/OneDHeatmap";
 import BeeswarmChartComponent from "../components/charts/distribution/BeeswarmChart";
+
+// ============================================
+// TEMPORAL CHARTS - 12 Charts (Purple) - COMING SOON
+// ============================================
+// import AreaChartComponent from "../components/charts/temporal/AreaChart";
+// import StackedAreaChartComponent from "../components/charts/temporal/StackedAreaChart";
+// import StreamGraphComponent from "../components/charts/temporal/StreamGraph";
+// import BumpChartComponent from "../components/charts/temporal/BumpChart";
+// import BumpAreaChartComponent from "../components/charts/temporal/BumpAreaChart";
+// import LineChartComponent from "../components/charts/temporal/LineChart";
+// import SplineChartComponent from "../components/charts/temporal/SplineChart";
+// import StepLineChartComponent from "../components/charts/temporal/StepLineChart";
+// import CandlestickChartComponent from "../components/charts/temporal/CandlestickChart";
+// import GanttChartComponent from "../components/charts/temporal/GanttChart";
+// import BarcodeChartComponent from "../components/charts/temporal/BarcodeChart";
+// import OHLCChartComponent from "../components/charts/temporal/OHLCChart";
 
 // ============================================
 // CHART COMPONENT MAP
@@ -83,6 +121,7 @@ const chartComponents = {
   table: TableChartComponent,
   categoricalScatter: CategoricalScatterComponent,
   quadrant: QuadrantChartComponent,
+
   // Correlation (6)
   scatter: ScatterPlotComponent,
   bubble: BubbleChartComponent,
@@ -90,6 +129,27 @@ const chartComponents = {
   connectedScatter: ConnectedScatterComponent,
   contour: ContourPlotComponent,
   hexagonalBinning: HexagonalBinningComponent,
+
+  // Part-to-Whole (18)
+  pie: PieChartComponent,
+  donut: DonutChartComponent,
+  stackedBar: StackedBarChartComponent,
+  funnel: FunnelPyramidComponent,
+  waffle: WaffleChartComponent,
+  semiCircleDonut: SemiCircleDonutComponent,
+  circularGauge: CircularGaugeComponent,
+  populationPyramid: PopulationPyramidComponent,
+  iconArray: IconArrayComponent,
+  venn: VennDiagramComponent,
+  divergingBar: DivergingBarChartComponent,
+  treemap: TreemapComponent,
+  circularTreemap: CircularTreemapComponent,
+  convexTreemap: ConvexTreemapComponent,
+  sunburst: SunburstChartComponent,
+  dendrogram: DendrogramComponent,
+  euler: EulerDiagramComponent,
+  marimekko: MarimekkoChartComponent,
+
   // Distribution (11)
   histogram: HistogramComponent,
   box: BoxChartComponent,
@@ -102,6 +162,20 @@ const chartComponents = {
   jitter: JitterPlotComponent,
   oneDHeatmap: OneDHeatmapComponent,
   beeswarm: BeeswarmChartComponent,
+
+  // Temporal (12) - COMING SOON
+  // area: AreaChartComponent,
+  // stackedArea: StackedAreaChartComponent,
+  // streamGraph: StreamGraphComponent,
+  // bump: BumpChartComponent,
+  // bumpArea: BumpAreaChartComponent,
+  // line: LineChartComponent,
+  // spline: SplineChartComponent,
+  // stepLine: StepLineChartComponent,
+  // candlestick: CandlestickChartComponent,
+  // gantt: GanttChartComponent,
+  // barcode: BarcodeChartComponent,
+  // ohlc: OHLCChartComponent,
 };
 
 const ChartPage = ({ chartId, onBack }) => {
@@ -262,8 +336,14 @@ const pageStyle = {
   minHeight: "100vh",
   fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
 };
+
 const contentStyle = { padding: "0" };
-const errorStyle = { textAlign: "center", padding: "100px 0" };
+
+const errorStyle = {
+  textAlign: "center",
+  padding: "100px 0",
+};
+
 const breadcrumbStyle = {
   display: "flex",
   alignItems: "center",
@@ -272,6 +352,7 @@ const breadcrumbStyle = {
   background: "#161b22",
   borderBottom: "1px solid #30363d",
 };
+
 const backLinkStyle = {
   background: "none",
   border: "none",
@@ -282,7 +363,12 @@ const backLinkStyle = {
   letterSpacing: "1px",
   padding: 0,
 };
-const separatorStyle = { color: "#484f58", fontSize: "11px" };
+
+const separatorStyle = {
+  color: "#484f58",
+  fontSize: "11px",
+};
+
 const infoBarStyle = {
   background: "#161b22",
   borderBottom: "1px solid #30363d",
@@ -291,6 +377,7 @@ const infoBarStyle = {
   alignItems: "center",
   justifyContent: "space-between",
 };
+
 const backBtnStyle = {
   marginTop: "16px",
   padding: "10px 20px",
@@ -302,6 +389,7 @@ const backBtnStyle = {
   fontFamily: "'JetBrains Mono', monospace",
   letterSpacing: "1px",
 };
+
 const comingSoonStyle = {
   display: "flex",
   flexDirection: "column",
