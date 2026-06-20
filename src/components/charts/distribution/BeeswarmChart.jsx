@@ -35,17 +35,39 @@ const BeeswarmChartComponent = ({
 
   const colors = [chartColor, "#58a6ff", "#3fb950", "#f85149", "#a371f7"];
 
+  const groupKeys = Object.keys(data);
+
   const scatterData = useMemo(() => {
     const result = [];
-    Object.entries(data).forEach(([group, values], gi) => {
+    groupKeys.forEach((group, gi) => {
+      const values = data[group];
       const sorted = [...values].sort((a, b) => a - b);
       sorted.forEach((v, vi) => {
         const offset = (vi % 4) * spacing - spacing * 1.5;
-        result.push({ x: gi + offset, y: v, group, groupIndex: gi });
+        result.push({
+          x: gi + offset,
+          y: v,
+          group: group,
+          groupIndex: gi,
+        });
       });
     });
     return result;
-  }, [data, spacing]);
+  }, [data, spacing, groupKeys]);
+
+  const stats = useMemo(() => {
+    return groupKeys.map((group) => {
+      const values = data[group];
+      const sorted = [...values].sort((a, b) => a - b);
+      const n = sorted.length;
+      const mean = sorted.reduce((s, v) => s + v, 0) / n;
+      const median =
+        n % 2 === 0
+          ? (sorted[n / 2 - 1] + sorted[n / 2]) / 2
+          : sorted[Math.floor(n / 2)];
+      return { group, mean, median, min: sorted[0], max: sorted[n - 1], n };
+    });
+  }, [data, groupKeys]);
 
   const handleValueChange = useCallback((group, index, newVal) => {
     setData((prev) => {
@@ -55,6 +77,7 @@ const BeeswarmChartComponent = ({
       return updated;
     });
   }, []);
+
   const addValue = useCallback((group) => {
     setData((prev) => {
       const updated = { ...prev };
@@ -62,6 +85,7 @@ const BeeswarmChartComponent = ({
       return updated;
     });
   }, []);
+
   const removeValue = useCallback((group, index) => {
     setData((prev) => {
       const updated = { ...prev };
@@ -72,6 +96,7 @@ const BeeswarmChartComponent = ({
 
   const CustomDot = (props) => {
     const { cx, cy, payload } = props;
+    if (!payload) return null;
     const c = colors[payload.groupIndex % colors.length];
     return (
       <g>
@@ -96,6 +121,7 @@ const BeeswarmChartComponent = ({
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const pt = payload[0]?.payload;
+      if (!pt) return null;
       return (
         <div
           style={{
@@ -133,6 +159,7 @@ const BeeswarmChartComponent = ({
     borderRadius: theme.borderRadius.md,
     border: `1px solid ${theme.colors.border.default}`,
   };
+
   const headerStyle = {
     display: "flex",
     alignItems: "center",
@@ -140,6 +167,7 @@ const BeeswarmChartComponent = ({
     flexWrap: "wrap",
     gap: "12px",
   };
+
   const titleInputStyle = {
     background: "transparent",
     border: "none",
@@ -153,6 +181,7 @@ const BeeswarmChartComponent = ({
     padding: "4px 0",
     width: "260px",
   };
+
   const chartContainerStyle = {
     background: "#ffffff",
     borderRadius: "6px",
@@ -160,6 +189,7 @@ const BeeswarmChartComponent = ({
     border: "1px solid #30363d",
     minHeight: "420px",
   };
+
   const controlsGridStyle = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
@@ -169,11 +199,13 @@ const BeeswarmChartComponent = ({
     borderRadius: "4px",
     border: "1px solid #30363d",
   };
+
   const controlGroupStyle = {
     display: "flex",
     flexDirection: "column",
     gap: "6px",
   };
+
   const labelStyle = {
     color: "#8b949e",
     fontSize: "10px",
@@ -181,12 +213,14 @@ const BeeswarmChartComponent = ({
     textTransform: "uppercase",
     letterSpacing: "2px",
   };
+
   const checkboxStyle = {
     display: "flex",
     alignItems: "center",
     gap: "8px",
     cursor: "pointer",
   };
+
   const cellInputStyle = (w = "45px") => ({
     padding: "3px 4px",
     background: theme.colors.inputBg,
@@ -199,6 +233,7 @@ const BeeswarmChartComponent = ({
     outline: "none",
     boxSizing: "border-box",
   });
+
   const buttonStyle = (c = dotColor) => ({
     padding: "6px 12px",
     background: "transparent",
@@ -247,7 +282,7 @@ const BeeswarmChartComponent = ({
               borderRadius: "3px",
             }}
           >
-            {Object.keys(data).length} GROUPS
+            {groupKeys.length} GROUPS
           </span>
         </div>
       </div>
@@ -261,19 +296,23 @@ const BeeswarmChartComponent = ({
             <XAxis
               type="number"
               dataKey="x"
-              domain={[-0.5, Object.keys(data).length - 0.5]}
-              ticks={Object.keys(data).map((_, i) => i)}
-              tickFormatter={(i) => Object.keys(data)[i]}
+              domain={[-0.5, groupKeys.length - 0.5]}
+              ticks={groupKeys.map((_, i) => i)}
+              tickFormatter={(i) => groupKeys[i] || ""}
               tick={{ fill: "#8b949e", fontSize: 10 }}
             />
-            <YAxis tick={{ fill: "#8b949e", fontSize: 10 }} />
+            <YAxis
+              type="number"
+              dataKey="y"
+              tick={{ fill: "#8b949e", fontSize: 10 }}
+            />
             <ZAxis range={[dotSize * 5, dotSize * 5]} />
             <Tooltip
               content={<CustomTooltip />}
               cursor={{ strokeDasharray: "3 3" }}
             />
             <Legend
-              payload={Object.keys(data).map((g, i) => ({
+              payload={groupKeys.map((g, i) => ({
                 value: g,
                 type: "circle",
                 color: colors[i % colors.length],
@@ -356,6 +395,29 @@ const BeeswarmChartComponent = ({
         </div>
       </div>
 
+      <div
+        style={{
+          display: "flex",
+          gap: "16px",
+          flexWrap: "wrap",
+          padding: "10px 14px",
+          background: theme.colors.cardBg,
+          borderRadius: "4px",
+          border: "1px solid #30363d",
+          fontSize: "10px",
+        }}
+      >
+        {stats.map((s, i) => (
+          <span key={i} style={{ color: "#8b949e" }}>
+            {s.group}:{" "}
+            <strong style={{ color: colors[i % colors.length] }}>
+              M:{s.median.toFixed(1)}
+            </strong>{" "}
+            n={s.n}
+          </span>
+        ))}
+      </div>
+
       <div id="chart-data-table">
         {Object.entries(data).map(([group, values]) => (
           <div
@@ -366,7 +428,7 @@ const BeeswarmChartComponent = ({
               padding: "10px 14px",
               borderRadius: "4px",
               border: "1px solid #30363d",
-              borderLeft: `3px solid ${colors[Object.keys(data).indexOf(group) % colors.length]}`,
+              borderLeft: `3px solid ${colors[groupKeys.indexOf(group) % colors.length]}`,
             }}
           >
             <div
@@ -378,8 +440,7 @@ const BeeswarmChartComponent = ({
             >
               <span
                 style={{
-                  color:
-                    colors[Object.keys(data).indexOf(group) % colors.length],
+                  color: colors[groupKeys.indexOf(group) % colors.length],
                   fontSize: "11px",
                   fontWeight: 700,
                 }}
@@ -389,7 +450,7 @@ const BeeswarmChartComponent = ({
               <button
                 onClick={() => addValue(group)}
                 style={buttonStyle(
-                  colors[Object.keys(data).indexOf(group) % colors.length],
+                  colors[groupKeys.indexOf(group) % colors.length],
                 )}
               >
                 + Value

@@ -1,12 +1,18 @@
+// src/pages/HomePage.jsx
 import React, { useState, useMemo } from "react";
 import { theme } from "../styles/theme";
 import { CHART_CATEGORIES, getAllCharts } from "../utils/chartTypes";
 import ChartCard from "../components/common/ChartCard";
 import Header from "../components/layout/Header";
+import Sidebar from "../components/layout/Sidebar";
+import SearchBar from "../components/common/SearchBar";
+import { useLanguage } from "../context/LanguageContext";
 
 const HomePage = ({ onSelectChart }) => {
+  const { t, language, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const allCharts = useMemo(() => getAllCharts(), []);
 
@@ -36,120 +42,139 @@ const HomePage = ({ onSelectChart }) => {
     return groups;
   }, [filteredCharts]);
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
-    <div style={pageStyle}>
-      <Header currentPage="home" />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        background: "#F5EDE0",
+        direction: isRTL ? "rtl" : "ltr",
+      }}
+    >
+      <Header />
 
-      <div style={contentStyle}>
-        {/* Hero Section */}
-        <div style={heroStyle}>
-          <h2 style={heroTitleStyle}>📊 FORGE YOUR DATA</h2>
-          <p style={heroSubtitleStyle}>
-            Choose from <span style={countStyle}>{allCharts.length}</span> chart
-            types
-          </p>
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          paddingTop: "64px", // Height of fixed header
+          position: "relative",
+        }}
+      >
+        <Sidebar
+          currentPath="/home"
+          isOpen={sidebarOpen}
+          onToggle={toggleSidebar}
+        />
 
-          {/* Search Bar - Folder Style */}
-          <div style={searchWrapperStyle}>
-            <div style={searchTabStyle}>
-              <div style={searchDotStyle("#ff6b6b")} />
-              <div style={searchDotStyle("#ffd93d")} />
-              <div style={searchDotStyle("#6bcb77")} />
-            </div>
-            <div style={searchContainerStyle}>
-              <span style={searchIconStyle}>⌕</span>
-              <input
-                type="text"
-                placeholder="SEARCH CHARTS..."
+        <main
+          style={{
+            flex: 1,
+            padding: "24px",
+            marginLeft: sidebarOpen ? "250px" : "0",
+            overflow: "auto",
+            background: "#F5EDE0",
+            transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            minHeight: "calc(100vh - 64px)",
+          }}
+        >
+          <div style={contentStyle}>
+            {/* Hero Section */}
+            <div style={heroStyle}>
+              <h2 style={heroTitleStyle}>📊 {t("home.title")}</h2>
+              <p style={heroSubtitleStyle}>
+                {t("home.subtitle", { count: allCharts.length })}
+              </p>
+
+              <SearchBar
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={searchInputStyle}
+                placeholder={t("home.search")}
               />
             </div>
-          </div>
-        </div>
 
-        {/* Category Filters - Folder Style Buttons */}
-        <div style={filterWrapperStyle}>
-          <div style={filterTabStyle("all", activeCategory === "all")}>
-            <div style={filterDotStyle} />
-            <div style={filterDotStyle} />
-            <div style={filterDotStyle} />
-          </div>
-          <div style={filterContainerStyle}>
-            <button
-              onClick={() => setActiveCategory("all")}
-              style={filterBtnStyle(activeCategory === "all", "#ffffff")}
-            >
-              📂 ALL [{allCharts.length}]
-            </button>
-            {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
-              <button
-                key={key}
-                onClick={() => setActiveCategory(key)}
-                style={filterBtnStyle(activeCategory === key, cat.color)}
-              >
-                {cat.label} [{Object.keys(cat.charts).length}]
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Charts Grid */}
-        <div style={gridContainerStyle}>
-          {Object.entries(groupedCharts).map(([catKey, group]) => (
-            <div key={catKey} style={sectionStyle}>
-              <div style={sectionHeaderStyle}>
-                <span
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    background: group.categoryColor,
-                    borderRadius: "2px",
-                    display: "inline-block",
-                  }}
-                />
-                <h3 style={sectionTitleStyle}>{group.categoryName}</h3>
-                <span style={sectionCountStyle}>
-                  {group.charts.length} charts
-                </span>
+            {/* Category Filters - Folder Style */}
+            <div style={filterWrapperStyle}>
+              <div style={filterTabStyle("all", activeCategory === "all")}>
+                <div style={filterDotStyle} />
+                <div style={filterDotStyle} />
+                <div style={filterDotStyle} />
               </div>
-              <div style={gridStyle}>
-                {group.charts.map((chart) => (
-                  <ChartCard
-                    key={chart.id}
-                    chart={chart}
-                    onClick={onSelectChart}
-                  />
+              <div style={filterContainerStyle}>
+                <button
+                  onClick={() => setActiveCategory("all")}
+                  style={filterBtnStyle(activeCategory === "all", "#A8DCF0")}
+                >
+                  📂 ALL [{allCharts.length}]
+                </button>
+                {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveCategory(key)}
+                    style={filterBtnStyle(activeCategory === key, cat.color)}
+                  >
+                    {cat.label} [{Object.keys(cat.charts).length}]
+                  </button>
                 ))}
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* Empty State */}
-        {filteredCharts.length === 0 && (
-          <div style={emptyStyle}>
-            <span style={{ fontSize: "48px" }}>📂</span>
-            <p style={{ color: theme.colors.text.muted }}>NO CHARTS FOUND</p>
+            {/* Charts Grid */}
+            <div style={gridContainerStyle}>
+              {Object.entries(groupedCharts).map(([catKey, group]) => (
+                <div key={catKey} style={sectionStyle}>
+                  <div style={sectionHeaderStyle}>
+                    <span
+                      style={{
+                        width: "10px",
+                        height: "10px",
+                        background: group.categoryColor,
+                        borderRadius: "2px",
+                        display: "inline-block",
+                      }}
+                    />
+                    <h3 style={sectionTitleStyle}>{group.categoryName}</h3>
+                    <span style={sectionCountStyle}>
+                      {group.charts.length} charts
+                    </span>
+                  </div>
+                  <div style={gridStyle}>
+                    {group.charts.map((chart) => (
+                      <ChartCard
+                        key={chart.id}
+                        chart={chart}
+                        onClick={onSelectChart}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {filteredCharts.length === 0 && (
+              <div style={emptyStyle}>
+                <span style={{ fontSize: "48px" }}>📂</span>
+                <p style={{ color: theme.colors.text.muted }}>
+                  {t("home.noCharts")}
+                </p>
+              </div>
+            )}
           </div>
-        )}
+        </main>
       </div>
     </div>
   );
 };
 
 // ===== STYLES =====
-const pageStyle = {
-  background: "#0a0e14",
-  minHeight: "100vh",
-  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
-};
-
 const contentStyle = {
   maxWidth: "1400px",
   margin: "0 auto",
-  padding: "32px 24px",
 };
 
 const heroStyle = {
@@ -158,7 +183,7 @@ const heroStyle = {
 };
 
 const heroTitleStyle = {
-  color: "#f0f6fc",
+  color: "#4A3728",
   fontSize: "32px",
   fontWeight: 700,
   letterSpacing: "4px",
@@ -166,76 +191,12 @@ const heroTitleStyle = {
 };
 
 const heroSubtitleStyle = {
-  color: "#8b949e",
+  color: "#8A7A6A",
   fontSize: "14px",
   letterSpacing: "1px",
   margin: "0 0 32px 0",
 };
 
-const countStyle = {
-  color: "#58a6ff",
-  fontWeight: 700,
-};
-
-// Search Bar - Folder Style
-const searchWrapperStyle = {
-  maxWidth: "520px",
-  margin: "0 auto",
-  position: "relative",
-};
-
-const searchTabStyle = {
-  position: "absolute",
-  top: "-10px",
-  left: "0",
-  width: "40%",
-  height: "10px",
-  background: "#21262d",
-  borderRadius: "3px 3px 0 0",
-  display: "flex",
-  alignItems: "center",
-  padding: "0 10px",
-  gap: "4px",
-};
-
-const searchDotStyle = (color) => ({
-  width: "5px",
-  height: "5px",
-  background: color,
-  borderRadius: "50%",
-});
-
-const searchContainerStyle = {
-  position: "relative",
-  border: "1px solid #30363d",
-  borderRadius: "0 6px 6px 6px",
-  background: "#161b22",
-  overflow: "hidden",
-};
-
-const searchIconStyle = {
-  position: "absolute",
-  left: "14px",
-  top: "50%",
-  transform: "translateY(-50%)",
-  color: "#8b949e",
-  fontSize: "18px",
-};
-
-const searchInputStyle = {
-  width: "100%",
-  padding: "14px 16px 14px 40px",
-  background: "transparent",
-  border: "none",
-  color: "#c9d1d9",
-  fontSize: "13px",
-  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
-  letterSpacing: "1px",
-  outline: "none",
-  boxSizing: "border-box",
-};
-
-// Category Filters - Folder Style
 const filterWrapperStyle = {
   marginBottom: "40px",
   position: "relative",
@@ -248,7 +209,7 @@ const filterTabStyle = (cat, isActive) => ({
   width: "30%",
   maxWidth: "200px",
   height: "10px",
-  background: isActive ? "#58a6ff" : "#21262d",
+  background: isActive ? "#A8DCF0" : "#D4C4AE",
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",
@@ -259,7 +220,7 @@ const filterTabStyle = (cat, isActive) => ({
 const filterDotStyle = {
   width: "4px",
   height: "4px",
-  background: "rgba(255,255,255,0.5)",
+  background: "rgba(255,255,255,0.6)",
   borderRadius: "50%",
 };
 
@@ -268,28 +229,28 @@ const filterContainerStyle = {
   gap: "8px",
   flexWrap: "wrap",
   justifyContent: "center",
-  border: "1px solid #30363d",
+  border: "1px solid #D4C4AE",
   borderRadius: "0 6px 6px 6px",
-  background: "#161b22",
+  background: "#FFFFFF",
   padding: "16px",
+  boxShadow: "0 2px 8px rgba(180, 160, 140, 0.10)",
 };
 
 const filterBtnStyle = (isActive, color) => ({
   padding: "8px 16px",
   background: isActive ? `${color}20` : "transparent",
-  border: isActive ? `1px solid ${color}` : "1px solid #21262d",
+  border: isActive ? `1px solid ${color}` : "1px solid #E8DCC8",
   borderRadius: "3px",
-  color: isActive ? color : "#8b949e",
+  color: isActive ? color : "#8A7A6A",
   cursor: "pointer",
   fontSize: "11px",
-  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
   fontWeight: isActive ? 700 : 400,
   letterSpacing: "1px",
   transition: "all 0.15s ease",
   textTransform: "uppercase",
 });
 
-// Grid
 const gridContainerStyle = {
   display: "flex",
   flexDirection: "column",
@@ -304,11 +265,11 @@ const sectionHeaderStyle = {
   gap: "10px",
   marginBottom: "20px",
   paddingBottom: "8px",
-  borderBottom: "1px solid #21262d",
+  borderBottom: "1px solid #E8DCC8",
 };
 
 const sectionTitleStyle = {
-  color: "#f0f6fc",
+  color: "#4A3728",
   fontSize: "15px",
   fontWeight: 700,
   letterSpacing: "2px",
@@ -317,7 +278,7 @@ const sectionTitleStyle = {
 };
 
 const sectionCountStyle = {
-  color: "#484f58",
+  color: "#8A7A6A",
   fontSize: "10px",
   letterSpacing: "1px",
 };
@@ -332,7 +293,7 @@ const gridStyle = {
 const emptyStyle = {
   textAlign: "center",
   padding: "80px 0",
-  color: "#8b949e",
+  color: "#8A7A6A",
 };
 
 export default HomePage;

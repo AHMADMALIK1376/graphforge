@@ -1,7 +1,11 @@
-import React from "react";
+// src/pages/ChartPage.jsx
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 import { theme, getCategoryColor } from "../styles/theme";
 import { getChartById } from "../utils/chartTypes";
 import Header from "../components/layout/Header";
+import Sidebar from "../components/layout/Sidebar";
 import ExportMenu from "../components/common/ExportMenu";
 import { exportChartWithData } from "../utils/exportUtils";
 
@@ -178,163 +182,268 @@ const chartComponents = {
   barcode: BarcodeChartComponent,
 };
 
-const ChartPage = ({ chartId, onBack }) => {
-  const chart = getChartById(chartId);
+// ============================================
+// CHART PAGE COMPONENT
+// ============================================
+const ChartPage = ({ chartId, onBack, onSelectChart }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t, language, isRTL } = useLanguage();
+
+  // State for sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  // If chartId is not provided, try to get it from URL
+  const getChartIdFromUrl = () => {
+    const pathSegments = location.pathname.split("/");
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    return lastSegment && lastSegment !== "chart" ? lastSegment : null;
+  };
+
+  const effectiveChartId = chartId || getChartIdFromUrl();
+  const chart = getChartById(effectiveChartId);
+
+  // Handle back navigation
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate("/home");
+    }
+  };
 
   if (!chart) {
     return (
-      <div style={pageStyle}>
+      <div
+        style={{
+          ...pageStyle,
+          display: "flex",
+          flexDirection: "column",
+          direction: isRTL ? "rtl" : "ltr",
+        }}
+      >
         <Header />
-        <div style={errorStyle}>
-          <span style={{ fontSize: "48px" }}>⚠</span>
-          <p style={{ color: theme.colors.text.muted }}>CHART NOT FOUND</p>
-          <button onClick={onBack} style={backBtnStyle}>
-            ← BACK TO CHARTS
-          </button>
+        <div style={{ display: "flex", flex: 1, paddingTop: "64px" }}>
+          <Sidebar
+            currentPath="/charts"
+            isOpen={sidebarOpen}
+            onToggle={toggleSidebar}
+          />
+          <main
+            style={{
+              flex: 1,
+              marginLeft: sidebarOpen ? "250px" : "0",
+              transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+              overflow: "auto",
+              background: "#F5EDE0",
+              minHeight: "calc(100vh - 64px)",
+            }}
+          >
+            <div style={errorStyle}>
+              <span style={{ fontSize: "48px" }}>⚠</span>
+              <p style={{ color: theme.colors.text.muted }}>
+                {t("chart.notFound") || "CHART NOT FOUND"}
+              </p>
+              <button onClick={handleBack} style={backBtnStyle}>
+                ← {t("chart.backToCharts") || "BACK TO CHARTS"}
+              </button>
+            </div>
+          </main>
         </div>
       </div>
     );
   }
 
   const categoryColor = getCategoryColor(chart.categoryId);
-  const ChartComponent = chartComponents[chartId];
+  const ChartComponent = chartComponents[effectiveChartId];
 
   return (
-    <div style={pageStyle}>
+    <div
+      style={{
+        ...pageStyle,
+        display: "flex",
+        flexDirection: "column",
+        direction: isRTL ? "rtl" : "ltr",
+      }}
+    >
       <Header currentPage="charts" />
-      <div style={contentStyle}>
-        <div style={breadcrumbStyle}>
-          <button onClick={onBack} style={backLinkStyle}>
-            ← ALL CHARTS
-          </button>
-          <span style={separatorStyle}>/</span>
-          <span
-            style={{ color: "#8b949e", fontSize: "11px", letterSpacing: "1px" }}
-          >
-            {chart.categoryName}
-          </span>
-          <span style={separatorStyle}>/</span>
-          <span
-            style={{
-              color: "#f0f6fc",
-              fontSize: "11px",
-              fontWeight: 700,
-              letterSpacing: "1px",
-            }}
-          >
-            {chart.name.toUpperCase()}
-          </span>
-        </div>
 
-        <div style={infoBarStyle}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ fontSize: "28px" }}>{chart.icon}</span>
-            <div>
-              <h2
+      {/* Main Content Area with Sidebar */}
+      <div style={{ display: "flex", flex: 1, paddingTop: "64px" }}>
+        <Sidebar
+          currentPath="/charts"
+          isOpen={sidebarOpen}
+          onToggle={toggleSidebar}
+        />
+
+        <main
+          style={{
+            flex: 1,
+            marginLeft: sidebarOpen ? "250px" : "0",
+            transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            overflow: "auto",
+            background: "#F5EDE0",
+            minHeight: "calc(100vh - 64px)",
+            padding: "0",
+          }}
+        >
+          <div style={contentStyle}>
+            {/* Breadcrumb Navigation */}
+            <div style={breadcrumbStyle}>
+              <button onClick={handleBack} style={backLinkStyle}>
+                ← {t("chart.allCharts") || "ALL CHARTS"}
+              </button>
+              <span style={separatorStyle}>/</span>
+              <span
                 style={{
-                  color: "#f0f6fc",
-                  fontSize: "18px",
+                  color: "#8A7A6A",
+                  fontSize: "11px",
+                  letterSpacing: "1px",
+                }}
+              >
+                {chart.categoryName}
+              </span>
+              <span style={separatorStyle}>/</span>
+              <span
+                style={{
+                  color: "#4A3728",
+                  fontSize: "11px",
                   fontWeight: 700,
-                  letterSpacing: "2px",
-                  margin: 0,
+                  letterSpacing: "1px",
                 }}
               >
                 {chart.name.toUpperCase()}
-              </h2>
-              <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
-                <span
-                  style={{
-                    color:
-                      chart.difficulty === "easy"
-                        ? "#3fb950"
-                        : chart.difficulty === "medium"
-                          ? "#d29922"
-                          : "#f85149",
-                    border: "1px solid #30363d",
-                    padding: "2px 8px",
-                    fontSize: "9px",
-                    letterSpacing: "2px",
-                    borderRadius: "2px",
-                    fontWeight: 600,
+              </span>
+            </div>
+
+            {/* Info Bar */}
+            <div style={infoBarStyle}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+              >
+                <span style={{ fontSize: "28px" }}>{chart.icon}</span>
+                <div>
+                  <h2
+                    style={{
+                      color: "#4A3728",
+                      fontSize: "18px",
+                      fontWeight: 700,
+                      letterSpacing: "2px",
+                      margin: 0,
+                    }}
+                  >
+                    {chart.name.toUpperCase()}
+                  </h2>
+                  <div
+                    style={{ display: "flex", gap: "8px", marginTop: "6px" }}
+                  >
+                    <span
+                      style={{
+                        color:
+                          chart.difficulty === "easy"
+                            ? "#4CAF50"
+                            : chart.difficulty === "medium"
+                              ? "#FFF3A0"
+                              : "#D15F55",
+                        border: "1px solid #D4C4AE",
+                        padding: "2px 8px",
+                        fontSize: "9px",
+                        letterSpacing: "2px",
+                        borderRadius: "2px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {chart.difficulty.toUpperCase()}
+                    </span>
+                    <span
+                      style={{
+                        color: categoryColor,
+                        border: `1px solid ${categoryColor}50`,
+                        padding: "2px 8px",
+                        fontSize: "9px",
+                        letterSpacing: "2px",
+                        borderRadius: "2px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {chart.categoryName.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Export Controls */}
+              <div
+                style={{ display: "flex", gap: "8px", alignItems: "center" }}
+              >
+                <ExportMenu
+                  type="chart"
+                  label={t("chart.exportChart") || "📊 Export Chart"}
+                  formats={["png", "svg", "pdf"]}
+                  onExport={(format) => {
+                    exportChartWithData(
+                      "chart-visual-area",
+                      [],
+                      format,
+                      chart?.name?.toLowerCase() + "_chart" || "chart",
+                    );
                   }}
-                >
-                  {chart.difficulty.toUpperCase()}
-                </span>
-                <span
-                  style={{
-                    color: categoryColor,
-                    border: `1px solid ${categoryColor}50`,
-                    padding: "2px 8px",
-                    fontSize: "9px",
-                    letterSpacing: "2px",
-                    borderRadius: "2px",
-                    fontWeight: 600,
+                />
+                <ExportMenu
+                  type="data"
+                  label={t("chart.exportTable") || "📋 Export Table"}
+                  formats={["png", "svg", "pdf", "csv", "json", "excel"]}
+                  onExport={(format) => {
+                    if (["csv", "json", "excel"].includes(format)) {
+                      exportChartWithData(
+                        "chart-data-table",
+                        [],
+                        format,
+                        chart?.name?.toLowerCase() + "_data" || "data",
+                      );
+                    } else {
+                      exportChartWithData(
+                        "chart-data-table",
+                        [],
+                        format,
+                        chart?.name?.toLowerCase() + "_table" || "table",
+                      );
+                    }
                   }}
-                >
-                  {chart.categoryName.toUpperCase()}
-                </span>
+                />
               </div>
             </div>
-          </div>
 
-          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <ExportMenu
-              type="chart"
-              label="📊 Export Chart"
-              formats={["png", "svg", "pdf"]}
-              onExport={(format) => {
-                exportChartWithData(
-                  "chart-visual-area",
-                  [],
-                  format,
-                  chart?.name?.toLowerCase() + "_chart" || "chart",
-                );
-              }}
-            />
-            <ExportMenu
-              type="data"
-              label="📋 Export Table"
-              formats={["png", "svg", "pdf", "csv", "json", "excel"]}
-              onExport={(format) => {
-                if (["csv", "json", "excel"].includes(format)) {
-                  exportChartWithData(
-                    "chart-data-table",
-                    [],
-                    format,
-                    chart?.name?.toLowerCase() + "_data" || "data",
-                  );
-                } else {
-                  exportChartWithData(
-                    "chart-data-table",
-                    [],
-                    format,
-                    chart?.name?.toLowerCase() + "_table" || "table",
-                  );
-                }
-              }}
-            />
+            {/* Chart Component */}
+            {ChartComponent ? (
+              <ChartComponent />
+            ) : (
+              <div style={comingSoonStyle}>
+                <span style={{ fontSize: "48px" }}>🚧</span>
+                <p style={{ color: "#8A7A6A", letterSpacing: "1px" }}>
+                  {chart.name.toUpperCase()} -{" "}
+                  {t("chart.comingSoon") || "COMING SOON"}
+                </p>
+              </div>
+            )}
           </div>
-        </div>
-
-        {ChartComponent ? (
-          <ChartComponent />
-        ) : (
-          <div style={comingSoonStyle}>
-            <span style={{ fontSize: "48px" }}>🚧</span>
-            <p style={{ color: "#8b949e", letterSpacing: "1px" }}>
-              {chart.name.toUpperCase()} - COMING SOON
-            </p>
-          </div>
-        )}
+        </main>
       </div>
     </div>
   );
 };
 
+// ============================================
+// STYLES
+// ============================================
 const pageStyle = {
-  background: "#0a0e14",
+  background: "#F5EDE0",
   minHeight: "100vh",
-  fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
 };
 
 const contentStyle = { padding: "0" };
@@ -349,44 +458,46 @@ const breadcrumbStyle = {
   alignItems: "center",
   gap: "8px",
   padding: "12px 24px",
-  background: "#161b22",
-  borderBottom: "1px solid #30363d",
+  background: "#FFFFFF",
+  borderBottom: "1px solid #D4C4AE",
+  boxShadow: "0 2px 8px rgba(180, 160, 140, 0.08)",
 };
 
 const backLinkStyle = {
   background: "none",
   border: "none",
-  color: "#58a6ff",
+  color: "#A8DCF0",
   cursor: "pointer",
   fontSize: "11px",
-  fontFamily: "'JetBrains Mono', monospace",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
   letterSpacing: "1px",
   padding: 0,
 };
 
 const separatorStyle = {
-  color: "#484f58",
+  color: "#D4C4AE",
   fontSize: "11px",
 };
 
 const infoBarStyle = {
-  background: "#161b22",
-  borderBottom: "1px solid #30363d",
+  background: "#FFFFFF",
+  borderBottom: "1px solid #D4C4AE",
   padding: "14px 24px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  boxShadow: "0 2px 8px rgba(180, 160, 140, 0.06)",
 };
 
 const backBtnStyle = {
   marginTop: "16px",
   padding: "10px 20px",
   background: "transparent",
-  border: "1px solid #58a6ff",
+  border: "1px solid #A8DCF0",
   borderRadius: "3px",
-  color: "#58a6ff",
+  color: "#A8DCF0",
   cursor: "pointer",
-  fontFamily: "'JetBrains Mono', monospace",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
   letterSpacing: "1px",
 };
 
@@ -396,9 +507,11 @@ const comingSoonStyle = {
   alignItems: "center",
   justifyContent: "center",
   minHeight: "400px",
-  background: "#ffffff",
+  background: "#FFFFFF",
   margin: "16px",
   borderRadius: "6px",
+  border: "1px solid #D4C4AE",
+  boxShadow: "0 2px 8px rgba(180, 160, 140, 0.08)",
 };
 
 export default ChartPage;

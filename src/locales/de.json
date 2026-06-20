@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "charts": "Diagramme",
+    "templates": "Vorlagen",
+    "about": "Über uns",
+    "settings": "Einstellungen"
+  },
+  "home": {
+    "title": "SCHMIEDE DEINE DATEN",
+    "subtitle": "Wähle aus {{count}} Diagrammtypen",
+    "search": "DIAGRAMME SUCHEN...",
+    "noCharts": "KEINE DIAGRAMME GEFUNDEN"
+  },
+  "templates": {
+    "title": "Vorlagen",
+    "description": "Vorgefertigte Diagrammvorlagen für einen schnellen Start",
+    "comingSoon": "Weitere Vorlagen in Kürze",
+    "comingSoonDesc": "Wir fügen ständig neue Vorlagen hinzu. Bleiben Sie dran für Updates!",
+    "all": "ALLE",
+    "business": "Geschäft",
+    "academic": "Akademisch",
+    "financial": "Finanzen",
+    "scientific": "Wissenschaftlich",
+    "marketing": "Marketing",
+    "businessDashboard": "Business-Dashboard",
+    "businessDesc": "Umsatz-, Einnahmen- und Wachstumskennzahlen",
+    "academicReport": "Akademischer Bericht",
+    "academicDesc": "Statistik- und Verteilungsanalyse",
+    "financialAnalysis": "Finanzanalyse",
+    "financialDesc": "Aktientrends und Marktleistung",
+    "scientificData": "Wissenschaftliche Daten",
+    "scientificDesc": "Korrelations- und Verteilungsanalyse",
+    "marketingAnalytics": "Marketing-Analytik",
+    "marketingDesc": "Kampagnenleistung und Conversion-Metriken",
+    "healthcareReport": "Gesundheitsberichte",
+    "healthcareDesc": "Patientenstatistiken und Behandlungsergebnisse",
+    "ecommerceAnalytics": "E-Commerce-Analytik",
+    "ecommerceDesc": "Verkäufe, Kundenverhalten und Produktleistung",
+    "socialMediaAnalytics": "Social-Media-Analytik",
+    "socialMediaDesc": "Engagement, Reichweite und Follower-Wachstum",
+    "popular": "Beliebt",
+    "new": "Neu",
+    "pro": "Pro",
+    "advanced": "Fortgeschritten",
+    "trending": "Trend",
+    "stats": {
+      "templates": "Vorlagen",
+      "categories": "Kategorien",
+      "chartTypes": "Diagrammtypen"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Passe deine GraphForge-Erfahrung an",
+    "appearance": "Erscheinungsbild",
+    "darkMode": "Dunkelmodus",
+    "chartAnimations": "Diagramm-Animationen",
+    "showGridLines": "Gitternetzlinien anzeigen",
+    "data": "Daten",
+    "autoSave": "Automatisch speichern",
+    "defaultChartType": "Standard-Diagrammtyp",
+    "barChart": "Balkendiagramm",
+    "lineChart": "Liniendiagramm",
+    "pieChart": "Kreisdiagramm",
+    "scatterPlot": "Punktdiagramm",
+    "areaChart": "Flächendiagramm",
+    "radarChart": "Radardiagramm",
+    "export": "Exportieren",
+    "exportQuality": "Exportqualität",
+    "low": "Niedrig (72 DPI)",
+    "medium": "Mittel (150 DPI)",
+    "high": "Hoch (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Benachrichtigungen",
+    "enableNotifications": "Benachrichtigungen aktivieren",
+    "language": "Sprache",
+    "selectLanguage": "Sprache auswählen",
+    "currentLanguage": "Aktuelle Sprache",
+    "resetAll": "Alle Einstellungen zurücksetzen",
+    "resetConfirm": "Sind Sie sicher, dass Sie alle Einstellungen auf die Standardwerte zurücksetzen möchten?",
+    "version": "Version"
+  },
+  "about": {
+    "title": "Über GraphForge",
+    "subtitle": "Schmiede Deine Daten in Visuals — Ein leistungsstarker Grafikrechner für alle",
+    "description": "GraphForge ist ein leistungsstarker, plattformübergreifender Grafikrechner, der Rohdaten in atemberaubende professionelle Visualisierungen verwandelt. Egal ob Student, Forscher oder Geschäftsprofi, GraphForge macht die Datenvisualisierung einfach, intuitiv und schön.",
+    "version": "Version 1.0.0",
+    "license": "MIT-Lizenz",
+    "openSource": "Open Source",
+    "keyFeatures": "Hauptfunktionen",
+    "techStack": "Technologie-Stack",
+    "features": {
+      "chartTypes": "69+ Diagrammtypen",
+      "categories": "5 Diagrammkategorien",
+      "export": "Export als PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Warmes professionelles Theme",
+      "free": "100% Kostenlos & Open Source"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungee-Schriftart",
+      "inter": "Inter-Schriftart"
+    },
+    "stats": {
+      "chartTypes": "Diagrammtypen",
+      "categories": "Kategorien",
+      "exportFormats": "Exportformate",
+      "free": "Kostenlos"
+    },
+    "footer": {
+      "builtWith": "Entwickelt mit ❤️ mit React, Recharts und D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "DIAGRAMM NICHT GEFUNDEN",
+    "backToCharts": "ZURÜCK ZU DIAGRAMMEN",
+    "allCharts": "ALLE DIAGRAMME",
+    "exportChart": "📊 Diagramm exportieren",
+    "exportTable": "📋 Tabelle exportieren",
+    "comingSoon": "BALD VERFÜGBAR"
+  },
+  "footer": {
+    "tagline": "Schmiede Deine Daten in Visuals",
+    "builtWith": "Entwickelt mit ❤️ mit React und Recharts"
+  },
+  "splash": {
+    "ready": "Bereit zum Schmieden!",
+    "loading": "Lade deine Diagramme..."
+  },
+  "common": {
+    "loading": "Lädt...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "next": "Weiter",
+    "done": "Fertig",
+    "tagline": "Datenvisualisierung einfach gemacht"
+  }
+}

@@ -1,15 +1,536 @@
+/* ==============================================
+   GRAPHFORGE - GLOBAL STYLES
+   Warm Professional Theme with Bungee Font
+   ============================================== */
+
+/* ==============================================
+   FONT IMPORTS
+   ============================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Bungee+Shade&family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* ==============================================
+   RESET & BASE
+   ============================================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #0d1117;
+  background: #f5ede0;
   margin: 0;
   padding: 0;
+  font-family: "Bungee", "Bungee Inline", "Bungee Shade", cursive;
+  color: #5c4a3a;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ==============================================
+   APP CONTAINER
+   ============================================== */
 
 .App {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5ede0;
+  color: #5c4a3a;
+}
+
+/* ==============================================
+   LINK STYLES
+   ============================================== */
+
+a {
+  color: #82c8e5;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: #a8dcf0;
+  text-decoration: underline;
+}
+
+/* ==============================================
+   BUTTON STYLES
+   ============================================== */
+
+button {
+  font-family: "Bungee", "Bungee Inline", "Bungee Shade", cursive;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==============================================
+   INPUT STYLES
+   ============================================== */
+
+input,
+select,
+textarea {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif;
+  transition: border-color 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #82c8e5;
+}
+
+/* ==============================================
+   SCROLLBAR STYLING
+   ============================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5ede0;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4c4ae;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b0a090;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d4c4ae #f5ede0;
+}
+
+/* ==============================================
+   SELECTION STYLING
+   ============================================== */
+
+::selection {
+  background: #82c8e5;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: #82c8e5;
+  color: #ffffff;
+}
+
+/* ==============================================
+   FOCUS STYLING
+   ============================================== */
+
+:focus-visible {
+  outline: 2px solid #82c8e5;
+  outline-offset: 2px;
+}
+
+/* ==============================================
+   CARD / CONTAINER STYLES
+   ============================================== */
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d4c4ae;
+  border-radius: 4px;
+  padding: 20px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(180, 160, 140, 0.1);
+}
+
+.card:hover {
+  border-color: #b0a090;
+  box-shadow: 0 4px 16px rgba(180, 160, 140, 0.12);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8dcc8;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  color: #4a3728;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==============================================
+   UTILITY CLASSES
+   ============================================== */
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #8a7a6a;
+}
+
+.text-heading {
+  color: #4a3728;
+}
+
+.text-success {
+  color: #4caf50;
+}
+
+.text-warning {
+  color: #ffeb3b;
+}
+
+.text-error {
+  color: #d15f55;
+}
+
+.text-info {
+  color: #82c8e5;
+}
+
+.bg-card {
+  background: #ffffff;
+}
+
+.bg-input {
+  background: #f5ede0;
+}
+
+.border-subtle {
+  border: 1px solid #e8dcc8;
+}
+
+.border-default {
+  border: 1px solid #d4c4ae;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-xs {
+  gap: 4px;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+
+.gap-md {
+  gap: 16px;
+}
+
+.gap-lg {
+  gap: 24px;
+}
+
+.gap-xl {
+  gap: 32px;
+}
+
+.p-sm {
+  padding: 8px;
+}
+
+.p-md {
+  padding: 16px;
+}
+
+.p-lg {
+  padding: 24px;
+}
+
+.p-xl {
+  padding: 32px;
+}
+
+.m-sm {
+  margin: 8px;
+}
+
+.m-md {
+  margin: 16px;
+}
+
+.m-lg {
+  margin: 24px;
+}
+
+.m-xl {
+  margin: 32px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ==============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================== */
+
+@media (max-width: 1024px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .flex-column-mobile {
+    flex-direction: column !important;
+  }
+
+  .gap-sm-mobile {
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-sm-mobile {
+    font-size: 12px !important;
+  }
+
+  .p-sm-mobile {
+    padding: 8px !important;
+  }
+
+  .m-sm-mobile {
+    margin: 8px !important;
+  }
+}
+
+/* ============================================
+   LOADING SHIMMER EFFECT
+   ============================================ */
+
+.shimmer {
+  background: linear-gradient(90deg, #ffffff 25%, #f5ede0 50%, #ffffff 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   CHART CONTAINER OVERRIDES
+   ============================================ */
+
+.chart-container {
+  background: #ffffff;
+  border-radius: 4px;
+  padding: 20px;
+  min-height: 400px;
+  border: 1px solid #d4c4ae;
+}
+
+/* ============================================
+   DATA TABLE STYLES
+   ============================================ */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.data-table thead th {
+  background: #f5ede0;
+  color: #4a3728;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #d4c4ae;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-table tbody td {
+  padding: 6px 12px;
+  border-bottom: 1px solid #e8dcc8;
+  font-size: 11px;
+}
+
+.data-table tbody tr:hover {
+  background: #f5ede0;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .App {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .card {
+    border: 1px solid #d1d5db !important;
+    background: #ffffff !important;
+  }
+
+  .card-title {
+    color: #000000 !important;
+  }
+
+  .text-muted {
+    color: #6b7280 !important;
+  }
+
+  .data-table thead th {
+    background: #f3f4f6 !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #d1d5db !important;
+  }
+
+  .data-table tbody td {
+    border-bottom: 1px solid #e5e7eb !important;
+  }
 }

@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "charts": "チャート",
+    "templates": "テンプレート",
+    "about": "概要",
+    "settings": "設定"
+  },
+  "home": {
+    "title": "データを鍛える",
+    "subtitle": "{{count}}種類のチャートから選択",
+    "search": "チャートを検索...",
+    "noCharts": "チャートが見つかりません"
+  },
+  "templates": {
+    "title": "テンプレート",
+    "description": "すぐに始められる事前作成済みチャートテンプレート",
+    "comingSoon": "近日公開予定",
+    "comingSoonDesc": "新しいテンプレートを常に追加しています。アップデートをお楽しみに！",
+    "all": "すべて",
+    "business": "ビジネス",
+    "academic": "学術",
+    "financial": "金融",
+    "scientific": "科学",
+    "marketing": "マーケティング",
+    "businessDashboard": "ビジネスダッシュボード",
+    "businessDesc": "売上、収益、成長指標",
+    "academicReport": "学術レポート",
+    "academicDesc": "統計と分布分析",
+    "financialAnalysis": "財務分析",
+    "financialDesc": "株価動向と市場パフォーマンス",
+    "scientificData": "科学データ",
+    "scientificDesc": "相関と分布分析",
+    "marketingAnalytics": "マーケティング分析",
+    "marketingDesc": "キャンペーンパフォーマンスと変換指標",
+    "healthcareReport": "ヘルスケアレポート",
+    "healthcareDesc": "患者統計と治療結果",
+    "ecommerceAnalytics": "Eコマース分析",
+    "ecommerceDesc": "売上、顧客行動、製品パフォーマンス",
+    "socialMediaAnalytics": "ソーシャルメディア分析",
+    "socialMediaDesc": "エンゲージメント、リーチ、フォロワー成長",
+    "popular": "人気",
+    "new": "新着",
+    "pro": "プロ",
+    "advanced": "上級",
+    "trending": "トレンド",
+    "stats": {
+      "templates": "テンプレート",
+      "categories": "カテゴリ",
+      "chartTypes": "チャートタイプ"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "subtitle": "GraphForge体験をカスタマイズ",
+    "appearance": "外観",
+    "darkMode": "ダークモード",
+    "chartAnimations": "チャートアニメーション",
+    "showGridLines": "グリッド線を表示",
+    "data": "データ",
+    "autoSave": "自動保存",
+    "defaultChartType": "デフォルトチャートタイプ",
+    "barChart": "棒グラフ",
+    "lineChart": "折れ線グラフ",
+    "pieChart": "円グラフ",
+    "scatterPlot": "散布図",
+    "areaChart": "面グラフ",
+    "radarChart": "レーダーチャート",
+    "export": "エクスポート",
+    "exportQuality": "エクスポート品質",
+    "low": "低 (72 DPI)",
+    "medium": "中 (150 DPI)",
+    "high": "高 (300 DPI)",
+    "ultra": "ウルトラ (600 DPI)",
+    "notifications": "通知",
+    "enableNotifications": "通知を有効にする",
+    "language": "言語",
+    "selectLanguage": "言語を選択",
+    "currentLanguage": "現在の言語",
+    "resetAll": "すべての設定をリセット",
+    "resetConfirm": "すべての設定をデフォルトにリセットしてもよろしいですか？",
+    "version": "バージョン"
+  },
+  "about": {
+    "title": "GraphForgeについて",
+    "subtitle": "データをビジュアルに鍛える — すべての人のための強力なグラフ計算機",
+    "description": "GraphForgeは、生データを驚くほどプロフェッショナルなビジュアライゼーションに変換する、強力なクロスプラットフォームのグラフ計算機です。学生、研究者、ビジネスプロフェッショナルを問わず、GraphForgeはデータビジュアライゼーションをシンプルで直感的かつ美しくします。",
+    "version": "バージョン 1.0.0",
+    "license": "MITライセンス",
+    "openSource": "オープンソース",
+    "keyFeatures": "主な機能",
+    "techStack": "テクノロジースタック",
+    "features": {
+      "chartTypes": "69以上のチャートタイプ",
+      "categories": "5つのチャートカテゴリ",
+      "export": "PNG、SVG、PDF、CSV、JSON、Excelにエクスポート",
+      "theme": "温かいプロフェッショナルテーマ",
+      "free": "100%無料＆オープンソース"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungeeフォント",
+      "inter": "Interフォント"
+    },
+    "stats": {
+      "chartTypes": "チャートタイプ",
+      "categories": "カテゴリ",
+      "exportFormats": "エクスポート形式",
+      "free": "無料"
+    },
+    "footer": {
+      "builtWith": "React、Recharts、D3.jsを使って❤️を込めて構築"
+    }
+  },
+  "chart": {
+    "notFound": "チャートが見つかりません",
+    "backToCharts": "チャートに戻る",
+    "allCharts": "すべてのチャート",
+    "exportChart": "📊 チャートをエクスポート",
+    "exportTable": "📋 テーブルをエクスポート",
+    "comingSoon": "近日公開"
+  },
+  "footer": {
+    "tagline": "データをビジュアルに鍛える",
+    "builtWith": "ReactとRechartsで❤️を込めて構築"
+  },
+  "splash": {
+    "ready": "鍛える準備完了！",
+    "loading": "チャートを読み込み中..."
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "back": "戻る",
+    "next": "次へ",
+    "done": "完了",
+    "tagline": "シンプルなデータビジュアライゼーション"
+  }
+}

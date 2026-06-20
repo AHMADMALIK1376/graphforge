@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "होम",
+    "charts": "चार्ट",
+    "templates": "टेम्पलेट",
+    "about": "हमारे बारे में",
+    "settings": "सेटिंग्स"
+  },
+  "home": {
+    "title": "अपने डेटा को गढ़ें",
+    "subtitle": "{{count}} चार्ट प्रकारों में से चुनें",
+    "search": "चार्ट खोजें...",
+    "noCharts": "कोई चार्ट नहीं मिला"
+  },
+  "templates": {
+    "title": "टेम्पलेट",
+    "description": "त्वरित शुरुआत के लिए पूर्व-निर्मित चार्ट टेम्पलेट",
+    "comingSoon": "जल्द ही और टेम्पलेट",
+    "comingSoonDesc": "हम लगातार नए टेम्पलेट जोड़ रहे हैं। अपडेट के लिए बने रहें!",
+    "all": "सभी",
+    "business": "व्यवसाय",
+    "academic": "शैक्षणिक",
+    "financial": "वित्तीय",
+    "scientific": "वैज्ञानिक",
+    "marketing": "मार्केटिंग",
+    "businessDashboard": "व्यवसाय डैशबोर्ड",
+    "businessDesc": "बिक्री, राजस्व और विकास मेट्रिक्स",
+    "academicReport": "शैक्षणिक रिपोर्ट",
+    "academicDesc": "सांख्यिकी और वितरण विश्लेषण",
+    "financialAnalysis": "वित्तीय विश्लेषण",
+    "financialDesc": "शेयर रुझान और बाजार प्रदर्शन",
+    "scientificData": "वैज्ञानिक डेटा",
+    "scientificDesc": "सहसंबंध और वितरण विश्लेषण",
+    "marketingAnalytics": "मार्केटिंग एनालिटिक्स",
+    "marketingDesc": "अभियान प्रदर्शन और रूपांतरण मेट्रिक्स",
+    "healthcareReport": "स्वास्थ्य सेवा रिपोर्ट",
+    "healthcareDesc": "रोगी सांख्यिकी और उपचार परिणाम",
+    "ecommerceAnalytics": "ई-कॉमर्स एनालिटिक्स",
+    "ecommerceDesc": "बिक्री, ग्राहक व्यवहार और उत्पाद प्रदर्शन",
+    "socialMediaAnalytics": "सोशल मीडिया एनालिटिक्स",
+    "socialMediaDesc": "जुड़ाव, पहुंच और अनुयायी वृद्धि",
+    "popular": "लोकप्रिय",
+    "new": "नया",
+    "pro": "प्रो",
+    "advanced": "उन्नत",
+    "trending": "ट्रेंडिंग",
+    "stats": {
+      "templates": "टेम्पलेट",
+      "categories": "श्रेणियाँ",
+      "chartTypes": "चार्ट प्रकार"
+    }
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "subtitle": "अपने GraphForge अनुभव को अनुकूलित करें",
+    "appearance": "दिखावट",
+    "darkMode": "डार्क मोड",
+    "chartAnimations": "चार्ट एनिमेशन",
+    "showGridLines": "ग्रिड लाइन दिखाएं",
+    "data": "डेटा",
+    "autoSave": "ऑटो सेव",
+    "defaultChartType": "डिफ़ॉल्ट चार्ट प्रकार",
+    "barChart": "बार चार्ट",
+    "lineChart": "लाइन चार्ट",
+    "pieChart": "पाई चार्ट",
+    "scatterPlot": "स्कैटर प्लॉट",
+    "areaChart": "एरिया चार्ट",
+    "radarChart": "रडार चार्ट",
+    "export": "निर्यात करें",
+    "exportQuality": "निर्यात गुणवत्ता",
+    "low": "निम्न (72 DPI)",
+    "medium": "मध्यम (150 DPI)",
+    "high": "उच्च (300 DPI)",
+    "ultra": "अल्ट्रा (600 DPI)",
+    "notifications": "सूचनाएं",
+    "enableNotifications": "सूचनाएं सक्षम करें",
+    "language": "भाषा",
+    "selectLanguage": "भाषा चुनें",
+    "currentLanguage": "वर्तमान भाषा",
+    "resetAll": "सभी सेटिंग्स रीसेट करें",
+    "resetConfirm": "क्या आप वाकई सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करना चाहते हैं?",
+    "version": "संस्करण"
+  },
+  "about": {
+    "title": "GraphForge के बारे में",
+    "subtitle": "अपने डेटा को विज़ुअल में बदलें — सभी के लिए एक शक्तिशाली ग्राफ कैलकुलेटर",
+    "description": "GraphForge एक शक्तिशाली, क्रॉस-प्लेटफॉर्म ग्राफ कैलकुलेटर है जो कच्चे डेटा को आश्चर्यजनक पेशेवर विज़ुअलाइज़ेशन में बदल देता है। चाहे आप छात्र हों, शोधकर्ता हों, या व्यवसाय पेशेवर हों, GraphForge डेटा विज़ुअलाइज़ेशन को सरल, सहज और सुंदर बनाता है।",
+    "version": "संस्करण 1.0.0",
+    "license": "MIT लाइसेंस",
+    "openSource": "ओपन सोर्स",
+    "keyFeatures": "मुख्य विशेषताएं",
+    "techStack": "प्रौद्योगिकी स्टैक",
+    "features": {
+      "chartTypes": "69+ चार्ट प्रकार",
+      "categories": "5 चार्ट श्रेणियाँ",
+      "export": "PNG, SVG, PDF, CSV, JSON, Excel में निर्यात करें",
+      "theme": "वार्म प्रोफेशनल थीम",
+      "free": "100% मुफ्त और ओपन सोर्स"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungee फ़ॉन्ट",
+      "inter": "Inter फ़ॉन्ट"
+    },
+    "stats": {
+      "chartTypes": "चार्ट प्रकार",
+      "categories": "श्रेणियाँ",
+      "exportFormats": "निर्यात प्रारूप",
+      "free": "मुफ्त"
+    },
+    "footer": {
+      "builtWith": "React, Recharts और D3.js का उपयोग करके ❤️ के साथ बनाया गया"
+    }
+  },
+  "chart": {
+    "notFound": "चार्ट नहीं मिला",
+    "backToCharts": "चार्ट पर वापस जाएं",
+    "allCharts": "सभी चार्ट",
+    "exportChart": "📊 चार्ट निर्यात करें",
+    "exportTable": "📋 तालिका निर्यात करें",
+    "comingSoon": "जल्द आ रहा है"
+  },
+  "footer": {
+    "tagline": "अपने डेटा को विज़ुअल में बदलें",
+    "builtWith": "React और Recharts का उपयोग करके ❤️ के साथ बनाया गया"
+  },
+  "splash": {
+    "ready": "गढ़ने के लिए तैयार!",
+    "loading": "आपके चार्ट लोड हो रहे हैं..."
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "back": "पीछे",
+    "next": "अगला",
+    "done": "हो गया",
+    "tagline": "डेटा विज़ुअलाइज़ेशन को सरल बनाया गया"
+  }
+}

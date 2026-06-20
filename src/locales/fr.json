@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "charts": "Graphiques",
+    "templates": "Modèles",
+    "about": "À propos",
+    "settings": "Paramètres"
+  },
+  "home": {
+    "title": "FORGEZ VOS DONNÉES",
+    "subtitle": "Choisissez parmi {{count}} types de graphiques",
+    "search": "RECHERCHER DES GRAPHIQUES...",
+    "noCharts": "AUCUN GRAPHIQUE TROUVÉ"
+  },
+  "templates": {
+    "title": "Modèles",
+    "description": "Modèles de graphiques prédéfinis pour commencer rapidement",
+    "comingSoon": "Plus de modèles à venir",
+    "comingSoonDesc": "Nous ajoutons constamment de nouveaux modèles. Restez à l'écoute pour les mises à jour !",
+    "all": "TOUT",
+    "business": "Affaires",
+    "academic": "Académique",
+    "financial": "Financier",
+    "scientific": "Scientifique",
+    "marketing": "Marketing",
+    "businessDashboard": "Tableau de Bord d'Entreprise",
+    "businessDesc": "Métriques de ventes, revenus et croissance",
+    "academicReport": "Rapport Académique",
+    "academicDesc": "Analyse des statistiques et distributions",
+    "financialAnalysis": "Analyse Financière",
+    "financialDesc": "Tendances boursières et performance du marché",
+    "scientificData": "Données Scientifiques",
+    "scientificDesc": "Analyse de corrélation et distribution",
+    "marketingAnalytics": "Analytique Marketing",
+    "marketingDesc": "Performance des campagnes et métriques de conversion",
+    "healthcareReport": "Rapports de Santé",
+    "healthcareDesc": "Statistiques des patients et résultats de traitements",
+    "ecommerceAnalytics": "Analytique E-Commerce",
+    "ecommerceDesc": "Ventes, comportement client et performance des produits",
+    "socialMediaAnalytics": "Analytique des Réseaux Sociaux",
+    "socialMediaDesc": "Engagement, portée et croissance des abonnés",
+    "popular": "Populaire",
+    "new": "Nouveau",
+    "pro": "Pro",
+    "advanced": "Avancé",
+    "trending": "Tendance",
+    "stats": {
+      "templates": "Modèles",
+      "categories": "Catégories",
+      "chartTypes": "Types de Graphiques"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Personnalisez votre expérience GraphForge",
+    "appearance": "Apparence",
+    "darkMode": "Mode Sombre",
+    "chartAnimations": "Animations des Graphiques",
+    "showGridLines": "Afficher les Lignes de Grille",
+    "data": "Données",
+    "autoSave": "Sauvegarde Automatique",
+    "defaultChartType": "Type de Graphique par Défaut",
+    "barChart": "Graphique à Barres",
+    "lineChart": "Graphique en Lignes",
+    "pieChart": "Graphique Circulaire",
+    "scatterPlot": "Nuage de Points",
+    "areaChart": "Graphique en Aire",
+    "radarChart": "Graphique Radar",
+    "export": "Exporter",
+    "exportQuality": "Qualité d'Export",
+    "low": "Basse (72 DPI)",
+    "medium": "Moyenne (150 DPI)",
+    "high": "Haute (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Notifications",
+    "enableNotifications": "Activer les Notifications",
+    "language": "Langue",
+    "selectLanguage": "Sélectionner la Langue",
+    "currentLanguage": "Langue Actuelle",
+    "resetAll": "Réinitialiser les Paramètres",
+    "resetConfirm": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres par défaut ?",
+    "version": "Version"
+  },
+  "about": {
+    "title": "À propos de GraphForge",
+    "subtitle": "Forgez Vos Données en Visuels — Un puissant calculateur de graphiques pour tous",
+    "description": "GraphForge est un puissant calculateur de graphiques multiplateforme qui transforme les données brutes en visualisations professionnelles époustouflantes. Que vous soyez étudiant, chercheur ou professionnel, GraphForge rend la visualisation de données simple, intuitive et belle.",
+    "version": "Version 1.0.0",
+    "license": "Licence MIT",
+    "openSource": "Open Source",
+    "keyFeatures": "Fonctionnalités Clés",
+    "techStack": "Stack Technologique",
+    "features": {
+      "chartTypes": "69+ Types de Graphiques",
+      "categories": "5 Catégories de Graphiques",
+      "export": "Exporter en PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Thème Professionnel Chaud",
+      "free": "100% Gratuit et Open Source"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Police Bungee",
+      "inter": "Police Inter"
+    },
+    "stats": {
+      "chartTypes": "Types de Graphiques",
+      "categories": "Catégories",
+      "exportFormats": "Formats d'Export",
+      "free": "Gratuit"
+    },
+    "footer": {
+      "builtWith": "Construit avec ❤️ en utilisant React, Recharts et D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "GRAPHIQUE NON TROUVÉ",
+    "backToCharts": "RETOUR AUX GRAPHIQUES",
+    "allCharts": "TOUS LES GRAPHIQUES",
+    "exportChart": "📊 Exporter le Graphique",
+    "exportTable": "📋 Exporter le Tableau",
+    "comingSoon": "PROCHAINEMENT"
+  },
+  "footer": {
+    "tagline": "Forgez Vos Données en Visuels",
+    "builtWith": "Construit avec ❤️ en utilisant React et Recharts"
+  },
+  "splash": {
+    "ready": "Prêt à Forger !",
+    "loading": "Chargement de vos graphiques..."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "next": "Suivant",
+    "done": "Terminé",
+    "tagline": "Visualisation de Données Simplifiée"
+  }
+}

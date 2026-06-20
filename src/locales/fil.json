@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Home",
+    "charts": "Mga Tsart",
+    "templates": "Mga Template",
+    "about": "Tungkol",
+    "settings": "Mga Setting"
+  },
+  "home": {
+    "title": "IHUGO ANG IYONG DATA",
+    "subtitle": "Pumili mula sa {{count}} uri ng tsart",
+    "search": "MAGHANAP NG MGA TSART...",
+    "noCharts": "WALANG NATAGPUANG TSART"
+  },
+  "templates": {
+    "title": "Mga Template",
+    "description": "Mga pre-made na template ng tsart upang matulungan kang magsimula nang mabilis",
+    "comingSoon": "Marami pang Template sa Lalong Madaling Panahon",
+    "comingSoonDesc": "Patuloy kaming nagdaragdag ng mga bagong template. Manatiling nakatutok para sa mga update!",
+    "all": "LAHAT",
+    "business": "Negosyo",
+    "academic": "Akademiko",
+    "financial": "Pinansyal",
+    "scientific": "Siyentipiko",
+    "marketing": "Marketing",
+    "businessDashboard": "Dashboard ng Negosyo",
+    "businessDesc": "Mga sukatan ng benta, kita, at paglago",
+    "academicReport": "Ulats na Akademiko",
+    "academicDesc": "Pagsusuri ng estadistika at distribusyon",
+    "financialAnalysis": "Pagsusuri sa Pinansyal",
+    "financialDesc": "Mga trend ng stock at pagganap ng merkado",
+    "scientificData": "Datong Siyentipiko",
+    "scientificDesc": "Pagsusuri ng korrelasyon at distribusyon",
+    "marketingAnalytics": "Analytics sa Marketing",
+    "marketingDesc": "Pagganap ng kampanya at mga sukatan ng conversion",
+    "healthcareReport": "Mga Ulat sa Pangangalagang Pangkalusugan",
+    "healthcareDesc": "Estadistika ng pasyente at mga resulta ng paggamot",
+    "ecommerceAnalytics": "Analytics sa E-Commerce",
+    "ecommerceDesc": "Benta, pag-uugali ng customer, at pagganap ng produkto",
+    "socialMediaAnalytics": "Analytics sa Social Media",
+    "socialMediaDesc": "Pakikipag-ugnayan, abot, at paglago ng tagasunod",
+    "popular": "Sikat",
+    "new": "Bago",
+    "pro": "Pro",
+    "advanced": "Advanced",
+    "trending": "Uso",
+    "stats": {
+      "templates": "Mga Template",
+      "categories": "Mga Kategorya",
+      "chartTypes": "Mga Uri ng Tsart"
+    }
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "subtitle": "I-customize ang iyong karanasan sa GraphForge",
+    "appearance": "Hitsura",
+    "darkMode": "Dark Mode",
+    "chartAnimations": "Mga Animasyon ng Tsart",
+    "showGridLines": "Ipakita ang mga Grid Line",
+    "data": "Data",
+    "autoSave": "Auto Save",
+    "defaultChartType": "Default na Uri ng Tsart",
+    "barChart": "Bar Chart",
+    "lineChart": "Line Chart",
+    "pieChart": "Pie Chart",
+    "scatterPlot": "Scatter Plot",
+    "areaChart": "Area Chart",
+    "radarChart": "Radar Chart",
+    "export": "I-export",
+    "exportQuality": "Kalidad ng Export",
+    "low": "Mababa (72 DPI)",
+    "medium": "Katamtaman (150 DPI)",
+    "high": "Mataas (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Mga Notipikasyon",
+    "enableNotifications": "I-activate ang mga Notipikasyon",
+    "language": "Wika",
+    "selectLanguage": "Pumili ng Wika",
+    "currentLanguage": "Kasalukuyang Wika",
+    "resetAll": "I-reset ang Lahat ng Setting",
+    "resetConfirm": "Sigurado ka bang gusto mong i-reset ang lahat ng setting sa default?",
+    "version": "Bersyon"
+  },
+  "about": {
+    "title": "Tungkol sa GraphForge",
+    "subtitle": "Ihugo ang Iyong Data sa mga Visual — Isang makapangyarihang graph calculator para sa lahat",
+    "description": "Ang GraphForge ay isang makapangyarihan, cross-platform na graph calculator na nagbabago ng raw data sa mga nakamamanghang propesyonal na visualisasyon. Ikaw man ay isang estudyante, mananaliksik, o propesyonal sa negosyo, ginagawang simple, intuitive, at maganda ng GraphForge ang data visualization.",
+    "version": "Bersyon 1.0.0",
+    "license": "MIT License",
+    "openSource": "Open Source",
+    "keyFeatures": "Mga Pangunahing Tampok",
+    "techStack": "Technology Stack",
+    "features": {
+      "chartTypes": "69+ Uri ng Tsart",
+      "categories": "5 Kategorya ng Tsart",
+      "export": "I-export sa PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Warm Professional Theme",
+      "free": "100% Libre at Open Source"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungee Font",
+      "inter": "Inter Font"
+    },
+    "stats": {
+      "chartTypes": "Mga Uri ng Tsart",
+      "categories": "Mga Kategorya",
+      "exportFormats": "Mga Format ng Export",
+      "free": "Libre"
+    },
+    "footer": {
+      "builtWith": "Ginawa nang may ❤️ gamit ang React, Recharts, at D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "HINDI NATAGPUAN ANG TSART",
+    "backToCharts": "BUMALIK SA MGA TSART",
+    "allCharts": "LAHAT NG TSART",
+    "exportChart": "📊 I-export ang Tsart",
+    "exportTable": "📋 I-export ang Talahanayan",
+    "comingSoon": "MALAPIT NA"
+  },
+  "footer": {
+    "tagline": "Ihugo ang Iyong Data sa mga Visual",
+    "builtWith": "Ginawa nang may ❤️ gamit ang React at Recharts"
+  },
+  "splash": {
+    "ready": "Handa nang Ihugo!",
+    "loading": "Nilo-load ang iyong mga tsart..."
+  },
+  "common": {
+    "loading": "Naglo-load...",
+    "save": "I-save",
+    "cancel": "Kanselahin",
+    "delete": "Burahin",
+    "edit": "I-edit",
+    "back": "Bumalik",
+    "next": "Susunod",
+    "done": "Tapos na",
+    "tagline": "Naging Simpleng ang Data Visualization"
+  }
+}

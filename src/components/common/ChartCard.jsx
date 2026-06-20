@@ -1,8 +1,21 @@
+// src/components/common/ChartCard.jsx
 import React from "react";
 import { theme, getCategoryColor } from "../../styles/theme";
 
+// Map category IDs to specific folder colors
+const categoryFolderColors = {
+  comparison: "#0077C8", // Aegean Blue (Comparison)
+  correlation: "#F88379", // Coral Pink
+  partToWhole: "#F2D24B", // Light Yellow
+  temporal: "#D4A373", // Warm Brown
+  distribution: "#A9C632", // Tea Mist (NEW)
+};
+
 const ChartCard = ({ chart, onClick }) => {
   const categoryColor = getCategoryColor(chart.categoryId);
+
+  // Use custom color for distribution, otherwise use categoryColor
+  const folderColor = categoryFolderColors[chart.categoryId] || categoryColor;
 
   // Folder design - like desktop folders
   const cardStyle = {
@@ -19,7 +32,7 @@ const ChartCard = ({ chart, onClick }) => {
     left: "0",
     height: "12px",
     width: "60%",
-    background: categoryColor,
+    background: folderColor,
     borderRadius: "3px 3px 0 0",
     display: "flex",
     alignItems: "center",
@@ -36,8 +49,8 @@ const ChartCard = ({ chart, onClick }) => {
 
   // Main folder body
   const folderBodyStyle = {
-    background: `linear-gradient(135deg, ${categoryColor}dd, ${categoryColor}99)`,
-    border: `1px solid ${categoryColor}`,
+    background: `linear-gradient(135deg, ${folderColor}dd, ${folderColor}99)`,
+    border: `1px solid ${folderColor}`,
     borderRadius: "0 4px 4px 4px",
     padding: "20px 16px 16px",
     minHeight: "140px",
@@ -46,7 +59,7 @@ const ChartCard = ({ chart, onClick }) => {
     gap: "8px",
     position: "relative",
     overflow: "hidden",
-    boxShadow: `0 4px 12px ${categoryColor}40`,
+    boxShadow: `0 4px 12px ${folderColor}40`,
   };
 
   // Folder shine effect
@@ -81,7 +94,6 @@ const ChartCard = ({ chart, onClick }) => {
     borderRadius: "1px",
   };
 
-  // Content styles
   const iconStyle = {
     fontSize: "36px",
     lineHeight: 1,
@@ -91,36 +103,38 @@ const ChartCard = ({ chart, onClick }) => {
   const nameStyle = {
     color: "#ffffff",
     fontSize: "12px",
-    fontWeight: 700,
+    fontWeight: 400,
     textTransform: "uppercase",
     letterSpacing: "1px",
     textShadow: "0 1px 2px rgba(0,0,0,0.3)",
     margin: 0,
     lineHeight: 1.3,
+    fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
   };
 
   const difficultyStyle = {
     color: "rgba(255,255,255,0.9)",
     fontSize: "10px",
-    fontWeight: 600,
+    fontWeight: 400,
     textTransform: "uppercase",
-    letterSpacing: "2px",
+    letterSpacing: "1px",
     background: "rgba(0,0,0,0.2)",
     padding: "2px 8px",
     borderRadius: "2px",
     alignSelf: "flex-start",
+    fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
   };
 
   const handleMouseEnter = (e) => {
     const body = e.currentTarget.querySelector(".folder-body");
     body.style.transform = "translateY(-4px)";
-    body.style.boxShadow = `0 8px 24px ${categoryColor}60`;
+    body.style.boxShadow = `0 8px 24px ${folderColor}60`;
   };
 
   const handleMouseLeave = (e) => {
     const body = e.currentTarget.querySelector(".folder-body");
     body.style.transform = "translateY(0)";
-    body.style.boxShadow = `0 4px 12px ${categoryColor}40`;
+    body.style.boxShadow = `0 4px 12px ${folderColor}40`;
   };
 
   return (

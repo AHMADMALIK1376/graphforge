@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Home",
+    "charts": "Charts",
+    "templates": "Templates",
+    "about": "About",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "FORGE YOUR DATA",
+    "subtitle": "Choose from {{count}} chart types",
+    "search": "SEARCH CHARTS...",
+    "noCharts": "NO CHARTS FOUND"
+  },
+  "templates": {
+    "title": "Templates",
+    "description": "Pre-made chart templates to help you get started quickly",
+    "comingSoon": "More Templates Coming Soon",
+    "comingSoonDesc": "We're constantly adding new templates. Stay tuned for updates!",
+    "all": "ALL",
+    "business": "Business",
+    "academic": "Academic",
+    "financial": "Financial",
+    "scientific": "Scientific",
+    "marketing": "Marketing",
+    "businessDashboard": "Business Dashboard",
+    "businessDesc": "Sales, revenue, and growth metrics",
+    "academicReport": "Academic Report",
+    "academicDesc": "Statistics and distribution analysis",
+    "financialAnalysis": "Financial Analysis",
+    "financialDesc": "Stock trends and market performance",
+    "scientificData": "Scientific Data",
+    "scientificDesc": "Correlation and distribution analysis",
+    "marketingAnalytics": "Marketing Analytics",
+    "marketingDesc": "Campaign performance and conversion metrics",
+    "healthcareReport": "Healthcare Reports",
+    "healthcareDesc": "Patient statistics and treatment outcomes",
+    "ecommerceAnalytics": "E-Commerce Analytics",
+    "ecommerceDesc": "Sales, customer behavior, and product performance",
+    "socialMediaAnalytics": "Social Media Analytics",
+    "socialMediaDesc": "Engagement, reach, and follower growth",
+    "popular": "Popular",
+    "new": "New",
+    "pro": "Pro",
+    "advanced": "Advanced",
+    "trending": "Trending",
+    "stats": {
+      "templates": "Templates",
+      "categories": "Categories",
+      "chartTypes": "Chart Types"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your GraphForge experience",
+    "appearance": "Appearance",
+    "darkMode": "Dark Mode",
+    "chartAnimations": "Chart Animations",
+    "showGridLines": "Show Grid Lines",
+    "data": "Data",
+    "autoSave": "Auto Save",
+    "defaultChartType": "Default Chart Type",
+    "barChart": "Bar Chart",
+    "lineChart": "Line Chart",
+    "pieChart": "Pie Chart",
+    "scatterPlot": "Scatter Plot",
+    "areaChart": "Area Chart",
+    "radarChart": "Radar Chart",
+    "export": "Export",
+    "exportQuality": "Export Quality",
+    "low": "Low (72 DPI)",
+    "medium": "Medium (150 DPI)",
+    "high": "High (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Notifications",
+    "enableNotifications": "Enable Notifications",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "currentLanguage": "Current Language",
+    "resetAll": "Reset All Settings",
+    "resetConfirm": "Are you sure you want to reset all settings to default?",
+    "version": "Version"
+  },
+  "about": {
+    "title": "About GraphForge",
+    "subtitle": "Forge Your Data Into Visuals — A powerful graph calculator for everyone",
+    "description": "GraphForge is a powerful, cross-platform graph calculator that transforms raw data into stunning professional visualizations. Whether you're a student, researcher, or business professional, GraphForge makes data visualization simple, intuitive, and beautiful.",
+    "version": "Version 1.0.0",
+    "license": "MIT License",
+    "openSource": "Open Source",
+    "keyFeatures": "Key Features",
+    "techStack": "Technology Stack",
+    "features": {
+      "chartTypes": "69+ Chart Types",
+      "categories": "5 Chart Categories",
+      "export": "Export to PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Warm Professional Theme",
+      "free": "100% Free & Open Source"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungee Font",
+      "inter": "Inter Font"
+    },
+    "stats": {
+      "chartTypes": "Chart Types",
+      "categories": "Categories",
+      "exportFormats": "Export Formats",
+      "free": "Free"
+    },
+    "footer": {
+      "builtWith": "Built with ❤️ using React, Recharts, and D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "CHART NOT FOUND",
+    "backToCharts": "BACK TO CHARTS",
+    "allCharts": "ALL CHARTS",
+    "exportChart": "📊 Export Chart",
+    "exportTable": "📋 Export Table",
+    "comingSoon": "COMING SOON"
+  },
+  "footer": {
+    "tagline": "Forge Your Data Into Visuals",
+    "builtWith": "Built with ❤️ using React & Recharts"
+  },
+  "splash": {
+    "ready": "Ready to Forge!",
+    "loading": "Loading your charts..."
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "tagline": "Data Visualization Made Simple"
+  }
+}
