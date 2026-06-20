@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "charts": "الرسوم البيانية",
+    "templates": "القوالب",
+    "about": "حول",
+    "settings": "الإعدادات"
+  },
+  "home": {
+    "title": "أنشئ بياناتك",
+    "subtitle": "اختر من بين {{count}} نوعًا من الرسوم البيانية",
+    "search": "ابحث عن الرسوم البيانية...",
+    "noCharts": "لم يتم العثور على رسوم بيانية"
+  },
+  "templates": {
+    "title": "القوالب",
+    "description": "قوالب رسوم بيانية جاهزة لمساعدتك على البدء بسرعة",
+    "comingSoon": "المزيد من القوالب قريبًا",
+    "comingSoonDesc": "نضيف باستمرار قوالب جديدة. ترقبوا التحديثات!",
+    "all": "الكل",
+    "business": "الأعمال",
+    "academic": "الأكاديمي",
+    "financial": "المالية",
+    "scientific": "علمي",
+    "marketing": "التسويق",
+    "businessDashboard": "لوحة معلومات الأعمال",
+    "businessDesc": "مؤشرات المبيعات والإيرادات والنمو",
+    "academicReport": "تقرير أكاديمي",
+    "academicDesc": "الإحصاءات وتحليل التوزيع",
+    "financialAnalysis": "تحليل مالي",
+    "financialDesc": "اتجاهات الأسهم وأداء السوق",
+    "scientificData": "بيانات علمية",
+    "scientificDesc": "تحليل الارتباط والتوزيع",
+    "marketingAnalytics": "تحليلات التسويق",
+    "marketingDesc": "مؤشرات أداء الحملات والتحويل",
+    "healthcareReport": "تقارير الرعاية الصحية",
+    "healthcareDesc": "إحصاءات المرضى ونتائج العلاج",
+    "ecommerceAnalytics": "تحليلات التجارة الإلكترونية",
+    "ecommerceDesc": "المبيعات وسلوك العملاء وأداء المنتج",
+    "socialMediaAnalytics": "تحليلات وسائل التواصل الاجتماعي",
+    "socialMediaDesc": "التفاعل والوصول ونمو المتابعين",
+    "popular": "شائع",
+    "new": "جديد",
+    "pro": "احترافي",
+    "advanced": "متقدم",
+    "trending": "رائج",
+    "stats": {
+      "templates": "القوالب",
+      "categories": "الفئات",
+      "chartTypes": "أنواع المخططات"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "subtitle": "تخصيص تجربة GraphForge",
+    "appearance": "المظهر",
+    "darkMode": "الوضع الداكن",
+    "chartAnimations": "رسوم متحركة للمخططات",
+    "showGridLines": "إظهار خطوط الشبكة",
+    "data": "البيانات",
+    "autoSave": "الحفظ التلقائي",
+    "defaultChartType": "نوع المخطط الافتراضي",
+    "barChart": "المخطط الشريطي",
+    "lineChart": "مخطط خطي",
+    "pieChart": "مخطط دائري",
+    "scatterPlot": "مخطط مبعثر",
+    "areaChart": "مخطط مساحي",
+    "radarChart": "مخطط رادار",
+    "export": "تصدير",
+    "exportQuality": "جودة التصدير",
+    "low": "منخفض (72 نقطة في البوصة)",
+    "medium": "متوسط (150 نقطة في البوصة)",
+    "high": "عالي (300 نقطة في البوصة)",
+    "ultra": "عالي جدًا (600 نقطة في البوصة)",
+    "notifications": "الإشعارات",
+    "enableNotifications": "تفعيل الإشعارات",
+    "language": "اللغة",
+    "selectLanguage": "تحديد اللغة",
+    "currentLanguage": "اللغة الحالية",
+    "resetAll": "إعادة ضبط جميع الإعدادات",
+    "resetConfirm": "هل أنت متأكد من رغبتك في إعادة ضبط جميع الإعدادات إلى الوضع الافتراضي؟",
+    "version": "الإصدار"
+  },
+  "about": {
+    "title": "حول GraphForge",
+    "subtitle": "حوّل بياناتك إلى رسومات بيانية - حاسبة رسوم بيانية قوية للجميع",
+    "description": "GraphForge هي حاسبة رسوم بيانية قوية ومتعددة المنصات، تحوّل البيانات الخام إلى رسومات بيانية احترافية مذهلة. سواء كنت طالبًا أو باحثًا أو محترفًا في مجال الأعمال، فإن GraphForge يجعل تصور البيانات بسيطًا وبديهيًا وجميلًا.",
+    "version": "الإصدار 1.0.0",
+    "license": "رخصة MIT",
+    "openSource": "مفتوح المصدر",
+    "keyFeatures": "الميزات الرئيسية",
+    "techStack": "مجموعة التقنيات",
+    "features": {
+      "chartTypes": "أكثر من 69 نوعًا من الرسوم البيانية",
+      "categories": "5 فئات للرسوم البيانية",
+      "export": "التصدير إلى PNG، SVG، PDF، CSV، JSON، Excel",
+      "theme": "السمة المهنية الدافئة",
+      "free": "مجاني ومفتوح المصدر بنسبة 100%"
+    },
+    "tech": {
+      "react": "رياكت 18",
+      "recharts": "ريتشارتس",
+      "d3": "دي 3.جي إس",
+      "router": "موجّه ريكت",
+      "bungee": "خط بانجي",
+      "inter": "خط الواجهة"
+    },
+    "stats": {
+      "chartTypes": "أنواع الرسوم البيانية",
+      "categories": "الفئات",
+      "exportFormats": "تنسيقات التصدير",
+      "free": "مجاني"
+    },
+    "footer": {
+      "builtWith": "بُني بكل حب باستخدام ريكت، ريتشارتس، ودي 3.جي إس"
+    }
+  },
+  "chart": {
+    "notFound": "الرسم البياني غير موجود",
+    "backToCharts": "العودة إلى الرسوم البيانية",
+    "allCharts": "جميع الرسوم البيانية",
+    "exportChart": "📊 تصدير الرسم البياني",
+    "exportTable": "📋 تصدير الجدول",
+    "comingSoon": "قريبًا"
+  },
+  "footer": {
+    "tagline": "حوّل بياناتك إلى رسومات بيانية",
+    "builtWith": "صُمم بكل حب باستخدام React وRecharts"
+  },
+  "splash": {
+    "ready": "جاهز للتحويل!",
+    "loading": "جارٍ تحميل رسوماتك البيانية..."
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "back": "رجوع",
+    "next": "التالي",
+    "done": "تم",
+    "tagline": "تبسيط تمثيل البيانات"
+  }
+}

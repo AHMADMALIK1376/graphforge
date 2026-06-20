@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "charts": "Grafik",
+    "templates": "Template",
+    "about": "Tentang",
+    "settings": "Pengaturan"
+  },
+  "home": {
+    "title": "TEMPA DATA ANDA",
+    "subtitle": "Pilih dari {{count}} jenis grafik",
+    "search": "CARI GRAFIK...",
+    "noCharts": "TIDAK ADA GRAFIK DITEMUKAN"
+  },
+  "templates": {
+    "title": "Template",
+    "description": "Template grafik siap pakai untuk membantu Anda memulai dengan cepat",
+    "comingSoon": "Template Lainnya Segera Hadir",
+    "comingSoonDesc": "Kami terus menambahkan template baru. Nantikan pembaruan!",
+    "all": "SEMUA",
+    "business": "Bisnis",
+    "academic": "Akademis",
+    "financial": "Keuangan",
+    "scientific": "Ilmiah",
+    "marketing": "Pemasaran",
+    "businessDashboard": "Dasbor Bisnis",
+    "businessDesc": "Metrik penjualan, pendapatan, dan pertumbuhan",
+    "academicReport": "Laporan Akademis",
+    "academicDesc": "Analisis statistik dan distribusi",
+    "financialAnalysis": "Analisis Keuangan",
+    "financialDesc": "Tren saham dan kinerja pasar",
+    "scientificData": "Data Ilmiah",
+    "scientificDesc": "Analisis korelasi dan distribusi",
+    "marketingAnalytics": "Analitik Pemasaran",
+    "marketingDesc": "Kinerja kampanye dan metrik konversi",
+    "healthcareReport": "Laporan Kesehatan",
+    "healthcareDesc": "Statistik pasien dan hasil pengobatan",
+    "ecommerceAnalytics": "Analitik E-Commerce",
+    "ecommerceDesc": "Penjualan, perilaku pelanggan, dan kinerja produk",
+    "socialMediaAnalytics": "Analitik Media Sosial",
+    "socialMediaDesc": "Keterlibatan, jangkauan, dan pertumbuhan pengikut",
+    "popular": "Populer",
+    "new": "Baru",
+    "pro": "Pro",
+    "advanced": "Lanjutan",
+    "trending": "Tren",
+    "stats": {
+      "templates": "Template",
+      "categories": "Kategori",
+      "chartTypes": "Jenis Grafik"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "subtitle": "Sesuaikan pengalaman GraphForge Anda",
+    "appearance": "Tampilan",
+    "darkMode": "Mode Gelap",
+    "chartAnimations": "Animasi Grafik",
+    "showGridLines": "Tampilkan Garis Kisi",
+    "data": "Data",
+    "autoSave": "Simpan Otomatis",
+    "defaultChartType": "Jenis Grafik Default",
+    "barChart": "Grafik Batang",
+    "lineChart": "Grafik Garis",
+    "pieChart": "Grafik Lingkaran",
+    "scatterPlot": "Plot Sebar",
+    "areaChart": "Grafik Area",
+    "radarChart": "Grafik Radar",
+    "export": "Ekspor",
+    "exportQuality": "Kualitas Ekspor",
+    "low": "Rendah (72 DPI)",
+    "medium": "Sedang (150 DPI)",
+    "high": "Tinggi (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Notifikasi",
+    "enableNotifications": "Aktifkan Notifikasi",
+    "language": "Bahasa",
+    "selectLanguage": "Pilih Bahasa",
+    "currentLanguage": "Bahasa Saat Ini",
+    "resetAll": "Atur Ulang Semua Pengaturan",
+    "resetConfirm": "Apakah Anda yakin ingin mengatur ulang semua pengaturan ke default?",
+    "version": "Versi"
+  },
+  "about": {
+    "title": "Tentang GraphForge",
+    "subtitle": "Tempa Data Anda Menjadi Visual — Kalkulator grafik yang kuat untuk semua orang",
+    "description": "GraphForge adalah kalkulator grafik lintas platform yang kuat yang mengubah data mentah menjadi visualisasi profesional yang menakjubkan. Baik Anda seorang pelajar, peneliti, atau profesional bisnis, GraphForge membuat visualisasi data menjadi sederhana, intuitif, dan indah.",
+    "version": "Versi 1.0.0",
+    "license": "Lisensi MIT",
+    "openSource": "Sumber Terbuka",
+    "keyFeatures": "Fitur Utama",
+    "techStack": "Tumpukan Teknologi",
+    "features": {
+      "chartTypes": "69+ Jenis Grafik",
+      "categories": "5 Kategori Grafik",
+      "export": "Ekspor ke PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Tema Profesional Hangat",
+      "free": "100% Gratis & Sumber Terbuka"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Font Bungee",
+      "inter": "Font Inter"
+    },
+    "stats": {
+      "chartTypes": "Jenis Grafik",
+      "categories": "Kategori",
+      "exportFormats": "Format Ekspor",
+      "free": "Gratis"
+    },
+    "footer": {
+      "builtWith": "Dibuat dengan ❤️ menggunakan React, Recharts, dan D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "GRAFIK TIDAK DITEMUKAN",
+    "backToCharts": "KEMBALI KE GRAFIK",
+    "allCharts": "SEMUA GRAFIK",
+    "exportChart": "📊 Ekspor Grafik",
+    "exportTable": "📋 Ekspor Tabel",
+    "comingSoon": "SEGERA HADIR"
+  },
+  "footer": {
+    "tagline": "Tempa Data Anda Menjadi Visual",
+    "builtWith": "Dibuat dengan ❤️ menggunakan React & Recharts"
+  },
+  "splash": {
+    "ready": "Siap Menempa!",
+    "loading": "Memuat grafik Anda..."
+  },
+  "common": {
+    "loading": "Memuat...",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Edit",
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "done": "Selesai",
+    "tagline": "Visualisasi Data Menjadi Sederhana"
+  }
+}

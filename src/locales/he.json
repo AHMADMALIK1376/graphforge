@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "בית",
+    "charts": "גרפים",
+    "templates": "תבניות",
+    "about": "אודות",
+    "settings": "הגדרות"
+  },
+  "home": {
+    "title": "חִבְצוּ אֶת הַנְּתוּנִים שֶׁלָּכֶם",
+    "subtitle": "בחרו מבין {{count}} סוגי גרפים",
+    "search": "חיפוש גרפים...",
+    "noCharts": "לא נמצאו גרפים"
+  },
+  "templates": {
+    "title": "תבניות",
+    "description": "תבניות גרפים מוכנות מראש שיעזרו לכם להתחיל במהירות",
+    "comingSoon": "תבניות נוספות בקרוב",
+    "comingSoonDesc": "אנחנו מוסיפים כל הזמן תבניות חדשות. הישארו מעודכנים!",
+    "all": "הכל",
+    "business": "עסקים",
+    "academic": "אקדמי",
+    "financial": "פיננסי",
+    "scientific": "מדעי",
+    "marketing": "שיווק",
+    "businessDashboard": "לוח מחוונים עסקי",
+    "businessDesc": "מדדי מכירות, הכנסות וצמיחה",
+    "academicReport": "דוח אקדמי",
+    "academicDesc": "ניתוח סטטיסטי והתפלגות",
+    "financialAnalysis": "ניתוח פיננסי",
+    "financialDesc": "מגמות מניות וביצועי שוק",
+    "scientificData": "נתונים מדעיים",
+    "scientificDesc": "ניתוח מתאם והתפלגות",
+    "marketingAnalytics": "אנליטיקת שיווק",
+    "marketingDesc": "ביצועי קמפיינים ומדדי המרה",
+    "healthcareReport": "דוחות בריאות",
+    "healthcareDesc": "סטטיסטיקות מטופלים ותוצאות טיפול",
+    "ecommerceAnalytics": "אנליטיקת מסחר אלקטרוני",
+    "ecommerceDesc": "מכירות, התנהגות לקוחות וביצועי מוצרים",
+    "socialMediaAnalytics": "אנליטיקת מדיה חברתית",
+    "socialMediaDesc": "מעורבות, טווח הגעה וצמיחת עוקבים",
+    "popular": "פופולרי",
+    "new": "חדש",
+    "pro": "מקצועי",
+    "advanced": "מתקדם",
+    "trending": "טרנדי",
+    "stats": {
+      "templates": "תבניות",
+      "categories": "קטגוריות",
+      "chartTypes": "סוגי גרפים"
+    }
+  },
+  "settings": {
+    "title": "הגדרות",
+    "subtitle": "התאימו אישית את חוויית GraphForge שלכם",
+    "appearance": "מראה",
+    "darkMode": "מצב כהה",
+    "chartAnimations": "אנימציות גרפים",
+    "showGridLines": "הצגת קווי רשת",
+    "data": "נתונים",
+    "autoSave": "שמירה אוטומטית",
+    "defaultChartType": "סוג גרף ברירת מחדל",
+    "barChart": "גרף עמודות",
+    "lineChart": "גרף קווי",
+    "pieChart": "גרף עוגה",
+    "scatterPlot": "דיאגרמת פיזור",
+    "areaChart": "גרף שטח",
+    "radarChart": "גרף רדאר",
+    "export": "ייצוא",
+    "exportQuality": "איכות ייצוא",
+    "low": "נמוכה (72 DPI)",
+    "medium": "בינונית (150 DPI)",
+    "high": "גבוהה (300 DPI)",
+    "ultra": "אולטרה (600 DPI)",
+    "notifications": "התראות",
+    "enableNotifications": "הפעלת התראות",
+    "language": "שפה",
+    "selectLanguage": "בחירת שפה",
+    "currentLanguage": "שפה נוכחית",
+    "resetAll": "איפוס כל ההגדרות",
+    "resetConfirm": "האם אתם בטוחים שברצונכם לאפס את כל ההגדרות לברירת המחדל?",
+    "version": "גרסה"
+  },
+  "about": {
+    "title": "אודות GraphForge",
+    "subtitle": "חִבְצוּ אֶת הַנְּתוּנִים שֶׁלָּכֶם לְתוֹךְ וִיזוּאָלִים — מַחְשְׁבוֹן גְּרָפִים עָצוּם לְכֻלָּם",
+    "description": "GraphForge הוּא מַחְשְׁבוֹן גְּרָפִים חֲצִי-פְּלַטְפוֹרְמָה עָצוּם הַמַּהֲפֵךְ נְתוּנִים גְּמוּרִים לְוִיזוּאָלִים מִקְצוֹעִיִּים וּמַרְהִיבִים. בֵּין אִם אַתֶּם סְטוּדֶנְטִים, חוֹקְרִים אוֹ אַנְשֵׁי עֲסָקִים, GraphForge הוֹפֵךְ אֶת הָווִיזוּאָלִיזַצְיָה לְפָשׁוּטָה, אִינְטוּאִיטִיבִית וְיָפָה.",
+    "version": "גרסה 1.0.0",
+    "license": "רישיון MIT",
+    "openSource": "קוד פתוח",
+    "keyFeatures": "תכונות עיקריות",
+    "techStack": "ערימת טכנולוגיות",
+    "features": {
+      "chartTypes": "69+ סוגי גרפים",
+      "categories": "5 קטגוריות גרפים",
+      "export": "ייצוא ל-PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "ערכת נושא מקצועית וחמה",
+      "free": "100% חינמי וקוד פתוח"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "גופן Bungee",
+      "inter": "גופן Inter"
+    },
+    "stats": {
+      "chartTypes": "סוגי גרפים",
+      "categories": "קטגוריות",
+      "exportFormats": "פורמטי ייצוא",
+      "free": "חינמי"
+    },
+    "footer": {
+      "builtWith": "נִבְנָה בְּ-❤️ בְּעֶזְרַת React, Recharts, וְ-D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "הַגְּרָף לֹא נִמְצָא",
+    "backToCharts": "חֲזָרָה לַגְּרָפִים",
+    "allCharts": "כָּל הַגְּרָפִים",
+    "exportChart": "📊 יְצוּא הַגְּרָף",
+    "exportTable": "📋 יְצוּא הַטַּבְלָה",
+    "comingSoon": "בְּקָרוֹב"
+  },
+  "footer": {
+    "tagline": "חִבְצוּ אֶת הַנְּתוּנִים שֶׁלָּכֶם לְתוֹךְ וִיזוּאָלִים",
+    "builtWith": "נִבְנָה בְּ-❤️ בְּעֶזְרַת React ו-Recharts"
+  },
+  "splash": {
+    "ready": "מוּכָנִים לְחִבּוּץ!",
+    "loading": "טוֹעֵן אֶת הַגְּרָפִים שֶׁלָּכֶם..."
+  },
+  "common": {
+    "loading": "טוֹעֵן...",
+    "save": "שְׁמִירָה",
+    "cancel": "בִּטּוּל",
+    "delete": "מְחִיקָה",
+    "edit": "עֲרִיכָה",
+    "back": "חֲזָרָה",
+    "next": "הַבָּא",
+    "done": "בּוּצַע",
+    "tagline": "וִיזוּאָלִיזַצְיַת נְתוּנִים נֶעֶשְׂתָה פְּשׁוּטָה"
+  }
+}

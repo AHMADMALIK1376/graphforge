@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "Home",
+    "charts": "Grafici",
+    "templates": "Modelli",
+    "about": "Chi siamo",
+    "settings": "Impostazioni"
+  },
+  "home": {
+    "title": "FORGIA I TUOI DATI",
+    "subtitle": "Scegli tra {{count}} tipi di grafici",
+    "search": "CERCA GRAFICI...",
+    "noCharts": "NESSUN GRAFICO TROVATO"
+  },
+  "templates": {
+    "title": "Modelli",
+    "description": "Modelli di grafici predefiniti per iniziare rapidamente",
+    "comingSoon": "Altri modelli in arrivo",
+    "comingSoonDesc": "Aggiungiamo costantemente nuovi modelli. Resta sintonizzato per gli aggiornamenti!",
+    "all": "TUTTI",
+    "business": "Affari",
+    "academic": "Accademico",
+    "financial": "Finanziario",
+    "scientific": "Scientifico",
+    "marketing": "Marketing",
+    "businessDashboard": "Dashboard Aziendale",
+    "businessDesc": "Metriche di vendite, entrate e crescita",
+    "academicReport": "Rapporto Accademico",
+    "academicDesc": "Analisi di statistiche e distribuzioni",
+    "financialAnalysis": "Analisi Finanziaria",
+    "financialDesc": "Tendenze azionarie e performance di mercato",
+    "scientificData": "Dati Scientifici",
+    "scientificDesc": "Analisi di correlazione e distribuzione",
+    "marketingAnalytics": "Analytics di Marketing",
+    "marketingDesc": "Performance delle campagne e metriche di conversione",
+    "healthcareReport": "Rapporti Sanitari",
+    "healthcareDesc": "Statistiche dei pazienti e risultati dei trattamenti",
+    "ecommerceAnalytics": "Analytics E-Commerce",
+    "ecommerceDesc": "Vendite, comportamento dei clienti e performance dei prodotti",
+    "socialMediaAnalytics": "Analytics dei Social Media",
+    "socialMediaDesc": "Coinvolgimento, portata e crescita dei follower",
+    "popular": "Popolare",
+    "new": "Nuovo",
+    "pro": "Pro",
+    "advanced": "Avanzato",
+    "trending": "Trend",
+    "stats": {
+      "templates": "Modelli",
+      "categories": "Categorie",
+      "chartTypes": "Tipi di Grafici"
+    }
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "subtitle": "Personalizza la tua esperienza GraphForge",
+    "appearance": "Aspetto",
+    "darkMode": "Modalità Scura",
+    "chartAnimations": "Animazioni dei Grafici",
+    "showGridLines": "Mostra Linee della Griglia",
+    "data": "Dati",
+    "autoSave": "Salvataggio Automatico",
+    "defaultChartType": "Tipo di Grafico Predefinito",
+    "barChart": "Grafico a Barre",
+    "lineChart": "Grafico a Linee",
+    "pieChart": "Grafico a Torta",
+    "scatterPlot": "Diagramma a Dispersione",
+    "areaChart": "Grafico ad Area",
+    "radarChart": "Grafico Radar",
+    "export": "Esporta",
+    "exportQuality": "Qualità di Esportazione",
+    "low": "Bassa (72 DPI)",
+    "medium": "Media (150 DPI)",
+    "high": "Alta (300 DPI)",
+    "ultra": "Ultra (600 DPI)",
+    "notifications": "Notifiche",
+    "enableNotifications": "Abilita Notifiche",
+    "language": "Lingua",
+    "selectLanguage": "Seleziona Lingua",
+    "currentLanguage": "Lingua Corrente",
+    "resetAll": "Reimposta Tutte le Impostazioni",
+    "resetConfirm": "Sei sicuro di voler reimpostare tutte le impostazioni ai valori predefiniti?",
+    "version": "Versione"
+  },
+  "about": {
+    "title": "Chi siamo",
+    "subtitle": "Forgia I Tuoi Dati in Visuali — Un potente calcolatore di grafici per tutti",
+    "description": "GraphForge è un potente calcolatore di grafici multipiattaforma che trasforma i dati grezzi in splendide visualizzazioni professionali. Che tu sia uno studente, un ricercatore o un professionista, GraphForge rende la visualizzazione dei dati semplice, intuitiva e bella.",
+    "version": "Versione 1.0.0",
+    "license": "Licenza MIT",
+    "openSource": "Open Source",
+    "keyFeatures": "Caratteristiche Principali",
+    "techStack": "Stack Tecnologico",
+    "features": {
+      "chartTypes": "69+ Tipi di Grafici",
+      "categories": "5 Categorie di Grafici",
+      "export": "Esporta in PNG, SVG, PDF, CSV, JSON, Excel",
+      "theme": "Tema Professionale Caldo",
+      "free": "100% Gratuito e Open Source"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Font Bungee",
+      "inter": "Font Inter"
+    },
+    "stats": {
+      "chartTypes": "Tipi di Grafici",
+      "categories": "Categorie",
+      "exportFormats": "Formati di Esportazione",
+      "free": "Gratuito"
+    },
+    "footer": {
+      "builtWith": "Costruito con ❤️ usando React, Recharts e D3.js"
+    }
+  },
+  "chart": {
+    "notFound": "GRAFICO NON TROVATO",
+    "backToCharts": "TORNA AI GRAFICI",
+    "allCharts": "TUTTI I GRAFICI",
+    "exportChart": "📊 Esporta Grafico",
+    "exportTable": "📋 Esporta Tabella",
+    "comingSoon": "PROSSIMAMENTE"
+  },
+  "footer": {
+    "tagline": "Forgia I Tuoi Dati in Visuali",
+    "builtWith": "Costruito con ❤️ usando React e Recharts"
+  },
+  "splash": {
+    "ready": "Pronto a Forgiare!",
+    "loading": "Caricamento dei tuoi grafici..."
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "back": "Indietro",
+    "next": "Avanti",
+    "done": "Fatto",
+    "tagline": "Visualizzazione Dati Semplificata"
+  }
+}

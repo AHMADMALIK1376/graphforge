@@ -1,0 +1,145 @@
+{
+  "nav": {
+    "home": "홈",
+    "charts": "차트",
+    "templates": "템플릿",
+    "about": "소개",
+    "settings": "설정"
+  },
+  "home": {
+    "title": "데이터를 단조하라",
+    "subtitle": "{{count}}가지 차트 유형 중 선택",
+    "search": "차트 검색...",
+    "noCharts": "차트를 찾을 수 없음"
+  },
+  "templates": {
+    "title": "템플릿",
+    "description": "빠르게 시작할 수 있는 사전 제작 차트 템플릿",
+    "comingSoon": "더 많은 템플릿 곧 제공",
+    "comingSoonDesc": "새로운 템플릿을 지속적으로 추가하고 있습니다. 업데이트를 기다려 주세요!",
+    "all": "모두",
+    "business": "비즈니스",
+    "academic": "학술",
+    "financial": "금융",
+    "scientific": "과학",
+    "marketing": "마케팅",
+    "businessDashboard": "비즈니스 대시보드",
+    "businessDesc": "판매, 수익 및 성장 지표",
+    "academicReport": "학술 보고서",
+    "academicDesc": "통계 및 분포 분석",
+    "financialAnalysis": "재무 분석",
+    "financialDesc": "주식 동향 및 시장 성과",
+    "scientificData": "과학 데이터",
+    "scientificDesc": "상관관계 및 분포 분석",
+    "marketingAnalytics": "마케팅 분석",
+    "marketingDesc": "캠페인 성과 및 전환 지표",
+    "healthcareReport": "의료 보고서",
+    "healthcareDesc": "환자 통계 및 치료 결과",
+    "ecommerceAnalytics": "이커머스 분석",
+    "ecommerceDesc": "판매, 고객 행동 및 제품 성과",
+    "socialMediaAnalytics": "소셜 미디어 분석",
+    "socialMediaDesc": "참여도, 도달률 및 팔로워 성장",
+    "popular": "인기",
+    "new": "신규",
+    "pro": "프로",
+    "advanced": "고급",
+    "trending": "트렌딩",
+    "stats": {
+      "templates": "템플릿",
+      "categories": "카테고리",
+      "chartTypes": "차트 유형"
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "subtitle": "GraphForge 경험을 맞춤화하세요",
+    "appearance": "외관",
+    "darkMode": "다크 모드",
+    "chartAnimations": "차트 애니메이션",
+    "showGridLines": "그리드 라인 표시",
+    "data": "데이터",
+    "autoSave": "자동 저장",
+    "defaultChartType": "기본 차트 유형",
+    "barChart": "막대 차트",
+    "lineChart": "라인 차트",
+    "pieChart": "파이 차트",
+    "scatterPlot": "산점도",
+    "areaChart": "영역 차트",
+    "radarChart": "레이더 차트",
+    "export": "내보내기",
+    "exportQuality": "내보내기 품질",
+    "low": "낮음 (72 DPI)",
+    "medium": "중간 (150 DPI)",
+    "high": "높음 (300 DPI)",
+    "ultra": "울트라 (600 DPI)",
+    "notifications": "알림",
+    "enableNotifications": "알림 활성화",
+    "language": "언어",
+    "selectLanguage": "언어 선택",
+    "currentLanguage": "현재 언어",
+    "resetAll": "모든 설정 재설정",
+    "resetConfirm": "모든 설정을 기본값으로 재설정하시겠습니까?",
+    "version": "버전"
+  },
+  "about": {
+    "title": "GraphForge 소개",
+    "subtitle": "데이터를 비주얼로 단조하세요 — 모두를 위한 강력한 그래프 계산기",
+    "description": "GraphForge는 원시 데이터를 놀라운 전문가용 시각화로 변환하는 강력한 크로스 플랫폼 그래프 계산기입니다. 학생, 연구원, 비즈니스 전문가 모두에게 GraphForge는 데이터 시각화를 간단하고 직관적이며 아름답게 만듭니다.",
+    "version": "버전 1.0.0",
+    "license": "MIT 라이선스",
+    "openSource": "오픈 소스",
+    "keyFeatures": "주요 기능",
+    "techStack": "기술 스택",
+    "features": {
+      "chartTypes": "69+ 차트 유형",
+      "categories": "5개 차트 카테고리",
+      "export": "PNG, SVG, PDF, CSV, JSON, Excel로 내보내기",
+      "theme": "따뜻한 전문 테마",
+      "free": "100% 무료 및 오픈 소스"
+    },
+    "tech": {
+      "react": "React 18",
+      "recharts": "Recharts",
+      "d3": "D3.js",
+      "router": "React Router",
+      "bungee": "Bungee 폰트",
+      "inter": "Inter 폰트"
+    },
+    "stats": {
+      "chartTypes": "차트 유형",
+      "categories": "카테고리",
+      "exportFormats": "내보내기 형식",
+      "free": "무료"
+    },
+    "footer": {
+      "builtWith": "React, Recharts, D3.js로 ❤️를 담아 제작"
+    }
+  },
+  "chart": {
+    "notFound": "차트를 찾을 수 없음",
+    "backToCharts": "차트로 돌아가기",
+    "allCharts": "모든 차트",
+    "exportChart": "📊 차트 내보내기",
+    "exportTable": "📋 테이블 내보내기",
+    "comingSoon": "곧 제공"
+  },
+  "footer": {
+    "tagline": "데이터를 비주얼로 단조하세요",
+    "builtWith": "React와 Recharts로 ❤️를 담아 제작"
+  },
+  "splash": {
+    "ready": "단조할 준비 완료!",
+    "loading": "차트를 불러오는 중..."
+  },
+  "common": {
+    "loading": "불러오는 중...",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "편집",
+    "back": "뒤로",
+    "next": "다음",
+    "done": "완료",
+    "tagline": "간편한 데이터 시각화"
+  }
+}
