@@ -1,13 +1,10 @@
 // src/pages/SettingsPage.jsx
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
+import Layout from "../components/layout/Layout";
 
 const SettingsPage = () => {
   const { t, language, changeLanguage, isRTL } = useLanguage();
-
-  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const [settings, setSettings] = useState({
     darkMode: false,
@@ -19,10 +16,6 @@ const SettingsPage = () => {
     showGridLines: true,
     defaultChartType: "bar",
   });
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   useEffect(() => {
     setSettings((prev) => ({ ...prev, language: language }));
@@ -41,9 +34,6 @@ const SettingsPage = () => {
   const LIGHT_YELLOW = "#F2D24B";
   const WARM_BROWN = "#D4A373";
   const GREEN = "#A9C632";
-
-  // Lighter version of #4A3728 for dropdown text
-  const LIGHTER_TEXT = "#8A7A6A";
 
   const languages = [
     { code: "en", name: "English", native: "English", flag: "🇬🇧" },
@@ -306,144 +296,105 @@ const SettingsPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        background: "#F5EDE0",
-        direction: isRTL ? "rtl" : "ltr",
-      }}
-    >
-      <Header currentPage="settings" />
+    <Layout currentPath="/settings">
+      {/* Header */}
+      <div style={headerStyle}>
+        <h2 style={titleStyle}>⚙️ {t("settings.title") || "Settings"}</h2>
+        <p style={subtitleStyle}>
+          {t("settings.subtitle") ||
+            "Manage your preferences and configurations."}
+        </p>
 
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          paddingTop: "64px",
-        }}
-      >
-        <Sidebar
-          currentPath="/settings"
-          isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
-        />
+        {/* Current Language Display */}
+        <div style={currentLanguageStyle}>
+          <span style={currentLanguageLabel}>
+            {t("settings.currentLanguage") || "Current Language"}:
+          </span>
+          <span style={currentLanguageValue}>
+            {getLanguageDisplay(settings.language)}
+          </span>
+        </div>
+      </div>
 
-        <main
-          style={{
-            flex: 1,
-            padding: "24px",
-            marginLeft: sidebarOpen ? "250px" : "0",
-            overflow: "auto",
-            background: "#F5EDE0",
-            transition: "margin-left 0.3s ease",
-            fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-          }}
-        >
-          {/* Header */}
-          <div style={headerStyle}>
-            <h2 style={titleStyle}>⚙️ {t("settings.title") || "Settings"}</h2>
-            <p style={subtitleStyle}>
-              {t("settings.subtitle") ||
-                "Manage your preferences and configurations."}
-            </p>
+      {/* Settings Cards with Folder Design - Matching TemplatesPage */}
+      <div style={settingsContainer}>
+        {settingsSections.map((section, index) => (
+          <div
+            key={index}
+            style={cardWrapperStyle}
+            onMouseEnter={(e) => {
+              const body = e.currentTarget.querySelector(".folder-body");
+              if (body) {
+                body.style.transform = "translateY(-4px)";
+                body.style.boxShadow = `0 8px 24px ${section.color}60`;
+              }
+            }}
+            onMouseLeave={(e) => {
+              const body = e.currentTarget.querySelector(".folder-body");
+              if (body) {
+                body.style.transform = "translateY(0)";
+                body.style.boxShadow = `0 4px 12px ${section.color}40`;
+              }
+            }}
+          >
+            {/* Folder Tab */}
+            <div style={folderTabStyle(section.color)}>
+              <div style={folderTabDotStyle} />
+              <div style={folderTabDotStyle} />
+              <div style={folderTabDotStyle} />
+            </div>
 
-            {/* Current Language Display */}
-            <div style={currentLanguageStyle}>
-              <span style={currentLanguageLabel}>
-                {t("settings.currentLanguage") || "Current Language"}:
-              </span>
-              <span style={currentLanguageValue}>
-                {getLanguageDisplay(settings.language)}
-              </span>
+            {/* Folder Body */}
+            <div className="folder-body" style={folderBodyStyle(section.color)}>
+              {/* Shine Effect */}
+              <div style={shineStyle} />
+
+              {/* Section Header */}
+              <div style={sectionHeaderStyle}>
+                <span style={sectionIconStyle}>{section.icon}</span>
+                <h3 style={sectionTitleStyle}>{section.title}</h3>
+              </div>
+
+              {/* Settings */}
+              <div style={sectionContentStyle}>
+                {section.settings.map((setting, sIndex) => (
+                  <div
+                    key={sIndex}
+                    style={{
+                      ...settingRowStyle,
+                      borderBottom:
+                        sIndex < section.settings.length - 1
+                          ? "1px solid rgba(255,255,255,0.15)"
+                          : "none",
+                    }}
+                  >
+                    <span style={labelStyle}>{setting.label}</span>
+                    {renderSetting(setting, section.toggleColor)}
+                  </div>
+                ))}
+              </div>
+
+              {/* Folder Lines (decorative) */}
+              <div style={folderLinesStyle}>
+                <div style={{ ...lineStyle, width: "100%" }} />
+                <div style={{ ...lineStyle, width: "70%" }} />
+                <div style={{ ...lineStyle, width: "85%" }} />
+              </div>
             </div>
           </div>
-
-          {/* Settings Cards with Folder Design - Matching TemplatesPage */}
-          <div style={settingsContainer}>
-            {settingsSections.map((section, index) => (
-              <div
-                key={index}
-                style={cardWrapperStyle}
-                onMouseEnter={(e) => {
-                  const body = e.currentTarget.querySelector(".folder-body");
-                  if (body) {
-                    body.style.transform = "translateY(-4px)";
-                    body.style.boxShadow = `0 8px 24px ${section.color}60`;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  const body = e.currentTarget.querySelector(".folder-body");
-                  if (body) {
-                    body.style.transform = "translateY(0)";
-                    body.style.boxShadow = `0 4px 12px ${section.color}40`;
-                  }
-                }}
-              >
-                {/* Folder Tab */}
-                <div style={folderTabStyle(section.color)}>
-                  <div style={folderTabDotStyle} />
-                  <div style={folderTabDotStyle} />
-                  <div style={folderTabDotStyle} />
-                </div>
-
-                {/* Folder Body */}
-                <div
-                  className="folder-body"
-                  style={folderBodyStyle(section.color)}
-                >
-                  {/* Shine Effect */}
-                  <div style={shineStyle} />
-
-                  {/* Section Header */}
-                  <div style={sectionHeaderStyle}>
-                    <span style={sectionIconStyle}>{section.icon}</span>
-                    <h3 style={sectionTitleStyle}>{section.title}</h3>
-                  </div>
-
-                  {/* Settings */}
-                  <div style={sectionContentStyle}>
-                    {section.settings.map((setting, sIndex) => (
-                      <div
-                        key={sIndex}
-                        style={{
-                          ...settingRowStyle,
-                          borderBottom:
-                            sIndex < section.settings.length - 1
-                              ? "1px solid rgba(255,255,255,0.15)"
-                              : "none",
-                        }}
-                      >
-                        <span style={labelStyle}>{setting.label}</span>
-                        {renderSetting(setting, section.toggleColor)}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Folder Lines (decorative) */}
-                  <div style={folderLinesStyle}>
-                    <div style={{ ...lineStyle, width: "100%" }} />
-                    <div style={{ ...lineStyle, width: "70%" }} />
-                    <div style={{ ...lineStyle, width: "85%" }} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div style={footerStyle}>
-            <button onClick={resetAllSettings} style={resetButtonStyle}>
-              ↺ {t("settings.resetAll") || "Reset All"}
-            </button>
-            <span style={versionStyle}>
-              {t("settings.version") || "Version"} 1.0.0
-            </span>
-          </div>
-        </main>
+        ))}
       </div>
-    </div>
+
+      {/* Footer */}
+      <div style={footerStyle}>
+        <button onClick={resetAllSettings} style={resetButtonStyle}>
+          ↺ {t("settings.resetAll") || "Reset All"}
+        </button>
+        <span style={versionStyle}>
+          {t("settings.version") || "Version"} 1.0.0
+        </span>
+      </div>
+    </Layout>
   );
 };
 

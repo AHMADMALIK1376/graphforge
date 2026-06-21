@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { theme, getCategoryColor } from "../styles/theme";
 import { getChartById } from "../utils/chartTypes";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
+import Layout from "../components/layout/Layout";
 import ExportMenu from "../components/common/ExportMenu";
 import { exportChartWithData } from "../utils/exportUtils";
 
@@ -190,13 +189,6 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
   const location = useLocation();
   const { t, language, isRTL } = useLanguage();
 
-  // State for sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   // If chartId is not provided, try to get it from URL
   const getChartIdFromUrl = () => {
     const pathSegments = location.pathname.split("/");
@@ -218,43 +210,17 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
 
   if (!chart) {
     return (
-      <div
-        style={{
-          ...pageStyle,
-          display: "flex",
-          flexDirection: "column",
-          direction: isRTL ? "rtl" : "ltr",
-        }}
-      >
-        <Header />
-        <div style={{ display: "flex", flex: 1, paddingTop: "64px" }}>
-          <Sidebar
-            currentPath="/charts"
-            isOpen={sidebarOpen}
-            onToggle={toggleSidebar}
-          />
-          <main
-            style={{
-              flex: 1,
-              marginLeft: sidebarOpen ? "250px" : "0",
-              transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-              overflow: "auto",
-              background: "#F5EDE0",
-              minHeight: "calc(100vh - 64px)",
-            }}
-          >
-            <div style={errorStyle}>
-              <span style={{ fontSize: "48px" }}>⚠</span>
-              <p style={{ color: theme.colors.text.muted }}>
-                {t("chart.notFound") || "CHART NOT FOUND"}
-              </p>
-              <button onClick={handleBack} style={backBtnStyle}>
-                ← {t("chart.backToCharts") || "BACK TO CHARTS"}
-              </button>
-            </div>
-          </main>
+      <Layout currentPath="/charts">
+        <div style={errorStyle}>
+          <span style={{ fontSize: "48px" }}>⚠</span>
+          <p style={{ color: theme.colors.text.muted }}>
+            {t("chart.notFound") || "CHART NOT FOUND"}
+          </p>
+          <button onClick={handleBack} style={backBtnStyle}>
+            ← {t("chart.backToCharts") || "BACK TO CHARTS"}
+          </button>
         </div>
-      </div>
+      </Layout>
     );
   }
 
@@ -262,191 +228,146 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
   const ChartComponent = chartComponents[effectiveChartId];
 
   return (
-    <div
-      style={{
-        ...pageStyle,
-        display: "flex",
-        flexDirection: "column",
-        direction: isRTL ? "rtl" : "ltr",
-      }}
-    >
-      <Header currentPage="charts" />
-
-      {/* Main Content Area with Sidebar */}
-      <div style={{ display: "flex", flex: 1, paddingTop: "64px" }}>
-        <Sidebar
-          currentPath="/charts"
-          isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
-        />
-
-        <main
+    <Layout currentPath="/charts">
+      {/* Breadcrumb Navigation */}
+      <div style={breadcrumbStyle}>
+        <button onClick={handleBack} style={backLinkStyle}>
+          ← {t("chart.allCharts") || "ALL CHARTS"}
+        </button>
+        <span style={separatorStyle}>/</span>
+        <span
           style={{
-            flex: 1,
-            marginLeft: sidebarOpen ? "250px" : "0",
-            transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-            overflow: "auto",
-            background: "#F5EDE0",
-            minHeight: "calc(100vh - 64px)",
-            padding: "0",
+            color: "#8A7A6A",
+            fontSize: "11px",
+            letterSpacing: "1px",
           }}
         >
-          <div style={contentStyle}>
-            {/* Breadcrumb Navigation */}
-            <div style={breadcrumbStyle}>
-              <button onClick={handleBack} style={backLinkStyle}>
-                ← {t("chart.allCharts") || "ALL CHARTS"}
-              </button>
-              <span style={separatorStyle}>/</span>
-              <span
-                style={{
-                  color: "#8A7A6A",
-                  fontSize: "11px",
-                  letterSpacing: "1px",
-                }}
-              >
-                {chart.categoryName}
-              </span>
-              <span style={separatorStyle}>/</span>
-              <span
-                style={{
-                  color: "#4A3728",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  letterSpacing: "1px",
-                }}
-              >
-                {chart.name.toUpperCase()}
-              </span>
-            </div>
-
-            {/* Info Bar */}
-            <div style={infoBarStyle}>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
-              >
-                <span style={{ fontSize: "28px" }}>{chart.icon}</span>
-                <div>
-                  <h2
-                    style={{
-                      color: "#4A3728",
-                      fontSize: "18px",
-                      fontWeight: 700,
-                      letterSpacing: "2px",
-                      margin: 0,
-                    }}
-                  >
-                    {chart.name.toUpperCase()}
-                  </h2>
-                  <div
-                    style={{ display: "flex", gap: "8px", marginTop: "6px" }}
-                  >
-                    <span
-                      style={{
-                        color:
-                          chart.difficulty === "easy"
-                            ? "#4CAF50"
-                            : chart.difficulty === "medium"
-                              ? "#FFF3A0"
-                              : "#D15F55",
-                        border: "1px solid #D4C4AE",
-                        padding: "2px 8px",
-                        fontSize: "9px",
-                        letterSpacing: "2px",
-                        borderRadius: "2px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {chart.difficulty.toUpperCase()}
-                    </span>
-                    <span
-                      style={{
-                        color: categoryColor,
-                        border: `1px solid ${categoryColor}50`,
-                        padding: "2px 8px",
-                        fontSize: "9px",
-                        letterSpacing: "2px",
-                        borderRadius: "2px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {chart.categoryName.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Export Controls */}
-              <div
-                style={{ display: "flex", gap: "8px", alignItems: "center" }}
-              >
-                <ExportMenu
-                  type="chart"
-                  label={t("chart.exportChart") || "📊 Export Chart"}
-                  formats={["png", "svg", "pdf"]}
-                  onExport={(format) => {
-                    exportChartWithData(
-                      "chart-visual-area",
-                      [],
-                      format,
-                      chart?.name?.toLowerCase() + "_chart" || "chart",
-                    );
-                  }}
-                />
-                <ExportMenu
-                  type="data"
-                  label={t("chart.exportTable") || "📋 Export Table"}
-                  formats={["png", "svg", "pdf", "csv", "json", "excel"]}
-                  onExport={(format) => {
-                    if (["csv", "json", "excel"].includes(format)) {
-                      exportChartWithData(
-                        "chart-data-table",
-                        [],
-                        format,
-                        chart?.name?.toLowerCase() + "_data" || "data",
-                      );
-                    } else {
-                      exportChartWithData(
-                        "chart-data-table",
-                        [],
-                        format,
-                        chart?.name?.toLowerCase() + "_table" || "table",
-                      );
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Chart Component */}
-            {ChartComponent ? (
-              <ChartComponent />
-            ) : (
-              <div style={comingSoonStyle}>
-                <span style={{ fontSize: "48px" }}>🚧</span>
-                <p style={{ color: "#8A7A6A", letterSpacing: "1px" }}>
-                  {chart.name.toUpperCase()} -{" "}
-                  {t("chart.comingSoon") || "COMING SOON"}
-                </p>
-              </div>
-            )}
-          </div>
-        </main>
+          {chart.categoryName}
+        </span>
+        <span style={separatorStyle}>/</span>
+        <span
+          style={{
+            color: "#4A3728",
+            fontSize: "11px",
+            fontWeight: 700,
+            letterSpacing: "1px",
+          }}
+        >
+          {chart.name.toUpperCase()}
+        </span>
       </div>
-    </div>
+
+      {/* Info Bar */}
+      <div style={infoBarStyle}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span style={{ fontSize: "28px" }}>{chart.icon}</span>
+          <div>
+            <h2
+              style={{
+                color: "#4A3728",
+                fontSize: "18px",
+                fontWeight: 700,
+                letterSpacing: "2px",
+                margin: 0,
+              }}
+            >
+              {chart.name.toUpperCase()}
+            </h2>
+            <div style={{ display: "flex", gap: "8px", marginTop: "6px" }}>
+              <span
+                style={{
+                  color:
+                    chart.difficulty === "easy"
+                      ? "#4CAF50"
+                      : chart.difficulty === "medium"
+                        ? "#FFF3A0"
+                        : "#D15F55",
+                  border: "1px solid #D4C4AE",
+                  padding: "2px 8px",
+                  fontSize: "9px",
+                  letterSpacing: "2px",
+                  borderRadius: "2px",
+                  fontWeight: 600,
+                }}
+              >
+                {chart.difficulty.toUpperCase()}
+              </span>
+              <span
+                style={{
+                  color: categoryColor,
+                  border: `1px solid ${categoryColor}50`,
+                  padding: "2px 8px",
+                  fontSize: "9px",
+                  letterSpacing: "2px",
+                  borderRadius: "2px",
+                  fontWeight: 600,
+                }}
+              >
+                {chart.categoryName.toUpperCase()}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Export Controls */}
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <ExportMenu
+            type="chart"
+            label={t("chart.exportChart") || "📊 Export Chart"}
+            formats={["png", "svg", "pdf"]}
+            onExport={(format) => {
+              exportChartWithData(
+                "chart-visual-area",
+                [],
+                format,
+                chart?.name?.toLowerCase() + "_chart" || "chart",
+              );
+            }}
+          />
+          <ExportMenu
+            type="data"
+            label={t("chart.exportTable") || "📋 Export Table"}
+            formats={["png", "svg", "pdf", "csv", "json", "excel"]}
+            onExport={(format) => {
+              if (["csv", "json", "excel"].includes(format)) {
+                exportChartWithData(
+                  "chart-data-table",
+                  [],
+                  format,
+                  chart?.name?.toLowerCase() + "_data" || "data",
+                );
+              } else {
+                exportChartWithData(
+                  "chart-data-table",
+                  [],
+                  format,
+                  chart?.name?.toLowerCase() + "_table" || "table",
+                );
+              }
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Chart Component */}
+      {ChartComponent ? (
+        <ChartComponent />
+      ) : (
+        <div style={comingSoonStyle}>
+          <span style={{ fontSize: "48px" }}>🚧</span>
+          <p style={{ color: "#8A7A6A", letterSpacing: "1px" }}>
+            {chart.name.toUpperCase()} -{" "}
+            {t("chart.comingSoon") || "COMING SOON"}
+          </p>
+        </div>
+      )}
+    </Layout>
   );
 };
 
 // ============================================
 // STYLES
 // ============================================
-const pageStyle = {
-  background: "#F5EDE0",
-  minHeight: "100vh",
-  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-};
-
-const contentStyle = { padding: "0" };
 
 const errorStyle = {
   textAlign: "center",
@@ -461,6 +382,7 @@ const breadcrumbStyle = {
   background: "#FFFFFF",
   borderBottom: "1px solid #D4C4AE",
   boxShadow: "0 2px 8px rgba(180, 160, 140, 0.08)",
+  marginBottom: "0",
 };
 
 const backLinkStyle = {
@@ -487,6 +409,7 @@ const infoBarStyle = {
   alignItems: "center",
   justifyContent: "space-between",
   boxShadow: "0 2px 8px rgba(180, 160, 140, 0.06)",
+  marginBottom: "16px",
 };
 
 const backBtnStyle = {

@@ -2,18 +2,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
+import Layout from "../components/layout/Layout";
 
 const TemplatesPage = () => {
   const navigate = useNavigate();
   const { t, language, isRTL } = useLanguage();
-
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   // Color palette based on provided codes
   const AEGEAN_BLUE = "#0077C8";
@@ -21,9 +14,6 @@ const TemplatesPage = () => {
   const LIGHT_YELLOW = "#F2D24B";
   const WARM_BROWN = "#D4A373";
   const GREEN = "#A9C632";
-
-  // Lighter version of #4A3728 for numbers
-  const LIGHTER_TEXT = "#8A7A6A";
 
   const templates = [
     {
@@ -130,170 +120,130 @@ const TemplatesPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        background: "#F5EDE0",
-        fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-        direction: isRTL ? "rtl" : "ltr",
-      }}
-    >
-      <Header currentPage="templates" />
-
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          paddingTop: "64px",
-        }}
-      >
-        <Sidebar
-          currentPath="/templates"
-          isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
-        />
-
-        <main
-          style={{
-            flex: 1,
-            padding: "24px",
-            marginLeft: sidebarOpen ? "250px" : "0",
-            transition: "margin-left 0.3s ease",
-            overflow: "auto",
-            background: "#F5EDE0",
-          }}
-        >
-          <div style={contentStyle}>
-            {/* Header */}
-            <div style={headerStyle}>
-              <h2 style={titleStyle}>
-                📁 {t("templates.title") || "Templates"}
-              </h2>
-              <p style={textStyle}>
-                {t("templates.description") ||
-                  "Start quickly with pre-built chart combinations."}
-              </p>
-              <div style={statsStyle}>
-                <span style={statItemStyle}>
-                  <span style={statNumberStyle}>{templates.length}</span>
-                  <span style={statLabelStyle}>
-                    {t("templates.stats.templates") || "Templates"}
-                  </span>
-                </span>
-                <span style={statDividerStyle}>|</span>
-                <span style={statItemStyle}>
-                  <span style={statNumberStyle}>5</span>
-                  <span style={statLabelStyle}>
-                    {t("templates.stats.categories") || "Categories"}
-                  </span>
-                </span>
-                <span style={statDividerStyle}>|</span>
-                <span style={statItemStyle}>
-                  <span style={statNumberStyle}>30+</span>
-                  <span style={statLabelStyle}>
-                    {t("templates.stats.chartTypes") || "Chart Types"}
-                  </span>
-                </span>
-              </div>
-            </div>
-
-            {/* Templates Grid - Folder Design (matching ChartCard) */}
-            <div style={gridStyle}>
-              {templates.map((template, index) => {
-                const folderColor = template.color;
-
-                return (
-                  <div
-                    key={index}
-                    style={cardWrapperStyle}
-                    onClick={() => handleTemplateClick(template.id)}
-                    onMouseEnter={(e) => {
-                      const body =
-                        e.currentTarget.querySelector(".folder-body");
-                      if (body) {
-                        body.style.transform = "translateY(-4px)";
-                        body.style.boxShadow = `0 8px 24px ${folderColor}60`;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      const body =
-                        e.currentTarget.querySelector(".folder-body");
-                      if (body) {
-                        body.style.transform = "translateY(0)";
-                        body.style.boxShadow = `0 4px 12px ${folderColor}40`;
-                      }
-                    }}
-                  >
-                    {/* Folder Tab */}
-                    <div style={folderTabStyle(folderColor)}>
-                      <div style={folderTabDotStyle} />
-                      <div style={folderTabDotStyle} />
-                      <div style={folderTabDotStyle} />
-                    </div>
-
-                    {/* Folder Body */}
-                    <div
-                      className="folder-body"
-                      style={folderBodyStyle(folderColor)}
-                    >
-                      {/* Shine Effect */}
-                      <div style={shineStyle} />
-
-                      {/* Icon */}
-                      <span style={iconStyle}>{template.icon}</span>
-
-                      {/* Title */}
-                      <h3 style={cardTitleStyle}>{template.title}</h3>
-
-                      {/* Description */}
-                      <p style={cardTextStyle}>{template.description}</p>
-
-                      {/* Category Badge */}
-                      <span style={categoryStyle(folderColor)}>
-                        {template.category}
-                      </span>
-
-                      {/* Chart Types Preview */}
-                      <div style={chartTypesStyle}>
-                        {template.charts.map((chart, i) => (
-                          <span key={i} style={chartTagStyle}>
-                            {chart}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Tag (Popular, New, Pro, etc.) */}
-                      <div style={tagStyle(folderColor)}>{template.tag}</div>
-
-                      {/* Folder Lines (decorative) */}
-                      <div style={folderLinesStyle}>
-                        <div style={{ ...lineStyle, width: "100%" }} />
-                        <div style={{ ...lineStyle, width: "70%" }} />
-                        <div style={{ ...lineStyle, width: "85%" }} />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Coming Soon Section */}
-            <div style={comingSoonStyle}>
-              <span style={comingSoonIconStyle}>🚀</span>
-              <h3 style={comingSoonTitleStyle}>
-                {t("templates.comingSoon") || "More Templates Coming Soon"}
-              </h3>
-              <p style={comingSoonTextStyle}>
-                {t("templates.comingSoonDesc") ||
-                  "We're constantly adding new templates. Stay tuned for updates!"}
-              </p>
-            </div>
+    <Layout currentPath="/templates">
+      <div style={contentStyle}>
+        {/* Header */}
+        <div style={headerStyle}>
+          <h2 style={titleStyle}>📁 {t("templates.title") || "Templates"}</h2>
+          <p style={textStyle}>
+            {t("templates.description") ||
+              "Start quickly with pre-built chart combinations."}
+          </p>
+          <div style={statsStyle}>
+            <span style={statItemStyle}>
+              <span style={statNumberStyle}>{templates.length}</span>
+              <span style={statLabelStyle}>
+                {t("templates.stats.templates") || "Templates"}
+              </span>
+            </span>
+            <span style={statDividerStyle}>|</span>
+            <span style={statItemStyle}>
+              <span style={statNumberStyle}>5</span>
+              <span style={statLabelStyle}>
+                {t("templates.stats.categories") || "Categories"}
+              </span>
+            </span>
+            <span style={statDividerStyle}>|</span>
+            <span style={statItemStyle}>
+              <span style={statNumberStyle}>30+</span>
+              <span style={statLabelStyle}>
+                {t("templates.stats.chartTypes") || "Chart Types"}
+              </span>
+            </span>
           </div>
-        </main>
+        </div>
+
+        {/* Templates Grid - Folder Design (matching ChartCard) */}
+        <div style={gridStyle}>
+          {templates.map((template, index) => {
+            const folderColor = template.color;
+
+            return (
+              <div
+                key={index}
+                style={cardWrapperStyle}
+                onClick={() => handleTemplateClick(template.id)}
+                onMouseEnter={(e) => {
+                  const body = e.currentTarget.querySelector(".folder-body");
+                  if (body) {
+                    body.style.transform = "translateY(-4px)";
+                    body.style.boxShadow = `0 8px 24px ${folderColor}60`;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const body = e.currentTarget.querySelector(".folder-body");
+                  if (body) {
+                    body.style.transform = "translateY(0)";
+                    body.style.boxShadow = `0 4px 12px ${folderColor}40`;
+                  }
+                }}
+              >
+                {/* Folder Tab */}
+                <div style={folderTabStyle(folderColor)}>
+                  <div style={folderTabDotStyle} />
+                  <div style={folderTabDotStyle} />
+                  <div style={folderTabDotStyle} />
+                </div>
+
+                {/* Folder Body */}
+                <div
+                  className="folder-body"
+                  style={folderBodyStyle(folderColor)}
+                >
+                  {/* Shine Effect */}
+                  <div style={shineStyle} />
+
+                  {/* Icon */}
+                  <span style={iconStyle}>{template.icon}</span>
+
+                  {/* Title */}
+                  <h3 style={cardTitleStyle}>{template.title}</h3>
+
+                  {/* Description */}
+                  <p style={cardTextStyle}>{template.description}</p>
+
+                  {/* Category Badge */}
+                  <span style={categoryStyle(folderColor)}>
+                    {template.category}
+                  </span>
+
+                  {/* Chart Types Preview */}
+                  <div style={chartTypesStyle}>
+                    {template.charts.map((chart, i) => (
+                      <span key={i} style={chartTagStyle}>
+                        {chart}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Tag (Popular, New, Pro, etc.) */}
+                  <div style={tagStyle(folderColor)}>{template.tag}</div>
+
+                  {/* Folder Lines (decorative) */}
+                  <div style={folderLinesStyle}>
+                    <div style={{ ...lineStyle, width: "100%" }} />
+                    <div style={{ ...lineStyle, width: "70%" }} />
+                    <div style={{ ...lineStyle, width: "85%" }} />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Coming Soon Section */}
+        <div style={comingSoonStyle}>
+          <span style={comingSoonIconStyle}>🚀</span>
+          <h3 style={comingSoonTitleStyle}>
+            {t("templates.comingSoon") || "More Templates Coming Soon"}
+          </h3>
+          <p style={comingSoonTextStyle}>
+            {t("templates.comingSoonDesc") ||
+              "We're constantly adding new templates. Stay tuned for updates!"}
+          </p>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
@@ -340,7 +290,7 @@ const statItemStyle = {
 };
 
 const statNumberStyle = {
-  color: "#8A7A6A", // Lighter version of #4A3728
+  color: "#8A7A6A",
   fontSize: "18px",
   fontWeight: 700,
 };

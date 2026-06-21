@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -30,8 +31,10 @@ body {
   font-family: "Bungee", "Bungee Inline", "Bungee Shade", cursive;
   color: #5c4a3a;
   min-height: 100vh;
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* ==============================================
@@ -40,10 +43,87 @@ body {
 
 .App {
   min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: #f5ede0;
   color: #5c4a3a;
+}
+
+/* ==============================================
+   FIXED HEADER & SIDEBAR - CRITICAL FIX
+   ============================================== */
+
+/* Fixed Header - stays at top */
+.navbar-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  height: 64px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #d4c4ae !important;
+  box-shadow: 0 2px 8px rgba(180, 160, 140, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 28px !important;
+}
+
+/* Fixed Sidebar - stays below header */
+.sidebar-fixed {
+  position: fixed !important;
+  top: 64px !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  z-index: 200 !important;
+  background: #ffffff !important;
+  border-right: 1px solid #d4c4ae !important;
+  box-shadow: 2px 0 8px rgba(180, 160, 140, 0.06) !important;
+  overflow: hidden !important;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease !important;
+}
+
+/* ==============================================
+   PAGE LAYOUT CONTAINERS
+   ============================================== */
+
+/* Page wrapper - provides space for fixed header */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 64px; /* Space for fixed header */
+  background: #f5ede0;
+}
+
+/* Page body - contains sidebar + main content */
+.page-body {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 64px);
+  background: #f5ede0;
+}
+
+/* Main content area */
+.page-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: #f5ede0;
+  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - 64px);
+}
+
+.page-main-with-sidebar {
+  margin-left: 240px;
+}
+
+.page-main-no-sidebar {
+  margin-left: 0;
 }
 
 /* ==============================================
@@ -405,6 +485,10 @@ textarea:focus {
   .hide-on-tablet {
     display: none !important;
   }
+
+  .page-main-with-sidebar {
+    margin-left: 0 !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -419,6 +503,14 @@ textarea:focus {
   .gap-sm-mobile {
     gap: 8px !important;
   }
+
+  .navbar-fixed {
+    padding: 0 16px !important;
+  }
+
+  .sidebar-fixed {
+    width: 200px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -432,6 +524,29 @@ textarea:focus {
 
   .m-sm-mobile {
     margin: 8px !important;
+  }
+
+  .navbar-fixed {
+    padding: 0 12px !important;
+    height: 56px !important;
+  }
+
+  .sidebar-fixed {
+    top: 56px !important;
+    width: 180px !important;
+  }
+
+  .page-wrapper {
+    padding-top: 56px !important;
+  }
+
+  .page-body {
+    min-height: calc(100vh - 56px) !important;
+  }
+
+  .page-main {
+    min-height: calc(100vh - 56px) !important;
+    padding: 16px !important;
   }
 }
 
@@ -509,6 +624,27 @@ textarea:focus {
 
   .no-print {
     display: none !important;
+  }
+
+  .navbar-fixed {
+    position: relative !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #d1d5db !important;
+  }
+
+  .sidebar-fixed {
+    position: relative !important;
+    top: 0 !important;
+    border-right: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+  }
+
+  .page-wrapper {
+    padding-top: 0 !important;
+  }
+
+  .page-main-with-sidebar {
+    margin-left: 0 !important;
   }
 
   .card {

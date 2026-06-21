@@ -36,6 +36,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 // PAGES (Lazy loaded for better performance)
 // ==============================================
 const HomePage = lazy(() => import("./pages/HomePage"));
+const ChartListPage = lazy(() => import("./pages/ChartListPage"));
 const ChartPage = lazy(() => import("./pages/ChartPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
@@ -99,7 +100,29 @@ function HomeWrapper() {
     navigate(`/chart/${chartId}`);
   };
 
-  return <HomePage onSelectChart={handleSelectChart} />;
+  const handleNavigateToCharts = () => {
+    navigate("/charts");
+  };
+
+  return (
+    <HomePage
+      onSelectChart={handleSelectChart}
+      onNavigateToCharts={handleNavigateToCharts}
+    />
+  );
+}
+
+// ==============================================
+// CHART LIST WRAPPER - Handles navigation to individual charts
+// ==============================================
+function ChartListWrapper() {
+  const navigate = useNavigate();
+
+  const handleSelectChart = (chartId) => {
+    navigate(`/chart/${chartId}`);
+  };
+
+  return <ChartListPage onSelectChart={handleSelectChart} />;
 }
 
 // ==============================================
@@ -112,6 +135,7 @@ function App() {
   // PRELOAD BUNDLES IN THE BACKGROUND
   useEffect(() => {
     import("./pages/HomePage");
+    import("./pages/ChartListPage");
     import("./pages/ChartPage");
     import("./pages/AboutPage");
     import("./pages/TemplatesPage");
@@ -161,6 +185,7 @@ function App() {
                         element={<Navigate to="/home" replace />}
                       />
                       <Route path="/home" element={<HomeWrapper />} />
+                      <Route path="/charts" element={<ChartListWrapper />} />
                       <Route path="/about" element={<AboutPage />} />
                       <Route
                         path="/chart/:chartId?"
