@@ -1,5 +1,6 @@
 // src/components/layout/Splash.jsx
 import React, { useState, useEffect } from "react";
+import FolderButton from "../common/FolderButton";
 import { useLanguage } from "../../context/LanguageContext";
 import logo from "../../assets/logos/Graphforgelogos.png";
 
@@ -170,7 +171,7 @@ const Splash = ({ onComplete }) => {
     left: "0",
     right: "0",
     height: "8px",
-    background: AEGEAN_BLUE,
+    background: "#D4C4AE",
     borderRadius: "3px 3px 0 0",
     display: "flex",
     alignItems: "center",
@@ -187,20 +188,23 @@ const Splash = ({ onComplete }) => {
   };
 
   const skipButtonStyle = {
-    padding: "8px 16px",
-    background: AEGEAN_BLUE + "15",
-    border: `1px solid ${AEGEAN_BLUE}50`,
-    borderRadius: "0 0 4px 4px",
-    color: AEGEAN_BLUE,
+    padding: "10px 18px",
+    background: "#FFFFFF",
+    border: "2px solid #D4C4AE",
+    borderRadius: "0 4px 4px 4px",
+    color: "#4A3728",
     cursor: "pointer",
-    fontSize: "11px",
-    fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
-    fontWeight: 700,
+    fontSize: "12px",
     letterSpacing: "1px",
     textTransform: "uppercase",
     transition: "all 0.2s ease",
     backdropFilter: "blur(10px)",
     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+    fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "120px",
   };
 
   // ============================================
@@ -247,25 +251,13 @@ const Splash = ({ onComplete }) => {
     <div style={splashContainer}>
       {/* ===== FOLDER STYLE SKIP BUTTON ===== */}
       <div style={skipButtonWrapperStyle}>
-        <div style={skipTabStyle}>
-          <span style={skipDotStyle} />
-          <span style={skipDotStyle} />
-          <span style={skipDotStyle} />
-        </div>
-        <button
+        <FolderButton
           onClick={onComplete}
-          style={skipButtonStyle}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = AEGEAN_BLUE + "25";
-            e.currentTarget.style.transform = "scale(1.02)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = AEGEAN_BLUE + "15";
-            e.currentTarget.style.transform = "scale(1)";
-          }}
+          baseColor={CORAL_PINK}
+          bodyStyle={{ width: "auto" }}
         >
           Skip →
-        </button>
+        </FolderButton>
       </div>
 
       {/* ===== DOT INDICATORS ===== */}

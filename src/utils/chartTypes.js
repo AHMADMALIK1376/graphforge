@@ -7,7 +7,7 @@ export const CHART_CATEGORIES = {
   comparison: {
     id: "comparison",
     label: "📊 Comparison",
-    color: "#58a6ff",
+    color: "#0077C8",
     description: "Compare values across categories",
     charts: {
       barChart: {
@@ -148,7 +148,7 @@ export const CHART_CATEGORIES = {
   correlation: {
     id: "correlation",
     label: "🔗 Correlation",
-    color: "#3fb950",
+    color: "#F88379",
     description: "Show relationships between variables",
     charts: {
       heatmap: {
@@ -193,7 +193,7 @@ export const CHART_CATEGORIES = {
   partToWhole: {
     id: "partToWhole",
     label: "🥧 Part-to-Whole",
-    color: "#f85149",
+    color: "#F2D24B",
     description: "Show composition and hierarchy",
     charts: {
       stackedBar: {
@@ -310,7 +310,7 @@ export const CHART_CATEGORIES = {
   temporal: {
     id: "temporal",
     label: "⏳ Temporal",
-    color: "#a371f7",
+    color: "#D4A373",
     description: "Show data over time",
     charts: {
       area: {
@@ -391,7 +391,7 @@ export const CHART_CATEGORIES = {
   distribution: {
     id: "distribution",
     label: "📉 Distribution",
-    color: "#d29922",
+    color: "#A9C632",
     description: "Show data spread and frequency",
     charts: {
       density: {

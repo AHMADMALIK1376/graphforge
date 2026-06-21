@@ -32,40 +32,73 @@ const Layout = ({ children }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "100vh",
+        height: "100vh",
+        width: "100%",
+        overflow: "hidden",
         background: "#F5EDE0",
         color: "#5C4A3A",
         fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
         direction: isRTL ? "rtl" : "ltr",
-        paddingTop: "64px", // Height of fixed header
+        position: "relative",
       }}
     >
+      {/* Force global overrides */}
+      <style>{`
+        html, body, #root {
+          margin: 0 !important;
+          padding: 0 !important;
+          height: 100vh !important;
+          max-height: 100vh !important;
+          overflow: hidden !important;
+        }
+      `}</style>
+
+      {/* Fixed Header */}
       <Header currentPage={currentPage} />
+
+      {/* Body Container */}
       <div
         style={{
           display: "flex",
           flex: 1,
+          marginTop: "64px",
+          height: "calc(100vh - 64px)",
+          minHeight: 0,
+          overflow: "hidden",
         }}
       >
+        {/* Sidebar */}
         <Sidebar
           currentPath={location.pathname}
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
         />
+
+        {/* Scrollable Content */}
         <main
           style={{
             flex: 1,
-            padding: "24px",
-            marginLeft: sidebarOpen ? "0" : "0",
-            overflow: "auto",
+            padding: "24px 32px",
+            marginLeft: sidebarOpen ? "240px" : "0px",
+            overflowY: "auto",
+            overflowX: "hidden",
             background: "#F5EDE0",
-            transition: "margin-left 0.3s ease",
+            transition: "margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+            height: "100%",
           }}
         >
-          {children || <Outlet />}
+          <div
+            style={{
+              minHeight: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ flex: 1 }}>{children || <Outlet />}</div>
+            <Footer />
+          </div>
         </main>
       </div>
-      <Footer />
     </div>
   );
 };

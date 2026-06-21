@@ -1,49 +1,48 @@
 // src/components/layout/Sidebar.jsx
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import FolderButton from "../common/FolderButton";
 import { useLanguage } from "../../context/LanguageContext";
-import AnalogClock from "../common/AnalogClock";
 
 const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
   const { t } = useLanguage();
 
-  // Alternating colors: Blue, Pink, Blue, Pink, Blue...
+  // Track currently hovered item path to sync tab and body colors cleanly
+  const [hoveredPath, setHoveredPath] = useState(null);
+
+  // Alternating themes: Blue, Pink, Blue, Pink, Blue... (Emojis removed)
   const navItems = [
     {
       path: "/home",
       label: t("nav.home"),
-      icon: "🏠",
       color: "#0077C8", // Aegean Blue
     },
     {
-      path: "/chart",
+      path: "/charts",
       label: t("nav.charts"),
-      icon: "📊",
       color: "#F88379", // Coral Pink
     },
     {
       path: "/templates",
       label: t("nav.templates"),
-      icon: "📁",
       color: "#0077C8", // Aegean Blue
     },
     {
       path: "/about",
       label: t("nav.about"),
-      icon: "ℹ️",
       color: "#F88379", // Coral Pink
     },
     {
       path: "/settings",
       label: t("nav.settings"),
-      icon: "⚙️",
       color: "#0077C8", // Aegean Blue
     },
   ];
 
   const isActive = (path) => {
-    if (path === "/chart") {
-      return currentPath.startsWith("/chart");
+    if (path === "/charts") {
+      return (
+        currentPath.startsWith("/charts") || currentPath.startsWith("/chart")
+      );
     }
     return currentPath === path;
   };
@@ -115,7 +114,7 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
           pointerEvents: isOpen ? "auto" : "none",
         }}
       >
-        {/* Custom Scrollbar Styles */}
+        {/* Custom Scrollbar and Base Utilities */}
         <style>{`
           .nav-scroll-container {
             scrollbar-width: thin;
@@ -168,7 +167,6 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
             animation: slideIn 0.25s ease forwards;
           }
 
-          /* Added Hover styles for the toggle buttons to match inactive tabs */
           .sidebar-folder-btn:hover, .sidebar-toggle-floating:hover {
             background: #F5EDE0 !important;
             border-color: #B0A090 !important;
@@ -178,27 +176,31 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
 
         {/* Sidebar Content Wrapper */}
         <div style={sidebarWrapperStyle}>
-          {/* Sidebar Header with Toggle Button and Analog Clock */}
+          {/* Sidebar Header with Toggle Button */}
           <div style={sidebarHeaderStyle}>
-            {/* Close Button - Inside sidebar when open */}
-            <div style={closeButtonWrapperStyle}>
-              <div style={closeFolderTabStyle}>
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
+            <div style={headerTopRowStyle}>
+              {/* Close Button - Folder style */}
+              <div style={closeButtonWrapperStyle}>
+                <div style={closeFolderTabStyle}>
+                  <div style={folderTabDotStyle} />
+                  <div style={folderTabDotStyle} />
+                  <div style={folderTabDotStyle} />
+                </div>
+                <button
+                  onClick={onToggle}
+                  style={closeFolderBodyStyle}
+                  aria-label="Close sidebar"
+                  className="sidebar-folder-btn"
+                >
+                  <ArrowLeftIcon />
+                </button>
               </div>
-              <button
-                onClick={onToggle}
-                style={closeFolderBodyStyle}
-                aria-label="Close sidebar"
-                className="sidebar-folder-btn"
-              >
-                <ArrowLeftIcon />
-              </button>
-            </div>
 
-            {/* Analog Clock */}
-            <AnalogClock />
+              {/* Brand Text (Emoji Cleaned) */}
+              <div style={brandTextStyle}>
+                <span style={brandNameStyle}>GraphForge</span>
+              </div>
+            </div>
           </div>
 
           {/* Divider */}
@@ -209,56 +211,17 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
             <nav style={navStyle}>
               {navItems.map((item) => {
                 const active = isActive(item.path);
-                const color = item.color;
-
                 return (
                   <div key={item.path} style={navItemWrapperStyle}>
-                    {/* Folder Tab */}
-                    <div
-                      style={folderTabStyle(active, active ? color : "#D4C4AE")}
-                    >
-                      <div style={folderTabDotStyle} />
-                      <div style={folderTabDotStyle} />
-                      <div style={folderTabDotStyle} />
-                    </div>
-                    {/* Folder Body */}
-                    <Link
+                    <FolderButton
                       to={item.path}
-                      style={{
-                        ...folderBodyStyle(active, color),
-                        color: active ? "#FFFFFF" : "#8A7A6A",
-                        background: active
-                          ? `linear-gradient(135deg, ${color}dd, ${color}99)`
-                          : "#FFFFFF",
-                        borderColor: active ? color : "#D4C4AE",
-                        fontWeight: active ? 600 : 400,
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!active) {
-                          e.currentTarget.style.background = "#F5EDE0";
-                          e.currentTarget.style.borderColor = "#B0A090";
-                          e.currentTarget.style.color = "#4A3728";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!active) {
-                          e.currentTarget.style.background = "#FFFFFF";
-                          e.currentTarget.style.borderColor = "#D4C4AE";
-                          e.currentTarget.style.color = "#8A7A6A";
-                        }
-                      }}
+                      baseColor={item.color}
+                      active={active}
+                      showDot={active}
+                      bodyStyle={{ width: "100%" }}
                     >
-                      <span style={iconStyle}>{item.icon}</span>
-                      {isOpen && <span style={labelStyle}>{item.label}</span>}
-                      {active && isOpen && (
-                        <span
-                          style={{
-                            ...dotStyle,
-                            background: color,
-                          }}
-                        />
-                      )}
-                    </Link>
+                      {item.label}
+                    </FolderButton>
                   </div>
                 );
               })}
@@ -289,7 +252,7 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
 // STYLES
 // ============================================
 
-// Floating Button (Closed Sidebar) - Styled exactly like inactive folder
+// Floating Button (Closed Sidebar)
 const floatingWrapperStyle = {
   position: "fixed",
   top: "76px",
@@ -303,8 +266,8 @@ const floatingFolderTabStyle = {
   top: "-6px",
   left: "0",
   height: "6px",
-  width: "50%",
-  background: "#D4C4AE", // Matches inactive folder tab
+  width: "40%",
+  background: "#D4C4AE",
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",
@@ -317,22 +280,21 @@ const floatingFolderBodyStyle = {
   alignItems: "center",
   justifyContent: "center",
   padding: "6px 8px",
-  background: "#FFFFFF", // Matches inactive folder background
-  border: "1px solid #D4C4AE", // Matches inactive folder border
+  background: "#FFFFFF",
+  border: "1px solid #D4C4AE",
   borderRadius: "0 4px 4px 4px",
   cursor: "pointer",
   transition: "all 0.25s ease",
-  color: "#8A7A6A", // Matches chart text color
+  color: "#8A7A6A",
   width: "32px",
   height: "32px",
   boxShadow: "none",
 };
 
-// Close Button (Open Sidebar) - Styled exactly like inactive folder
+// Close Button (Open Sidebar)
 const closeButtonWrapperStyle = {
   position: "relative",
-  marginTop: "6px",
-  alignSelf: "flex-start",
+  flexShrink: 0,
 };
 
 const closeFolderTabStyle = {
@@ -340,8 +302,8 @@ const closeFolderTabStyle = {
   top: "-6px",
   left: "0",
   height: "6px",
-  width: "50%",
-  background: "#D4C4AE", // Matches inactive folder tab
+  width: "40%",
+  background: "#D4C4AE",
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",
@@ -354,12 +316,12 @@ const closeFolderBodyStyle = {
   alignItems: "center",
   justifyContent: "center",
   padding: "6px 8px",
-  background: "#FFFFFF", // Matches inactive folder background
-  border: "1px solid #D4C4AE", // Matches inactive folder border
+  background: "#FFFFFF",
+  border: "1px solid #D4C4AE",
   borderRadius: "0 4px 4px 4px",
   cursor: "pointer",
   transition: "all 0.25s ease",
-  color: "#8A7A6A", // Matches chart text color
+  color: "#8A7A6A",
   width: "32px",
   height: "32px",
   boxShadow: "none",
@@ -392,16 +354,39 @@ const sidebarWrapperStyle = {
   height: "100%",
 };
 
-const sidebarHeaderStyle = {
+// Header Styles
+const headerTopRowStyle = {
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
-  padding: "12px 16px 12px 16px",
+  gap: "12px",
+  width: "100%",
+};
+
+const brandTextStyle = {
+  display: "flex",
+  alignItems: "center",
+  paddingLeft: "4px",
+  flex: 1,
+};
+
+const brandNameStyle = {
+  fontSize: "14px",
+  fontWeight: 700,
+  color: "#4A3728",
+  letterSpacing: "2px",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
+};
+
+const sidebarHeaderStyle = {
+  display: "flex",
   flexDirection: "column",
+  alignItems: "center",
   gap: "8px",
+  padding: "12px 16px 8px 16px",
   flexShrink: 0,
 };
 
+// Other Styles
 const dividerStyle = {
   height: "1px",
   background: "#E8DCC8",
@@ -430,41 +415,34 @@ const navItemWrapperStyle = {
   marginTop: "8px",
 };
 
-const folderTabStyle = (isActive, color) => ({
+const folderTabStyle = (bgColor) => ({
   position: "absolute",
   top: "-8px",
   left: "0",
   height: "8px",
-  width: "50%",
-  background: color,
+  width: "40%",
+  background: bgColor,
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",
   padding: "0 8px",
   gap: "2px",
+  transition: "background 0.2s ease",
 });
 
-const folderBodyStyle = (isActive, color) => ({
+const folderBodyStyle = {
   display: "flex",
   alignItems: "center",
   gap: "12px",
-  padding: "10px 14px",
+  padding: "10px 18px",
   textDecoration: "none",
   borderRadius: "0 4px 4px 4px",
-  border: "1px solid #D4C4AE",
-  transition: "all 0.15s ease",
+  border: "2px solid",
+  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   fontSize: "13px",
   letterSpacing: "1px",
   fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-  boxShadow: isActive ? `0 4px 12px ${color}40` : "none",
   position: "relative",
-});
-
-const iconStyle = {
-  fontSize: "18px",
-  width: "28px",
-  textAlign: "center",
-  flexShrink: 0,
 };
 
 const labelStyle = {

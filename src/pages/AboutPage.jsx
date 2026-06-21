@@ -1,19 +1,10 @@
 // src/pages/AboutPage.jsx
-import React, { useState } from "react";
+import React from "react";
 import { useLanguage } from "../context/LanguageContext";
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
-import Footer from "../components/layout/Footer";
+import Layout from "../components/layout/Layout";
 
 const AboutPage = () => {
   const { t, language, isRTL } = useLanguage();
-
-  // State for sidebar
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   // Color palette matching TemplatesPage
   const AEGEAN_BLUE = "#0077C8";
@@ -58,239 +49,198 @@ const AboutPage = () => {
   ];
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        background: "#F5EDE0",
-        fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-        direction: isRTL ? "rtl" : "ltr",
-      }}
-    >
-      {/* Header */}
-      <Header currentPage="about" />
+    <Layout currentPath="/about">
+      <div style={contentStyle}>
+        {/* Header */}
+        <div style={headerStyle}>
+          <h1 style={titleStyle}>
+            📊 {t("about.title") || "About GraphForge"}
+          </h1>
+          <p style={subtitleStyle}>
+            {t("about.subtitle") ||
+              "Forge Your Data Into Visuals — A powerful graph calculator for everyone"}
+          </p>
+        </div>
 
-      {/* Main Content Area with Sidebar */}
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          paddingTop: "64px",
-        }}
-      >
-        <Sidebar
-          currentPath="/about"
-          isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
-        />
-
-        <main
-          style={{
-            flex: 1,
-            padding: "40px 24px",
-            marginLeft: sidebarOpen ? "250px" : "0",
-            transition: "margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-            overflow: "auto",
-            background: "#F5EDE0",
-            minHeight: "calc(100vh - 64px)",
+        {/* Description - Folder Design with gradient */}
+        <div
+          style={cardWrapperStyle}
+          onMouseEnter={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(-4px)";
+              body.style.boxShadow = `0 8px 24px ${AEGEAN_BLUE}60`;
+            }
+          }}
+          onMouseLeave={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(0)";
+              body.style.boxShadow = `0 4px 12px ${AEGEAN_BLUE}40`;
+            }
           }}
         >
-          <div style={contentStyle}>
-            {/* Header */}
-            <div style={headerStyle}>
-              <h1 style={titleStyle}>
-                📊 {t("about.title") || "About GraphForge"}
-              </h1>
-              <p style={subtitleStyle}>
-                {t("about.subtitle") ||
-                  "Forge Your Data Into Visuals — A powerful graph calculator for everyone"}
-              </p>
+          <div style={folderTabStyle(AEGEAN_BLUE)}>
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+          </div>
+          <div className="folder-body" style={folderBodyStyle(AEGEAN_BLUE)}>
+            {/* Shine Effect */}
+            <div style={shineStyle} />
+
+            <p style={descriptionStyle}>
+              {t("about.description") ||
+                "GraphForge is a powerful, cross-platform graph calculator that transforms raw data into stunning professional visualizations. Whether you're a student, researcher, or business professional, GraphForge makes data visualization simple, intuitive, and beautiful."}
+            </p>
+            <div style={badgeContainerStyle}>
+              <span style={badgeStyle}>
+                🚀 {t("about.version") || "Version 1.0.0"}
+              </span>
+              <span style={badgeStyle}>
+                📦 {t("about.license") || "MIT License"}
+              </span>
+              <span style={badgeStyle}>
+                🌐 {t("about.openSource") || "Open Source"}
+              </span>
             </div>
 
-            {/* Description - Folder Design with gradient */}
-            <div
-              style={cardWrapperStyle}
-              onMouseEnter={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(-4px)";
-                  body.style.boxShadow = `0 8px 24px ${AEGEAN_BLUE}60`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(0)";
-                  body.style.boxShadow = `0 4px 12px ${AEGEAN_BLUE}40`;
-                }
-              }}
-            >
-              <div style={folderTabStyle(AEGEAN_BLUE)}>
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-              </div>
-              <div className="folder-body" style={folderBodyStyle(AEGEAN_BLUE)}>
-                {/* Shine Effect */}
-                <div style={shineStyle} />
-
-                <p style={descriptionStyle}>
-                  {t("about.description") ||
-                    "GraphForge is a powerful, cross-platform graph calculator that transforms raw data into stunning professional visualizations. Whether you're a student, researcher, or business professional, GraphForge makes data visualization simple, intuitive, and beautiful."}
-                </p>
-                <div style={badgeContainerStyle}>
-                  <span style={badgeStyle}>
-                    🚀 {t("about.version") || "Version 1.0.0"}
-                  </span>
-                  <span style={badgeStyle}>
-                    📦 {t("about.license") || "MIT License"}
-                  </span>
-                  <span style={badgeStyle}>
-                    🌐 {t("about.openSource") || "Open Source"}
-                  </span>
-                </div>
-
-                {/* Folder Lines (decorative) */}
-                <div style={folderLinesStyle}>
-                  <div style={{ ...lineStyle, width: "100%" }} />
-                  <div style={{ ...lineStyle, width: "70%" }} />
-                  <div style={{ ...lineStyle, width: "85%" }} />
-                </div>
-              </div>
-            </div>
-
-            {/* Key Features - Folder Design with gradient */}
-            <div
-              style={cardWrapperStyle}
-              onMouseEnter={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(-4px)";
-                  body.style.boxShadow = `0 8px 24px ${CORAL_PINK}60`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(0)";
-                  body.style.boxShadow = `0 4px 12px ${CORAL_PINK}40`;
-                }
-              }}
-            >
-              <div style={folderTabStyle(CORAL_PINK)}>
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-              </div>
-              <div className="folder-body" style={folderBodyStyle(CORAL_PINK)}>
-                {/* Shine Effect */}
-                <div style={shineStyle} />
-
-                <h3 style={sectionTitleStyle}>
-                  <span style={sectionIconStyle}>✨</span>{" "}
-                  {t("about.keyFeatures") || "Key Features"}
-                </h3>
-                <div style={featuresGridStyle}>
-                  {features.map((feature, index) => (
-                    <div key={index} style={featureItemStyle(feature.color)}>
-                      <span style={featureIconStyle}>{feature.icon}</span>
-                      <span style={featureTextStyle}>{feature.text}</span>
-                      <span style={featureTagStyle(feature.color)}>
-                        {feature.tag}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Folder Lines (decorative) */}
-                <div style={folderLinesStyle}>
-                  <div style={{ ...lineStyle, width: "100%" }} />
-                  <div style={{ ...lineStyle, width: "70%" }} />
-                  <div style={{ ...lineStyle, width: "85%" }} />
-                </div>
-              </div>
-            </div>
-
-            {/* Stats - Folder Design with gradient */}
-            <div
-              style={cardWrapperStyle}
-              onMouseEnter={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(-4px)";
-                  body.style.boxShadow = `0 8px 24px ${GREEN}60`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const body = e.currentTarget.querySelector(".folder-body");
-                if (body) {
-                  body.style.transform = "translateY(0)";
-                  body.style.boxShadow = `0 4px 12px ${GREEN}40`;
-                }
-              }}
-            >
-              <div style={folderTabStyle(GREEN)}>
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-                <div style={folderTabDotStyle} />
-              </div>
-              <div className="folder-body" style={folderBodyStyle(GREEN)}>
-                {/* Shine Effect */}
-                <div style={shineStyle} />
-
-                <div style={statsContainerStyle}>
-                  <div style={statCardStyle}>
-                    <span style={statNumberStyle}>69+</span>
-                    <span style={statLabelStyle}>
-                      {t("about.stats.chartTypes") || "Chart Types"}
-                    </span>
-                  </div>
-                  <div style={statCardStyle}>
-                    <span style={statNumberStyle}>5</span>
-                    <span style={statLabelStyle}>
-                      {t("about.stats.categories") || "Categories"}
-                    </span>
-                  </div>
-                  <div style={statCardStyle}>
-                    <span style={statNumberStyle}>6</span>
-                    <span style={statLabelStyle}>
-                      {t("about.stats.exportFormats") || "Export Formats"}
-                    </span>
-                  </div>
-                  <div style={statCardStyle}>
-                    <span style={statNumberStyle}>100%</span>
-                    <span style={statLabelStyle}>
-                      {t("about.stats.free") || "Free"}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Folder Lines (decorative) */}
-                <div style={folderLinesStyle}>
-                  <div style={{ ...lineStyle, width: "100%" }} />
-                  <div style={{ ...lineStyle, width: "70%" }} />
-                  <div style={{ ...lineStyle, width: "85%" }} />
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div style={footerStyle}>
-              <p style={footerTextStyle}>
-                {t("about.footer.builtWith") ||
-                  "Built with ❤️ using React, Recharts, and D3.js"}
-              </p>
-              <p style={footerVersionStyle}>
-                {t("about.version") || "Version 1.0.0"}
-              </p>
+            {/* Folder Lines (decorative) */}
+            <div style={folderLinesStyle}>
+              <div style={{ ...lineStyle, width: "100%" }} />
+              <div style={{ ...lineStyle, width: "70%" }} />
+              <div style={{ ...lineStyle, width: "85%" }} />
             </div>
           </div>
-        </main>
-      </div>
+        </div>
 
-      <Footer />
-    </div>
+        {/* Key Features - Folder Design with gradient */}
+        <div
+          style={cardWrapperStyle}
+          onMouseEnter={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(-4px)";
+              body.style.boxShadow = `0 8px 24px ${CORAL_PINK}60`;
+            }
+          }}
+          onMouseLeave={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(0)";
+              body.style.boxShadow = `0 4px 12px ${CORAL_PINK}40`;
+            }
+          }}
+        >
+          <div style={folderTabStyle(CORAL_PINK)}>
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+          </div>
+          <div className="folder-body" style={folderBodyStyle(CORAL_PINK)}>
+            {/* Shine Effect */}
+            <div style={shineStyle} />
+
+            <h3 style={sectionTitleStyle}>
+              <span style={sectionIconStyle}>✨</span>{" "}
+              {t("about.keyFeatures") || "Key Features"}
+            </h3>
+            <div style={featuresGridStyle}>
+              {features.map((feature, index) => (
+                <div key={index} style={featureItemStyle(feature.color)}>
+                  <span style={featureIconStyle}>{feature.icon}</span>
+                  <span style={featureTextStyle}>{feature.text}</span>
+                  <span style={featureTagStyle(feature.color)}>
+                    {feature.tag}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Folder Lines (decorative) */}
+            <div style={folderLinesStyle}>
+              <div style={{ ...lineStyle, width: "100%" }} />
+              <div style={{ ...lineStyle, width: "70%" }} />
+              <div style={{ ...lineStyle, width: "85%" }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Stats - Folder Design with gradient */}
+        <div
+          style={cardWrapperStyle}
+          onMouseEnter={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(-4px)";
+              body.style.boxShadow = `0 8px 24px ${GREEN}60`;
+            }
+          }}
+          onMouseLeave={(e) => {
+            const body = e.currentTarget.querySelector(".folder-body");
+            if (body) {
+              body.style.transform = "translateY(0)";
+              body.style.boxShadow = `0 4px 12px ${GREEN}40`;
+            }
+          }}
+        >
+          <div style={folderTabStyle(GREEN)}>
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+            <div style={folderTabDotStyle} />
+          </div>
+          <div className="folder-body" style={folderBodyStyle(GREEN)}>
+            {/* Shine Effect */}
+            <div style={shineStyle} />
+
+            <div style={statsContainerStyle}>
+              <div style={statCardStyle}>
+                <span style={statNumberStyle}>69+</span>
+                <span style={statLabelStyle}>
+                  {t("about.stats.chartTypes") || "Chart Types"}
+                </span>
+              </div>
+              <div style={statCardStyle}>
+                <span style={statNumberStyle}>5</span>
+                <span style={statLabelStyle}>
+                  {t("about.stats.categories") || "Categories"}
+                </span>
+              </div>
+              <div style={statCardStyle}>
+                <span style={statNumberStyle}>6</span>
+                <span style={statLabelStyle}>
+                  {t("about.stats.exportFormats") || "Export Formats"}
+                </span>
+              </div>
+              <div style={statCardStyle}>
+                <span style={statNumberStyle}>100%</span>
+                <span style={statLabelStyle}>
+                  {t("about.stats.free") || "Free"}
+                </span>
+              </div>
+            </div>
+
+            {/* Folder Lines (decorative) */}
+            <div style={folderLinesStyle}>
+              <div style={{ ...lineStyle, width: "100%" }} />
+              <div style={{ ...lineStyle, width: "70%" }} />
+              <div style={{ ...lineStyle, width: "85%" }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div style={footerStyle}>
+          <p style={footerTextStyle}>
+            {t("about.footer.builtWith") ||
+              "Built with ❤️ using React, Recharts, and D3.js"}
+          </p>
+          <p style={footerVersionStyle}>
+            {t("about.version") || "Version 1.0.0"}
+          </p>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
