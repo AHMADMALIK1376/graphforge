@@ -117,7 +117,7 @@ const ChartListPage = ({ onSelectChart }) => {
           <div style={filterContainerStyle}>
             <FolderButton
               onClick={() => handleSetCategory("all")}
-              baseColor={activeCategory === "all" ? "#D41F26" : "#A8DCF0"}
+              baseColor={activeCategory === "all" ? "#D41F26" : "#D41F26"}
               active={activeCategory === "all"}
             >
               📂 ALL [{allCharts.length}]
@@ -210,7 +210,7 @@ const filterTabStyle = (cat, isActive) => ({
   width: "30%",
   maxWidth: "200px",
   height: "10px",
-  background: isActive ? "#A8DCF0" : "#D4C4AE",
+  background: isActive ? "#D41F26" : "#D4C4AE",
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",

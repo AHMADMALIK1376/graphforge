@@ -167,10 +167,15 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
             animation: slideIn 0.25s ease forwards;
           }
 
-          .sidebar-folder-btn:hover, .sidebar-toggle-floating:hover {
-            background: #F5EDE0 !important;
-            border-color: #B0A090 !important;
-            color: #4A3728 !important;
+          .sidebar-folder-btn:hover {
+            background: #0077C8 !important;
+            border-color: #0077C8 !important;
+            color: #FFFFFF !important;
+          }
+          .sidebar-toggle-floating:hover {
+            background: #F88379 !important;
+            border-color: #F88379 !important;
+            color: #FFFFFF !important;
           }
         `}</style>
 

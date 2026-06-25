@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useState, lazy, Suspense, useEffect } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import {
   BrowserRouter,
@@ -35,12 +35,12 @@ import { LanguageProvider } from "./context/LanguageContext";
 // ==============================================
 // PAGES (Lazy loaded for better performance)
 // ==============================================
-const HomePage = lazy(() => import("./pages/HomePage"));
-const ChartListPage = lazy(() => import("./pages/ChartListPage"));
-const ChartPage = lazy(() => import("./pages/ChartPage"));
-const AboutPage = lazy(() => import("./pages/AboutPage"));
-const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
-const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const HomePage = React.lazy(() => import("./pages/HomePage"));
+const ChartListPage = React.lazy(() => import("./pages/ChartListPage"));
+const ChartPage = React.lazy(() => import("./pages/ChartPage"));
+const AboutPage = React.lazy(() => import("./pages/AboutPage"));
+const TemplatesPage = React.lazy(() => import("./pages/TemplatesPage"));
+const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
 
 // ==============================================
 // SCROLL TO TOP COMPONENT
@@ -82,11 +82,13 @@ function ChartWrapper() {
   };
 
   return (
-    <ChartPage
-      chartId={selectedChartId}
-      onBack={handleBackToHome}
-      onSelectChart={handleSelectChart}
-    />
+    <Suspense fallback={<PageLoader />}>
+      <ChartPage
+        chartId={selectedChartId}
+        onBack={handleBackToHome}
+        onSelectChart={handleSelectChart}
+      />
+    </Suspense>
   );
 }
 
@@ -105,10 +107,12 @@ function HomeWrapper() {
   };
 
   return (
-    <HomePage
-      onSelectChart={handleSelectChart}
-      onNavigateToCharts={handleNavigateToCharts}
-    />
+    <Suspense fallback={<PageLoader />}>
+      <HomePage
+        onSelectChart={handleSelectChart}
+        onNavigateToCharts={handleNavigateToCharts}
+      />
+    </Suspense>
   );
 }
 
@@ -122,7 +126,11 @@ function ChartListWrapper() {
     navigate(`/chart/${chartId}`);
   };
 
-  return <ChartListPage onSelectChart={handleSelectChart} />;
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <ChartListPage onSelectChart={handleSelectChart} />
+    </Suspense>
+  );
 }
 
 // ==============================================
@@ -134,12 +142,22 @@ function App() {
 
   // PRELOAD BUNDLES IN THE BACKGROUND
   useEffect(() => {
-    import("./pages/HomePage");
-    import("./pages/ChartListPage");
-    import("./pages/ChartPage");
-    import("./pages/AboutPage");
-    import("./pages/TemplatesPage");
-    import("./pages/SettingsPage");
+    // Preload all pages for smoother navigation
+    const preloadPages = async () => {
+      try {
+        await Promise.allSettled([
+          import("./pages/HomePage"),
+          import("./pages/ChartListPage"),
+          import("./pages/ChartPage"),
+          import("./pages/AboutPage"),
+          import("./pages/TemplatesPage"),
+          import("./pages/SettingsPage"),
+        ]);
+      } catch (error) {
+        console.warn("Page preloading completed with some warnings");
+      }
+    };
+    preloadPages();
   }, []);
 
   // Handle splash screen completion
@@ -186,13 +204,34 @@ function App() {
                       />
                       <Route path="/home" element={<HomeWrapper />} />
                       <Route path="/charts" element={<ChartListWrapper />} />
-                      <Route path="/about" element={<AboutPage />} />
+                      <Route
+                        path="/about"
+                        element={
+                          <Suspense fallback={<PageLoader />}>
+                            <AboutPage />
+                          </Suspense>
+                        }
+                      />
                       <Route
                         path="/chart/:chartId?"
                         element={<ChartWrapper />}
                       />
-                      <Route path="/templates" element={<TemplatesPage />} />
-                      <Route path="/settings" element={<SettingsPage />} />
+                      <Route
+                        path="/templates"
+                        element={
+                          <Suspense fallback={<PageLoader />}>
+                            <TemplatesPage />
+                          </Suspense>
+                        }
+                      />
+                      <Route
+                        path="/settings"
+                        element={
+                          <Suspense fallback={<PageLoader />}>
+                            <SettingsPage />
+                          </Suspense>
+                        }
+                      />
                       <Route path="*" element={<ErrorBoundaryRoute />} />
                     </Routes>
                   </Suspense>

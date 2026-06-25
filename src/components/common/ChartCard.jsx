@@ -9,6 +9,7 @@ const categoryFolderColors = {
   partToWhole: "#F2D24B", // Light Yellow
   temporal: "#D4A373", // Warm Brown
   distribution: "#A9C632", // Tea Mist (NEW)
+  geospatial: "#D41F26", // New geospatial category color requested
 };
 
 const ChartCard = ({ chart, onClick }) => {

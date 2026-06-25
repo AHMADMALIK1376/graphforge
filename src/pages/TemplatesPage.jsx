@@ -3,116 +3,45 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import Layout from "../components/layout/Layout";
+import businessDashboard from "../templates/businessDashboardTemplate";
+import academicReport from "../templates/academicReportTemplate";
+import financialAnalysis from "../templates/financialAnalysisTemplate";
+import scientificData from "../templates/scientificDataTemplate";
+import marketingAnalytics from "../templates/marketingAnalyticsTemplate";
+import healthcareReport from "../templates/healthcareReportTemplate";
+import ecommerceDashboard from "../templates/ecommerceDashboardTemplate";
+import socialMediaAnalytics from "../templates/socialMediaAnalyticsTemplate";
+import TemplateCard from "../templates/TemplateCard";
 
 const TemplatesPage = () => {
   const navigate = useNavigate();
   const { t, language, isRTL } = useLanguage();
 
-  // Color palette based on provided codes
-  const AEGEAN_BLUE = "#0077C8";
-  const CORAL_PINK = "#F88379";
-  const LIGHT_YELLOW = "#F2D24B";
-  const WARM_BROWN = "#D4A373";
-  const GREEN = "#A9C632";
-
   const templates = [
-    {
-      id: "business-dashboard",
-      icon: "📊",
-      title: t("templates.businessDashboard") || "Business Dashboard",
-      description:
-        t("templates.businessDesc") ||
-        "Comprehensive view of key business metrics.",
-      color: AEGEAN_BLUE,
-      category: "Business",
-      charts: ["Bar Chart", "Line Chart", "Area Chart"],
-      tag: t("templates.popular") || "Popular",
-    },
-    {
-      id: "academic-report",
-      icon: "📚",
-      title: t("templates.academicReport") || "Academic Report",
-      description:
-        t("templates.academicDesc") ||
-        "Standard visualizations for research papers.",
-      color: CORAL_PINK,
-      category: "Academic",
-      charts: ["Histogram", "Box Plot", "Scatter Plot"],
-      tag: t("templates.new") || "New",
-    },
-    {
-      id: "financial-analysis",
-      icon: "💰",
-      title: t("templates.financialAnalysis") || "Financial Analysis",
-      description:
-        t("templates.financialDesc") ||
-        "Deep dive into financial markets and trends.",
-      color: LIGHT_YELLOW,
-      category: "Financial",
-      charts: ["Candlestick", "OHLC", "Volume Chart"],
-      tag: t("templates.pro") || "Pro",
-    },
-    {
-      id: "scientific-data",
-      icon: "🔬",
-      title: t("templates.scientificData") || "Scientific Data",
-      description:
-        t("templates.scientificDesc") ||
-        "Complex multi-variable scientific data visualization.",
-      color: GREEN,
-      category: "Scientific",
-      charts: ["Heatmap", "Contour Plot", "Density Plot"],
-      tag: t("templates.advanced") || "Advanced",
-    },
-    {
-      id: "marketing-analytics",
-      icon: "📈",
-      title: t("templates.marketingAnalytics") || "Marketing Analytics",
-      description:
-        t("templates.marketingDesc") ||
-        "Track campaign performance and user journeys.",
-      color: AEGEAN_BLUE,
-      category: "Marketing",
-      charts: ["Pie Chart", "Funnel", "Radar Chart"],
-      tag: t("templates.popular") || "Popular",
-    },
-    {
-      id: "healthcare-report",
-      icon: "🏥",
-      title: t("templates.healthcareReport") || "Healthcare Report",
-      description:
-        t("templates.healthcareDesc") ||
-        "Patient metrics and resource allocation dashboards.",
-      color: CORAL_PINK,
-      category: "Healthcare",
-      charts: ["Gantt Chart", "Timeline", "Box Plot"],
-      tag: t("templates.new") || "New",
-    },
-    {
-      id: "ecommerce-dashboard",
-      icon: "🛒",
-      title: t("templates.ecommerceAnalytics") || "E-Commerce Dashboard",
-      description:
-        t("templates.ecommerceDesc") ||
-        "Sales, inventory, and customer behavior tracking.",
-      color: LIGHT_YELLOW,
-      category: "E-Commerce",
-      charts: ["Waterfall", "Stacked Bar", "Bubble Chart"],
-      tag: t("templates.trending") || "Trending",
-    },
-    {
-      id: "social-media-analytics",
-      icon: "📱",
-      title: t("templates.socialMediaAnalytics") || "Social Media Analytics",
-      description:
-        t("templates.socialMediaDesc") ||
-        "Engagement, reach, and demographic insights.",
-      color: AEGEAN_BLUE,
-      category: "Social Media",
-      charts: ["Line Chart", "Area Chart", "Radar Chart"],
-      tag: t("templates.popular") || "Popular",
-    },
-  ];
+    businessDashboard,
+    academicReport,
+    financialAnalysis,
+    scientificData,
+    marketingAnalytics,
+    healthcareReport,
+    ecommerceDashboard,
+    socialMediaAnalytics,
+  ].map((tpl) => ({
+    ...tpl,
+    // allow translations from context if available
+    title:
+      t && typeof t === "function"
+        ? t(`templates.${tpl.id}`) || tpl.title
+        : tpl.title,
+    description:
+      t && typeof t === "function"
+        ? t(`templates.${tpl.id}Desc`) || tpl.description
+        : tpl.description,
+    tag:
+      t && typeof t === "function"
+        ? t(`templates.${tpl.id}Tag`) || tpl.tag
+        : tpl.tag,
+  }));
 
   const handleTemplateClick = (templateId) => {
     console.log(`Opening template: ${templateId}`);
@@ -155,80 +84,13 @@ const TemplatesPage = () => {
 
         {/* Templates Grid - Folder Design (matching ChartCard) */}
         <div style={gridStyle}>
-          {templates.map((template, index) => {
-            const folderColor = template.color;
-
-            return (
-              <div
-                key={index}
-                style={cardWrapperStyle}
-                onClick={() => handleTemplateClick(template.id)}
-                onMouseEnter={(e) => {
-                  const body = e.currentTarget.querySelector(".folder-body");
-                  if (body) {
-                    body.style.transform = "translateY(-4px)";
-                    body.style.boxShadow = `0 8px 24px ${folderColor}60`;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  const body = e.currentTarget.querySelector(".folder-body");
-                  if (body) {
-                    body.style.transform = "translateY(0)";
-                    body.style.boxShadow = `0 4px 12px ${folderColor}40`;
-                  }
-                }}
-              >
-                {/* Folder Tab */}
-                <div style={folderTabStyle(folderColor)}>
-                  <div style={folderTabDotStyle} />
-                  <div style={folderTabDotStyle} />
-                  <div style={folderTabDotStyle} />
-                </div>
-
-                {/* Folder Body */}
-                <div
-                  className="folder-body"
-                  style={folderBodyStyle(folderColor)}
-                >
-                  {/* Shine Effect */}
-                  <div style={shineStyle} />
-
-                  {/* Icon */}
-                  <span style={iconStyle}>{template.icon}</span>
-
-                  {/* Title */}
-                  <h3 style={cardTitleStyle}>{template.title}</h3>
-
-                  {/* Description */}
-                  <p style={cardTextStyle}>{template.description}</p>
-
-                  {/* Category Badge */}
-                  <span style={categoryStyle(folderColor)}>
-                    {template.category}
-                  </span>
-
-                  {/* Chart Types Preview */}
-                  <div style={chartTypesStyle}>
-                    {template.charts.map((chart, i) => (
-                      <span key={i} style={chartTagStyle}>
-                        {chart}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Tag (Popular, New, Pro, etc.) */}
-                  <div style={tagStyle(folderColor)}>{template.tag}</div>
-
-                  {/* Folder Lines (decorative) */}
-                  <div style={folderLinesStyle}>
-                    <div style={{ ...lineStyle, width: "100%" }} />
-                    <div style={{ ...lineStyle, width: "70%" }} />
-                    <div style={{ ...lineStyle, width: "85%" }} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {templates.map((template) => (
+            <TemplateCard
+              key={template.id}
+              template={template}
+              onClick={(id) => handleTemplateClick(id)}
+            />
+          ))}
         </div>
 
         {/* Coming Soon Section */}

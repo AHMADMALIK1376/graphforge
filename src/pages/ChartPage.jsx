@@ -98,87 +98,175 @@ import GanttChartComponent from "../components/charts/temporal/GanttChart";
 import BarcodeChartComponent from "../components/charts/temporal/BarcodeChart";
 
 // ============================================
-// CHART COMPONENT MAP - ALL 69 CHARTS
+// GEOSPATIAL & OTHER CHARTS - 8 Charts (Teal/Cyan)
 // ============================================
+import GeographicHeatmapComponent from "../components/charts/geospatial/GeographicHeatmap";
+import ChoroplethMapComponent from "../components/charts/geospatial/ChoroplethMap";
+import TileMapComponent from "../components/charts/geospatial/TileMap";
+import ChordDiagramComponent from "../components/charts/geospatial/ChordDiagram";
+import ArcDiagramComponent from "../components/charts/geospatial/ArcDiagram";
+import SankeyDiagramComponent from "../components/charts/geospatial/SankeyDiagram";
+import NetworkDiagramComponent from "../components/charts/geospatial/NetworkDiagram";
+import FlowchartComponent from "../components/charts/geospatial/Flowchart";
+
+// ============================================
+// FALLBACK COMPONENT FOR BROKEN CHARTS
+// ============================================
+const ChartError = ({ name, error }) => (
+  <div
+    style={{
+      padding: "60px 40px",
+      textAlign: "center",
+      background: "#1a1a2e",
+      borderRadius: "8px",
+      margin: "16px",
+    }}
+  >
+    <span style={{ fontSize: "48px" }}>🔧</span>
+    <h3 style={{ color: "#f59e0b", marginTop: "16px", marginBottom: "8px" }}>
+      Chart Error: {name}
+    </h3>
+    <p
+      style={{
+        color: "#f87171",
+        fontSize: "13px",
+        maxWidth: "500px",
+        margin: "0 auto",
+      }}
+    >
+      {error?.message || "Unknown error loading chart component"}
+    </p>
+    <p style={{ color: "#64748b", fontSize: "11px", marginTop: "16px" }}>
+      Check the browser console for more details.
+    </p>
+  </div>
+);
+
+// ============================================
+// CHART COMPONENT MAP - ALL 77 CHARTS
+// Wrap each component in error boundary
+// ============================================
+const wrapComponent = (Component, chartName) => {
+  if (!Component)
+    return () => (
+      <ChartError
+        name={chartName}
+        error={{ message: "Component is undefined" }}
+      />
+    );
+  return Component;
+};
+
 const chartComponents = {
   // Comparison (22)
-  barChart: BarChartComponent,
-  columnChart: ColumnChartComponent,
-  groupedBar: GroupedBarChartComponent,
-  lollipop: LollipopChartComponent,
-  bullet: BulletChartComponent,
-  dotPlot: DotPlotComponent,
-  dumbbell: DumbbellChartComponent,
-  pictogram: PictogramChartComponent,
-  iconChart: IconChartComponent,
-  rangeChart: RangeChartComponent,
-  radialBar: RadialBarChartComponent,
-  parallelCoordinates: ParallelCoordinatesComponent,
-  radar: RadarChartComponent,
-  nightingale: NightingaleChartComponent,
-  waterfall: WaterfallChartComponent,
-  matrix: MatrixChartComponent,
-  smallMultiples: SmallMultiplesComponent,
-  wordCloud: WordCloudComponent,
-  slope: SlopeChartComponent,
-  table: TableChartComponent,
-  categoricalScatter: CategoricalScatterComponent,
-  quadrant: QuadrantChartComponent,
+  barChart: wrapComponent(BarChartComponent, "Bar Chart"),
+  columnChart: wrapComponent(ColumnChartComponent, "Column Chart"),
+  groupedBar: wrapComponent(GroupedBarChartComponent, "Grouped Bar Chart"),
+  lollipop: wrapComponent(LollipopChartComponent, "Lollipop Chart"),
+  bullet: wrapComponent(BulletChartComponent, "Bullet Chart"),
+  dotPlot: wrapComponent(DotPlotComponent, "Dot Plot"),
+  dumbbell: wrapComponent(DumbbellChartComponent, "Dumbbell Chart"),
+  pictogram: wrapComponent(PictogramChartComponent, "Pictogram Chart"),
+  iconChart: wrapComponent(IconChartComponent, "Icon Chart"),
+  rangeChart: wrapComponent(RangeChartComponent, "Range Chart"),
+  radialBar: wrapComponent(RadialBarChartComponent, "Radial Bar Chart"),
+  parallelCoordinates: wrapComponent(
+    ParallelCoordinatesComponent,
+    "Parallel Coordinates",
+  ),
+  radar: wrapComponent(RadarChartComponent, "Radar Chart"),
+  nightingale: wrapComponent(NightingaleChartComponent, "Nightingale Chart"),
+  waterfall: wrapComponent(WaterfallChartComponent, "Waterfall Chart"),
+  matrix: wrapComponent(MatrixChartComponent, "Matrix Chart"),
+  smallMultiples: wrapComponent(SmallMultiplesComponent, "Small Multiples"),
+  wordCloud: wrapComponent(WordCloudComponent, "Word Cloud"),
+  slope: wrapComponent(SlopeChartComponent, "Slope Chart"),
+  table: wrapComponent(TableChartComponent, "Table Chart"),
+  categoricalScatter: wrapComponent(
+    CategoricalScatterComponent,
+    "Categorical Scatter",
+  ),
+  quadrant: wrapComponent(QuadrantChartComponent, "Quadrant Chart"),
 
   // Correlation (6)
-  scatter: ScatterPlotComponent,
-  bubble: BubbleChartComponent,
-  heatmap: HeatmapComponent,
-  connectedScatter: ConnectedScatterComponent,
-  contour: ContourPlotComponent,
-  hexagonalBinning: HexagonalBinningComponent,
+  scatter: wrapComponent(ScatterPlotComponent, "Scatter Plot"),
+  bubble: wrapComponent(BubbleChartComponent, "Bubble Chart"),
+  heatmap: wrapComponent(HeatmapComponent, "Heatmap"),
+  connectedScatter: wrapComponent(
+    ConnectedScatterComponent,
+    "Connected Scatter",
+  ),
+  contour: wrapComponent(ContourPlotComponent, "Contour Plot"),
+  hexagonalBinning: wrapComponent(
+    HexagonalBinningComponent,
+    "Hexagonal Binning",
+  ),
 
   // Part-to-Whole (18)
-  pie: PieChartComponent,
-  donut: DonutChartComponent,
-  stackedBar: StackedBarChartComponent,
-  funnel: FunnelPyramidComponent,
-  waffle: WaffleChartComponent,
-  semiCircleDonut: SemiCircleDonutComponent,
-  circularGauge: CircularGaugeComponent,
-  populationPyramid: PopulationPyramidComponent,
-  iconArray: IconArrayComponent,
-  venn: VennDiagramComponent,
-  divergingBar: DivergingBarChartComponent,
-  treemap: TreemapComponent,
-  circularTreemap: CircularTreemapComponent,
-  convexTreemap: ConvexTreemapComponent,
-  sunburst: SunburstChartComponent,
-  dendrogram: DendrogramComponent,
-  euler: EulerDiagramComponent,
-  marimekko: MarimekkoChartComponent,
+  pie: wrapComponent(PieChartComponent, "Pie Chart"),
+  donut: wrapComponent(DonutChartComponent, "Donut Chart"),
+  stackedBar: wrapComponent(StackedBarChartComponent, "Stacked Bar Chart"),
+  funnel: wrapComponent(FunnelPyramidComponent, "Funnel & Pyramid"),
+  waffle: wrapComponent(WaffleChartComponent, "Waffle Chart"),
+  semiCircleDonut: wrapComponent(SemiCircleDonutComponent, "Semi-Circle Donut"),
+  circularGauge: wrapComponent(CircularGaugeComponent, "Circular Gauge"),
+  populationPyramid: wrapComponent(
+    PopulationPyramidComponent,
+    "Population Pyramid",
+  ),
+  iconArray: wrapComponent(IconArrayComponent, "Icon Array"),
+  venn: wrapComponent(VennDiagramComponent, "Venn Diagram"),
+  divergingBar: wrapComponent(
+    DivergingBarChartComponent,
+    "Diverging Bar Chart",
+  ),
+  treemap: wrapComponent(TreemapComponent, "Treemap"),
+  circularTreemap: wrapComponent(CircularTreemapComponent, "Circular Treemap"),
+  convexTreemap: wrapComponent(ConvexTreemapComponent, "Convex Treemap"),
+  sunburst: wrapComponent(SunburstChartComponent, "Sunburst Chart"),
+  dendrogram: wrapComponent(DendrogramComponent, "Dendrogram"),
+  euler: wrapComponent(EulerDiagramComponent, "Euler Diagram"),
+  marimekko: wrapComponent(MarimekkoChartComponent, "Marimekko Chart"),
 
   // Distribution (11)
-  histogram: HistogramComponent,
-  box: BoxChartComponent,
-  violin: ViolinPlotComponent,
-  density: DensityPlotComponent,
-  ridgeline: RidgelinePlotComponent,
-  horizon: HorizonChartComponent,
-  radialHistogram: RadialHistogramComponent,
-  strip: StripPlotComponent,
-  jitter: JitterPlotComponent,
-  oneDHeatmap: OneDHeatmapComponent,
-  beeswarm: BeeswarmChartComponent,
+  histogram: wrapComponent(HistogramComponent, "Histogram"),
+  box: wrapComponent(BoxChartComponent, "Box Chart"),
+  violin: wrapComponent(ViolinPlotComponent, "Violin Plot"),
+  density: wrapComponent(DensityPlotComponent, "Density Plot"),
+  ridgeline: wrapComponent(RidgelinePlotComponent, "Ridgeline Plot"),
+  horizon: wrapComponent(HorizonChartComponent, "Horizon Chart"),
+  radialHistogram: wrapComponent(RadialHistogramComponent, "Radial Histogram"),
+  strip: wrapComponent(StripPlotComponent, "Strip Plot"),
+  jitter: wrapComponent(JitterPlotComponent, "Jitter Plot"),
+  oneDHeatmap: wrapComponent(OneDHeatmapComponent, "1D Heatmap"),
+  beeswarm: wrapComponent(BeeswarmChartComponent, "Beeswarm Chart"),
 
   // Temporal (12)
-  line: LineChartComponent,
-  area: AreaChartComponent,
-  stackedArea: StackedAreaChartComponent,
-  spline: SplineChartComponent,
-  stepLine: StepLineChartComponent,
-  streamGraph: StreamGraphComponent,
-  bump: BumpChartComponent,
-  bumpArea: BumpAreaChartComponent,
-  candlestick: CandlestickChartComponent,
-  ohlc: OHLCChartComponent,
-  gantt: GanttChartComponent,
-  barcode: BarcodeChartComponent,
+  line: wrapComponent(LineChartComponent, "Line Chart"),
+  area: wrapComponent(AreaChartComponent, "Area Chart"),
+  stackedArea: wrapComponent(StackedAreaChartComponent, "Stacked Area Chart"),
+  spline: wrapComponent(SplineChartComponent, "Spline Chart"),
+  stepLine: wrapComponent(StepLineChartComponent, "Step Line Chart"),
+  streamGraph: wrapComponent(StreamGraphComponent, "Stream Graph"),
+  bump: wrapComponent(BumpChartComponent, "Bump Chart"),
+  bumpArea: wrapComponent(BumpAreaChartComponent, "Bump Area Chart"),
+  candlestick: wrapComponent(CandlestickChartComponent, "Candlestick Chart"),
+  ohlc: wrapComponent(OHLCChartComponent, "OHLC Chart"),
+  gantt: wrapComponent(GanttChartComponent, "Gantt Chart"),
+  barcode: wrapComponent(BarcodeChartComponent, "Barcode Chart"),
+
+  // Geospatial & Other (8)
+  geographicHeatmap: wrapComponent(
+    GeographicHeatmapComponent,
+    "Geographic Heatmap",
+  ),
+  choroplethMap: wrapComponent(ChoroplethMapComponent, "Choropleth Map"),
+  tileMap: wrapComponent(TileMapComponent, "Tile Map"),
+  chordDiagram: wrapComponent(ChordDiagramComponent, "Chord Diagram"),
+  arcDiagram: wrapComponent(ArcDiagramComponent, "Arc Diagram"),
+  sankeyDiagram: wrapComponent(SankeyDiagramComponent, "Sankey Diagram"),
+  networkDiagram: wrapComponent(NetworkDiagramComponent, "Network Diagram"),
+  flowchart: wrapComponent(FlowchartComponent, "Flowchart"),
 };
 
 // ============================================
@@ -236,11 +324,7 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
         </button>
         <span style={separatorStyle}>/</span>
         <span
-          style={{
-            color: "#8A7A6A",
-            fontSize: "11px",
-            letterSpacing: "1px",
-          }}
+          style={{ color: "#8A7A6A", fontSize: "11px", letterSpacing: "1px" }}
         >
           {chart.categoryName}
         </span>
@@ -368,11 +452,7 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
 // ============================================
 // STYLES
 // ============================================
-
-const errorStyle = {
-  textAlign: "center",
-  padding: "100px 0",
-};
+const errorStyle = { textAlign: "center", padding: "100px 0" };
 
 const breadcrumbStyle = {
   display: "flex",
@@ -396,10 +476,7 @@ const backLinkStyle = {
   padding: 0,
 };
 
-const separatorStyle = {
-  color: "#D4C4AE",
-  fontSize: "11px",
-};
+const separatorStyle = { color: "#D4C4AE", fontSize: "11px" };
 
 const infoBarStyle = {
   background: "#FFFFFF",
