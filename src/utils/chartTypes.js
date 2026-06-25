@@ -1,6 +1,8 @@
+// src/utils/chartTypes.js
+
 // ============================================
 // GRAPHFORGE - CHART TYPES REGISTRY
-// All 69 chart types across 5 categories
+// All 77 chart types across 6 categories
 // ============================================
 
 export const CHART_CATEGORIES = {
@@ -459,6 +461,66 @@ export const CHART_CATEGORIES = {
         icon: "🎻",
         difficulty: "hard",
         category: "distribution",
+      },
+    },
+  },
+
+  // ============================================
+  // NEW: GEOSPATIAL & OTHER (8 charts)
+  // ============================================
+  geospatial: {
+    id: "geospatial",
+    label: "🌍 Geospatial & Other",
+    color: "#D41F26",
+    description: "Maps, networks, flows, and process diagrams",
+    charts: {
+      geographicHeatmap: {
+        name: "Geographic Heatmap",
+        icon: "🔥",
+        difficulty: "medium",
+        category: "geospatial",
+      },
+      choroplethMap: {
+        name: "Choropleth Map",
+        icon: "🗺️",
+        difficulty: "medium",
+        category: "geospatial",
+      },
+      tileMap: {
+        name: "Tile Map",
+        icon: "🔲",
+        difficulty: "easy",
+        category: "geospatial",
+      },
+      chordDiagram: {
+        name: "Chord Diagram",
+        icon: "🔄",
+        difficulty: "hard",
+        category: "geospatial",
+      },
+      arcDiagram: {
+        name: "Arc Diagram",
+        icon: "🔗",
+        difficulty: "medium",
+        category: "geospatial",
+      },
+      sankeyDiagram: {
+        name: "Sankey Diagram",
+        icon: "🔀",
+        difficulty: "hard",
+        category: "geospatial",
+      },
+      networkDiagram: {
+        name: "Network Diagram",
+        icon: "🌐",
+        difficulty: "medium",
+        category: "geospatial",
+      },
+      flowchart: {
+        name: "Flowchart",
+        icon: "📊",
+        difficulty: "easy",
+        category: "geospatial",
       },
     },
   },

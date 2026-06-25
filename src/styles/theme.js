@@ -57,17 +57,23 @@ export const theme = {
         border: "#E8D870",
         light: "rgba(255, 243, 160, 0.15)",
       },
+      distribution: {
+        name: "Distribution",
+        color: "#A8DCF0", // Lighter Sky Blue
+        border: "#82C8E5",
+        light: "rgba(168, 220, 240, 0.15)",
+      },
       temporal: {
         name: "Temporal",
         color: "#E6D8C4",
         border: "#D4C4AE",
         light: "rgba(230, 216, 196, 0.30)",
       },
-      distribution: {
-        name: "Distribution",
-        color: "#A8DCF0", // Lighter Sky Blue
-        border: "#82C8E5",
-        light: "rgba(168, 220, 240, 0.15)",
+      geospatial: {
+        name: "Geospatial & Other",
+        color: "#06b6d4", // Teal/Cyan
+        border: "#0891b2",
+        light: "rgba(6, 182, 212, 0.15)",
       },
     },
 
@@ -85,6 +91,8 @@ export const theme = {
       "#FAA89F", // Light Coral
       "#4CAF50", // Green
       "#FFB74D", // Orange
+      "#06b6d4", // Teal/Cyan - Geospatial
+      "#0891b2", // Darker Teal
     ],
 
     // ===== TEXT SYSTEM =====
