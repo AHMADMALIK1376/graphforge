@@ -1,7 +1,5 @@
 // src/pages/HomePage.jsx
-import React, { useMemo, useEffect, useRef } from "react";
-import lottie from "lottie-web";
-import forgeAnimation from "../assets/lootiefiles/MxoeM9KC8Y.json";
+import React, { useMemo } from "react";
 import Layout from "../components/layout/Layout";
 import HeroCard from "../components/home/HeroCard";
 import VisualsCard from "../components/home/VisualsCard";
@@ -24,33 +22,6 @@ const HomePage = ({ onSelectChart, onNavigateToCharts }) => {
     return counts;
   }, []);
 
-  const lottieContainerRef = useRef(null);
-
-  useEffect(() => {
-    if (!lottieContainerRef.current) return;
-
-    let anim = null;
-    try {
-      anim = lottie.loadAnimation({
-        container: lottieContainerRef.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: forgeAnimation,
-        rendererSettings: { preserveAspectRatio: "xMidYMid meet" },
-      });
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error("Home Lottie load error:", err);
-    }
-
-    return () => {
-      if (anim) {
-        anim.destroy();
-      }
-    };
-  }, []);
-
   return (
     <Layout currentPath="/home">
       <HeroCard
@@ -71,8 +42,6 @@ const HomePage = ({ onSelectChart, onNavigateToCharts }) => {
           Source
         </p>
       </div>
-
-      <div ref={lottieContainerRef} style={homeLottieStyle} aria-hidden />
     </Layout>
   );
 };
@@ -92,16 +61,6 @@ const footerTextStyle = {
   letterSpacing: "1px",
   fontFamily: "'Inter', 'Segoe UI', -apple-system, sans-serif",
   margin: 0,
-};
-
-const homeLottieStyle = {
-  position: "fixed",
-  right: "24px",
-  top: "120px",
-  width: "360px",
-  height: "640px",
-  pointerEvents: "none",
-  zIndex: 50,
 };
 
 export default HomePage;

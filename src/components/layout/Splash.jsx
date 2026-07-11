@@ -64,20 +64,14 @@ const Splash = ({ onComplete }) => {
     for (let i = 1; i <= totalSlides; i++) {
       let delay = LOGO_DURATION + i * SLIDE_DURATION;
 
-      // If we are evaluating the final loop index (moving from Slide 4 to Slide 5),
-      // we calculate its window based on standard durations accrued beforehand
       if (i === totalSlides) {
-        // Delay is built from: Logo (3000) + 3 standard slides (3 * 3000) = 12000ms
         delay = LOGO_DURATION + (totalSlides - 1) * SLIDE_DURATION;
-
         timers.push(
           setTimeout(() => {
-            // Transitions into the final Ready slide (page 5) after the 4-second delay
             setCurrentPage(5);
           }, delay + FORGE_SLIDE_DURATION),
         );
       } else {
-        // Slides 1, 2, and 3 standard timeline propagation
         timers.push(
           setTimeout(() => {
             setCurrentPage(i + 1);
@@ -87,7 +81,6 @@ const Splash = ({ onComplete }) => {
     }
 
     // 3. Finalization Pipeline Callback (Ready slide display window)
-    // Logo (3s) + Slides 1-3 (9s) + Slide 4 (4s) + Ready slide display window (3s) = 19 seconds total
     const readyDelay =
       LOGO_DURATION +
       (totalSlides - 1) * SLIDE_DURATION +
@@ -165,28 +158,6 @@ const Splash = ({ onComplete }) => {
     zIndex: 100,
   };
 
-  const skipTabStyle = {
-    position: "absolute",
-    top: "-8px",
-    left: "0",
-    right: "0",
-    height: "8px",
-    background: "#D4C4AE",
-    borderRadius: "3px 3px 0 0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "3px",
-    padding: "0 8px",
-  };
-
-  const skipDotStyle = {
-    width: "3px",
-    height: "3px",
-    background: "rgba(255,255,255,0.5)",
-    borderRadius: "50%",
-  };
-
   const skipButtonStyle = {
     padding: "10px 18px",
     background: "#FFFFFF",
@@ -237,7 +208,6 @@ const Splash = ({ onComplete }) => {
     padding: 0,
   });
 
-  // Dot colors for each slide
   const dotColors = [
     AEGEAN_BLUE,
     AEGEAN_BLUE,

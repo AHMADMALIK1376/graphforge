@@ -1,23 +1,77 @@
 // src/components/layout/NavBar.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logos/Graphforgelogos.png";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [isCompact, setIsCompact] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompact(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleNavigate = () => {
     navigate("/home");
   };
 
   return (
-    <header style={headerStyle}>
-      <div style={logoSectionStyle} onClick={handleNavigate}>
-        <img src={logo} alt="GraphForge Logo" style={logoImageStyle} />
-        <h1 style={logoTextStyle}>GRAPHFORGE</h1>
-        <span style={versionStyle}>v1.0</span>
+    <header
+      style={{
+        ...headerStyle,
+        padding: isCompact ? "8px 16px" : "8px 28px",
+        minHeight: isCompact ? "72px" : "64px",
+        height: isCompact ? "auto" : "64px",
+        flexWrap: isCompact ? "wrap" : "nowrap",
+        gap: isCompact ? "8px" : "0",
+      }}
+    >
+      <div
+        style={{ ...logoSectionStyle, flexWrap: isCompact ? "wrap" : "nowrap" }}
+        onClick={handleNavigate}
+      >
+        <img
+          src={logo}
+          alt="GraphForge Logo"
+          style={{
+            ...logoImageStyle,
+            width: isCompact ? "30px" : "36px",
+            height: isCompact ? "30px" : "36px",
+          }}
+        />
+        <h1
+          style={{
+            ...logoTextStyle,
+            fontSize: isCompact ? "14px" : "18px",
+            letterSpacing: isCompact ? "1.5px" : "3px",
+          }}
+        >
+          GRAPHFORGE
+        </h1>
+        <span
+          style={{
+            ...versionStyle,
+            display: isCompact ? "none" : "inline-flex",
+          }}
+        >
+          v1.0
+        </span>
       </div>
-      <div style={statusIndicatorStyle}>
+      <div
+        style={{
+          ...statusIndicatorStyle,
+          display: isCompact ? "none" : "flex",
+        }}
+      >
         <span style={statusDotStyle} />
         <span style={statusTextStyle}>All systems ready</span>
       </div>

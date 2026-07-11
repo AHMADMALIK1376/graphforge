@@ -1,87 +1,35 @@
 // src/pages/ChartListPage.jsx
-import React, { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { theme } from "../styles/theme";
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import lottie from "lottie-web";
+import forgeAnimation from "../assets/lootiefiles/MxoeM9KC8Y.json";
+import comparisonAnimation from "../assets/lootiefiles/JeSv7vYZBK.json";
+import correlationAnimation from "../assets/lootiefiles/nM3kWOM2IG.json";
 import { CHART_CATEGORIES, getAllCharts } from "../utils/chartTypes";
-import ChartCard from "../components/common/ChartCard";
 import Layout from "../components/layout/Layout";
 import SearchBar from "../components/common/SearchBar";
-import FolderButton from "../components/common/FolderButton";
 import PageHeader from "../components/common/PageHeader";
+import CategoryInfoPopup from "../components/common/CategoryInfoPopup";
 import { useLanguage } from "../context/LanguageContext";
+
+// Map each category to its specific Lottie animation
+const categoryAnimations = {
+  comparison: comparisonAnimation,
+  correlation: correlationAnimation,
+  partToWhole: forgeAnimation,
+  temporal: forgeAnimation,
+  distribution: forgeAnimation,
+  geospatial: forgeAnimation,
+};
 
 const ChartListPage = ({ onSelectChart }) => {
   const { t } = useLanguage();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState(() => {
-    const initialCategory = searchParams.get("category");
-    return initialCategory && CHART_CATEGORIES[initialCategory]
-      ? initialCategory
-      : "all";
-  });
+  const [infoPopupCategory, setInfoPopupCategory] = useState(null);
 
   const allCharts = useMemo(() => getAllCharts(), []);
 
-  const [openSections, setOpenSections] = useState({});
-
-  const filteredCharts = useMemo(() => {
-    return allCharts.filter((chart) => {
-      const matchesSearch =
-        chart.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        chart.categoryName.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory =
-        activeCategory === "all" || chart.categoryId === activeCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchTerm, activeCategory, allCharts]);
-
-  const groupedCharts = useMemo(() => {
-    const groups = {};
-    filteredCharts.forEach((chart) => {
-      if (!groups[chart.categoryId]) {
-        groups[chart.categoryId] = {
-          categoryName: chart.categoryName,
-          categoryColor: chart.categoryColor,
-          charts: [],
-        };
-      }
-      groups[chart.categoryId].charts.push(chart);
-    });
-    return groups;
-  }, [filteredCharts]);
-
-  useEffect(() => {
-    const categoryFromUrl = searchParams.get("category");
-    const validatedCategory =
-      categoryFromUrl && CHART_CATEGORIES[categoryFromUrl]
-        ? categoryFromUrl
-        : "all";
-
-    setActiveCategory(validatedCategory);
-  }, [searchParams]);
-
-  const handleSetCategory = (cat) => {
-    setActiveCategory(cat);
-    if (cat === "all") {
-      setSearchParams({});
-    } else {
-      setSearchParams({ category: cat });
-    }
-  };
-
-  useEffect(() => {
-    const keys = Object.keys(groupedCharts);
-    const initial = {};
-    keys.forEach((k) => (initial[k] = true));
-    setOpenSections(initial);
-  }, [groupedCharts]);
-
-  const toggleSection = (key) => {
-    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  // Get category counts
   const categoryCounts = useMemo(() => {
     const counts = {};
     Object.entries(CHART_CATEGORIES).forEach(([key, cat]) => {
@@ -90,9 +38,54 @@ const ChartListPage = ({ onSelectChart }) => {
     return counts;
   }, []);
 
+  const openCategoryPage = (categoryId) => {
+    navigate(`/category/${categoryId}`);
+  };
+
+  const openInfoPopup = (categoryId) => {
+    setInfoPopupCategory(categoryId);
+  };
+
+  const closeInfoPopup = () => {
+    setInfoPopupCategory(null);
+  };
+
+  // Lottie refs for each folder card
+  const lottieRefs = useRef({});
+
+  useEffect(() => {
+    Object.entries(CHART_CATEGORIES).forEach(([key]) => {
+      const container = lottieRefs.current[key];
+      if (!container) return;
+
+      let anim = null;
+      try {
+        anim = lottie.loadAnimation({
+          container,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: categoryAnimations[key] || forgeAnimation,
+          rendererSettings: { preserveAspectRatio: "xMidYMid meet" },
+        });
+      } catch (err) {
+        console.error(`Lottie error for ${key}:`, err);
+      }
+
+      lottieRefs.current[`${key}-anim`] = anim;
+    });
+
+    return () => {
+      Object.entries(CHART_CATEGORIES).forEach(([key]) => {
+        const anim = lottieRefs.current[`${key}-anim`];
+        if (anim) anim.destroy();
+      });
+    };
+  }, []);
+
   return (
     <Layout currentPath="/charts">
-      <div style={contentStyle}>
+      <div style={pageContentStyle}>
         <PageHeader
           allCharts={allCharts.length}
           categoryCounts={categoryCounts}
@@ -107,81 +100,81 @@ const ChartListPage = ({ onSelectChart }) => {
           />
         </div>
 
-        {/* Category Filters - Folder Style */}
-        <div style={filterWrapperStyle}>
-          <div style={filterTabStyle("all", activeCategory === "all")}>
-            <div style={filterDotStyle} />
-            <div style={filterDotStyle} />
-            <div style={filterDotStyle} />
-          </div>
-          <div style={filterContainerStyle}>
-            <FolderButton
-              onClick={() => handleSetCategory("all")}
-              baseColor={activeCategory === "all" ? "#D41F26" : "#D41F26"}
-              active={activeCategory === "all"}
+        {/* Folder Cards – 2 per row, 3 rows */}
+        <div style={folderGridStyle}>
+          {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
+            <div
+              key={key}
+              style={categoryWrapperStyle}
+              onClick={() => openCategoryPage(key)}
             >
-              📂 ALL [{allCharts.length}]
-            </FolderButton>
-            {Object.entries(CHART_CATEGORIES).map(([key, cat]) => (
-              <FolderButton
-                key={key}
-                onClick={() => handleSetCategory(key)}
-                baseColor={cat.color}
-                active={activeCategory === key}
-              >
-                {cat.label} [{Object.keys(cat.charts).length}]
-              </FolderButton>
-            ))}
-          </div>
-        </div>
-
-        {/* Charts Grid */}
-        <div style={gridContainerStyle}>
-          {Object.entries(groupedCharts).map(([catKey, group]) => (
-            <div key={catKey} style={sectionStyle}>
-              <div style={sectionHeaderStyle}>
-                <span
-                  style={{
-                    width: "10px",
-                    height: "10px",
-                    background: group.categoryColor,
-                    borderRadius: "2px",
-                    display: "inline-block",
-                  }}
-                />
-                <h3 style={sectionTitleStyle}>{group.categoryName}</h3>
-                <span style={sectionCountStyle}>
-                  {group.charts.length} charts
-                </span>
-                <button
-                  style={toggleBtnStyle}
-                  onClick={() => toggleSection(catKey)}
-                >
-                  {openSections[catKey] ? "Hide" : "Show"}
-                </button>
+              {/* Folder tab */}
+              <div style={categoryFolderTabStyle(cat.color)}>
+                <span style={categoryDotStyle} />
+                <span style={categoryDotStyle} />
+                <span style={categoryDotStyle} />
               </div>
-              {openSections[catKey] && (
-                <div style={gridStyle}>
-                  {group.charts.map((chart) => (
-                    <ChartCard
-                      key={chart.id}
-                      chart={chart}
-                      onClick={onSelectChart}
+
+              {/* Three-dot info button */}
+              <div
+                style={threeDotContainerStyle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openInfoPopup(key);
+                }}
+              >
+                <span style={threeDotSingleStyle} />
+                <span style={threeDotSingleStyle} />
+                <span style={threeDotSingleStyle} />
+              </div>
+
+              {/* Folder body */}
+              <div style={categoryFolderBodyStyle(cat.color)}>
+                <div style={categoryInnerRowStyle}>
+                  {/* Left side: number + title */}
+                  <div style={categoryLeftAreaStyle}>
+                    <div style={categoryHeaderStyle}>
+                      <h3 style={categoryTitleStyle}>
+                        {cat.label.replace(/[^\w\s]/g, "").trim()}
+                      </h3>
+                    </div>
+                    <div style={categoryNumberAreaStyle}>
+                      <span style={categoryNumberStyle}>
+                        {categoryCounts[key]}
+                      </span>
+                      <span style={categoryNumberLabelStyle}>charts</span>
+                    </div>
+                    <span style={categoryCountStyle}>
+                      {categoryCounts[key]} charts
+                    </span>
+                  </div>
+
+                  {/* Right side: Lottie Animation */}
+                  <div style={lottieContainerStyle}>
+                    <div
+                      ref={(el) => (lottieRefs.current[key] = el)}
+                      style={lottieStyle}
                     />
-                  ))}
+                  </div>
                 </div>
-              )}
+
+                {/* Decorative lines */}
+                <div style={categoryLinesStyle}>
+                  <div style={{ ...categoryLineStyle, width: "100%" }} />
+                  <div style={{ ...categoryLineStyle, width: "70%" }} />
+                  <div style={{ ...categoryLineStyle, width: "85%" }} />
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
-        {filteredCharts.length === 0 && (
-          <div style={emptyStyle}>
-            <span style={{ fontSize: "48px" }}>📂</span>
-            <p style={{ color: theme.colors.text.muted }}>
-              {t("home.noCharts") || "No charts found"}
-            </p>
-          </div>
+        {/* Info Popup */}
+        {infoPopupCategory && (
+          <CategoryInfoPopup
+            categoryId={infoPopupCategory}
+            onClose={closeInfoPopup}
+          />
         )}
       </div>
     </Layout>
@@ -189,107 +182,147 @@ const ChartListPage = ({ onSelectChart }) => {
 };
 
 // ===== STYLES =====
-const contentStyle = {
-  maxWidth: "1400px",
+const pageContentStyle = {
+  maxWidth: "1100px",
   margin: "0 auto",
+  padding: "0 16px",
+};
+const searchWrapperStyle = { marginBottom: "24px" };
+
+const folderGridStyle = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "24px",
 };
 
-const searchWrapperStyle = {
-  marginBottom: "24px",
-};
-
-const filterWrapperStyle = {
-  marginBottom: "40px",
+const categoryWrapperStyle = {
   position: "relative",
+  cursor: "pointer",
+  transition: "transform 0.2s ease",
 };
 
-const filterTabStyle = (cat, isActive) => ({
+const categoryFolderTabStyle = (color) => ({
   position: "absolute",
   top: "-10px",
   left: "0",
-  width: "30%",
-  maxWidth: "200px",
   height: "10px",
-  background: isActive ? "#D41F26" : "#D4C4AE",
+  width: "55%",
+  maxWidth: "240px",
+  background: color,
   borderRadius: "3px 3px 0 0",
   display: "flex",
   alignItems: "center",
-  padding: "0 10px",
-  gap: "4px",
+  padding: "0 6px",
+  gap: "3px",
 });
-
-const filterDotStyle = {
-  width: "4px",
-  height: "4px",
+const categoryDotStyle = {
+  width: "3px",
+  height: "3px",
   background: "rgba(255,255,255,0.6)",
   borderRadius: "50%",
 };
 
-const filterContainerStyle = {
-  display: "flex",
-  gap: "8px",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  border: "1px solid #D4C4AE",
+const categoryFolderBodyStyle = (color) => ({
+  background: `linear-gradient(135deg, ${color}dd, ${color}99)`,
+  border: `1px solid ${color}`,
   borderRadius: "0 6px 6px 6px",
-  background: "#FFFFFF",
-  padding: "16px",
-  boxShadow: "0 2px 8px rgba(180,160,140,0.10)",
-};
+  padding: "24px 24px 36px",
+  boxShadow: `0 4px 16px ${color}40`,
+  position: "relative",
+  overflow: "hidden",
+});
 
-const gridContainerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "40px",
-};
-
-const sectionStyle = {};
-
-const sectionHeaderStyle = {
+const categoryInnerRowStyle = {
   display: "flex",
   alignItems: "center",
-  gap: "10px",
-  marginBottom: "20px",
-  paddingBottom: "8px",
-  borderBottom: "1px solid #E8DCC8",
+  justifyContent: "space-between",
+  gap: "16px",
 };
 
-const sectionTitleStyle = {
-  color: "#4A3728",
-  fontSize: "15px",
+const categoryLeftAreaStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+  flex: "0 0 auto",
+};
+
+const categoryHeaderStyle = { display: "flex", alignItems: "center" };
+const categoryTitleStyle = {
+  color: "#ffffff",
+  fontSize: "16px",
   fontWeight: 700,
-  letterSpacing: "2px",
+  letterSpacing: "1.5px",
   margin: 0,
-  textTransform: "uppercase",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
+  textShadow: "0 1px 2px rgba(0,0,0,0.15)",
 };
-
-const sectionCountStyle = {
-  color: "#8A7A6A",
+const categoryCountStyle = {
+  color: "rgba(255,255,255,0.7)",
   fontSize: "10px",
   letterSpacing: "1px",
+  fontFamily: "'Inter', 'Segoe UI', -apple-system, sans-serif",
 };
 
-const toggleBtnStyle = {
-  marginLeft: "12px",
-  padding: "6px 10px",
-  borderRadius: "4px",
-  border: "1px solid #E8DCC8",
-  background: "#FFFFFF",
+const categoryNumberAreaStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+};
+const categoryNumberStyle = {
+  fontSize: "34px",
+  fontWeight: 700,
+  color: "#ffffff",
+  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
+  lineHeight: 1,
+};
+const categoryNumberLabelStyle = {
+  fontSize: "9px",
+  color: "rgba(255,255,255,0.8)",
+  textTransform: "uppercase",
+  letterSpacing: "1px",
+  fontFamily: "'Inter', 'Segoe UI', -apple-system, sans-serif",
+};
+
+const lottieContainerStyle = {
+  flex: "0 0 auto",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+};
+const lottieStyle = { width: "180px", height: "180px" };
+
+const categoryLinesStyle = {
+  position: "absolute",
+  bottom: "10px",
+  left: "12px",
+  right: "12px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "3px",
+  opacity: 0.3,
+  pointerEvents: "none",
+};
+const categoryLineStyle = {
+  height: "2px",
+  background: "#ffffff",
+  borderRadius: "1px",
+};
+
+const threeDotContainerStyle = {
+  position: "absolute",
+  top: "6px",
+  right: "10px",
+  display: "flex",
+  gap: "3px",
   cursor: "pointer",
-  fontSize: "12px",
+  zIndex: 3,
+  padding: "4px",
 };
-
-const gridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-  gap: "20px",
-  paddingTop: "12px",
-};
-
-const emptyStyle = {
-  textAlign: "center",
-  padding: "80px 0",
-  color: "#8A7A6A",
+const threeDotSingleStyle = {
+  width: "4px",
+  height: "4px",
+  background: "rgba(255,255,255,0.9)",
+  borderRadius: "50%",
 };
 
 export default ChartListPage;

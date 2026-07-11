@@ -1,13 +1,15 @@
 // src/components/layout/Sidebar.jsx
-import React, { useState } from "react";
+import React from "react";
 import FolderButton from "../common/FolderButton";
 import { useLanguage } from "../../context/LanguageContext";
 
-const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
+const Sidebar = ({
+  currentPath = "",
+  isOpen = true,
+  onToggle = () => {},
+  isMobile = false,
+}) => {
   const { t } = useLanguage();
-
-  // Track currently hovered item path to sync tab and body colors cleanly
-  const [hoveredPath, setHoveredPath] = useState(null);
 
   // Alternating themes: Blue, Pink, Blue, Pink, Blue... (Emojis removed)
   const navItems = [
@@ -81,6 +83,18 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
 
   return (
     <>
+      {isMobile && isOpen && (
+        <div
+          onClick={onToggle}
+          style={{
+            position: "fixed",
+            inset: "64px 0 0 0",
+            background: "rgba(36, 28, 20, 0.45)",
+            zIndex: 300,
+          }}
+        />
+      )}
+
       {/* Floating Toggle Button - When sidebar is closed */}
       {!isOpen && (
         <div style={floatingWrapperStyle}>
@@ -105,13 +119,21 @@ const Sidebar = ({ currentPath = "", isOpen = true, onToggle = () => {} }) => {
         style={{
           ...asideStyle,
           transform: isOpen ? "translateX(0)" : "translateX(-100%)",
-          width: isOpen ? "240px" : "0",
+          width: isMobile
+            ? isOpen
+              ? "min(84vw, 280px)"
+              : "0"
+            : isOpen
+              ? "240px"
+              : "0",
+          maxWidth: isMobile ? "280px" : undefined,
           padding: isOpen ? "0" : "0",
           overflow: "hidden",
           transition:
             "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
+          zIndex: isMobile ? 400 : 200,
         }}
       >
         {/* Custom Scrollbar and Base Utilities */}
@@ -418,47 +440,6 @@ const navStyle = {
 const navItemWrapperStyle = {
   position: "relative",
   marginTop: "8px",
-};
-
-const folderTabStyle = (bgColor) => ({
-  position: "absolute",
-  top: "-8px",
-  left: "0",
-  height: "8px",
-  width: "40%",
-  background: bgColor,
-  borderRadius: "3px 3px 0 0",
-  display: "flex",
-  alignItems: "center",
-  padding: "0 8px",
-  gap: "2px",
-  transition: "background 0.2s ease",
-});
-
-const folderBodyStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: "12px",
-  padding: "10px 18px",
-  textDecoration: "none",
-  borderRadius: "0 4px 4px 4px",
-  border: "2px solid",
-  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-  fontSize: "13px",
-  letterSpacing: "1px",
-  fontFamily: "'Bungee', 'Bungee Inline', 'Bungee Shade', cursive",
-  position: "relative",
-};
-
-const labelStyle = {
-  flex: 1,
-};
-
-const dotStyle = {
-  width: "6px",
-  height: "6px",
-  borderRadius: "50%",
-  flexShrink: 0,
 };
 
 const bottomSectionStyle = {

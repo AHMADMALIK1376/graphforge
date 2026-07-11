@@ -1,20 +1,18 @@
 // src/components/common/LoadingSpinner.jsx
 import React from "react";
 
-export const LoadingSpinner = ({
-  fullScreen = true, // Force fullScreen true globally
-  duration = 5000,
-}) => {
-  // Brand color overrides matching your exact splash screen palette
-  const AEGEAN_BLUE = "#0077C8";
-  const CORAL_PINK = "#F88379";
-  const LIGHT_YELLOW = "#F2D24B";
-  const GREEN = "#A9C632";
+export const LoadingSpinner = () => {
+  const CATEGORY_COLORS = {
+    comparison: "#0077C8",
+    correlation: "#F88379",
+    partToWhole: "#F2D24B",
+    temporal: "#D4A373",
+    distribution: "#A9C632",
+    geospatial: "#D41F26",
+  };
+  const categories = Object.entries(CATEGORY_COLORS);
 
-  // Significantly increased base spinner sizes for a premium look
-  const SPINNER_SIZE = 140;
-
-  // Enforced full-screen parent container styling
+  // --- STYLES ---
   const containerStyle = {
     display: "flex",
     flexDirection: "column",
@@ -23,162 +21,154 @@ export const LoadingSpinner = ({
     minHeight: "100vh",
     width: "100%",
     background: "#F5EDE0",
-    position: "fixed", // locks over the entire browser viewport
+    position: "fixed",
     top: 0,
     left: 0,
-    zIndex: 99999, // Layer above everything else
+    zIndex: 99999,
     overflow: "hidden",
   };
 
-  // Full screen background glow effects using updated colors
-  const glowStyle = {
-    position: "absolute",
-    width: "600px",
-    height: "600px",
-    borderRadius: "50%",
-    background: `radial-gradient(circle, ${AEGEAN_BLUE}1A, transparent 70%)`,
-    top: "-20%",
-    right: "-15%",
-    animation: "pulseGlow 5s ease-in-out infinite",
-  };
-
-  const glowStyle2 = {
-    position: "absolute",
-    width: "500px",
-    height: "500px",
-    borderRadius: "50%",
-    background: `radial-gradient(circle, ${CORAL_PINK}1A, transparent 70%)`,
-    bottom: "-20%",
-    left: "-15%",
-    animation: "pulseGlow 5s ease-in-out infinite 2.5s",
-  };
-
-  const glowStyle3 = {
-    position: "absolute",
-    width: "400px",
-    height: "400px",
-    borderRadius: "50%",
-    background: `radial-gradient(circle, ${LIGHT_YELLOW}14, transparent 70%)`,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    animation: "pulseGlow 6s ease-in-out infinite 1.5s",
-  };
-
-  const glowStyle4 = {
-    position: "absolute",
-    width: "350px",
-    height: "350px",
-    borderRadius: "50%",
-    background: `radial-gradient(circle, ${GREEN}0F, transparent 70%)`,
-    top: "20%",
-    right: "15%",
-    animation: "pulseGlow 7s ease-in-out infinite 3s",
-  };
-
-  // Upgraded main outer spinner utilizing new theme track colors
-  const spinnerStyle = {
-    width: `${SPINNER_SIZE}px`,
-    height: `${SPINNER_SIZE}px`,
-    border: `5px solid #E8DCC8`,
-    borderTop: `5px solid ${AEGEAN_BLUE}`,
-    borderRight: `5px solid ${CORAL_PINK}`,
-    borderBottom: `5px solid ${LIGHT_YELLOW}`,
-    borderRadius: "50%",
-    animation: "spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+  const stageStyle = {
     position: "relative",
-    boxShadow: `0 0 60px ${AEGEAN_BLUE}33, 0 0 80px ${CORAL_PINK}1A, 0 0 100px ${LIGHT_YELLOW}0D`,
+    width: "300px",
+    height: "300px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
-  // Intermediate nested counter-spinning element
-  const innerSpinnerStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: `${SPINNER_SIZE * 0.55}px`,
-    height: `${SPINNER_SIZE * 0.55}px`,
-    border: `4px solid #F5EDE0`,
-    borderBottom: `4px solid ${LIGHT_YELLOW}`,
-    borderLeft: `4px solid ${GREEN}`,
-    borderRight: `4px solid ${AEGEAN_BLUE}`,
-    borderRadius: "50%",
-    animation: "spin 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse",
+  const numFolders = categories.length;
+  const midIndex = (numFolders - 1) / 2;
+
+  // Smooth cubic-bezier for natural feel
+  const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+  // Generate unique fan animation keyframes for each folder
+  const generateKeyframes = () => {
+    let css = "";
+    categories.forEach((_, i) => {
+      const xOffset = (i - midIndex) * 8;
+      const yOffset = -i * 4;
+      const fannedX = (i - midIndex) * 60;
+      const fannedY = -Math.abs(i - midIndex) * 10;
+      const angle = (i - midIndex) * 12;
+
+      css += `
+        @keyframes fanSpread-${i} {
+          0%, 100% { transform: translate(${xOffset}px, ${yOffset}px) rotate(0deg); }
+          50% { transform: translate(${fannedX}px, ${fannedY}px) rotate(${angle}deg); }
+        }
+      `;
+    });
+    return css;
   };
 
-  // Center core glowing focal dot
-  const centerDotStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: `${SPINNER_SIZE * 0.15}px`,
-    height: `${SPINNER_SIZE * 0.15}px`,
-    background: `linear-gradient(135deg, ${AEGEAN_BLUE}, ${CORAL_PINK})`,
+  // Dot style (like folder tabs across the app)
+  const dotStyle = {
+    width: "4px",
+    height: "4px",
+    background: "rgba(255,255,255,0.6)",
     borderRadius: "50%",
-    boxShadow: `0 0 30px ${AEGEAN_BLUE}66, 0 0 50px ${CORAL_PINK}33`,
-    animation: "pulse 1.8s ease-in-out infinite",
-  };
-
-  // Outer ambient dashed tracking ring
-  const outerRingStyle = {
-    position: "absolute",
-    top: "-12px",
-    left: "-12px",
-    right: "-12px",
-    bottom: "-12px",
-    borderRadius: "50%",
-    border: `2px dashed ${AEGEAN_BLUE}26`,
-    animation: "spin 10s linear infinite",
-  };
-
-  // Outer ambient secondary dashed tracking ring
-  const ringDotsStyle = {
-    position: "absolute",
-    width: `${SPINNER_SIZE + 40}px`,
-    height: `${SPINNER_SIZE + 40}px`,
-    borderRadius: "50%",
-    border: `1.5px dashed ${CORAL_PINK}1A`,
-    animation: "spin 7s linear infinite reverse",
   };
 
   return (
     <div style={containerStyle}>
-      {/* Background glow effects */}
-      <div style={glowStyle} />
-      <div style={glowStyle2} />
-      <div style={glowStyle3} />
-      <div style={glowStyle4} />
+      {/* Optional background glow blobs */}
+      <div
+        style={{
+          position: "absolute",
+          width: "300px",
+          height: "300px",
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${CATEGORY_COLORS.comparison}1A, transparent 70%)`,
+          top: "10%",
+          right: "5%",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          width: "400px",
+          height: "400px",
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${CATEGORY_COLORS.correlation}18, transparent 70%)`,
+          bottom: "10%",
+          left: "5%",
+        }}
+      />
 
-      {/* Upgraded Multi-Layered Spinner Hierarchy */}
-      <div style={{ position: "relative" }}>
-        <div style={ringDotsStyle} />
-        <div style={spinnerStyle}>
-          <div style={outerRingStyle} />
-          <div style={innerSpinnerStyle} />
-          <div style={centerDotStyle} />
-        </div>
+      <div style={stageStyle}>
+        {categories.map(([key, color], i) => (
+          <div
+            key={key}
+            style={{
+              position: "absolute",
+              width: "120px",
+              height: "80px",
+              animation: `fanSpread-${i} 3s ${easing} infinite`,
+              transformOrigin: "bottom center",
+              zIndex: i,
+            }}
+          >
+            {/* Folder tab with three dots */}
+            <div
+              style={{
+                position: "absolute",
+                top: "-10px",
+                left: "0",
+                width: "40%",
+                height: "10px",
+                background: color,
+                borderRadius: "3px 3px 0 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "3px",
+                padding: "0 4px",
+              }}
+            >
+              <span style={dotStyle} />
+              <span style={dotStyle} />
+              <span style={dotStyle} />
+            </div>
+
+            {/* Folder body */}
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: color,
+                borderRadius: "0 6px 6px 6px",
+                border: `2px solid ${color}`,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div
+        style={{
+          marginTop: "40px",
+          fontFamily: "'Bungee', sans-serif",
+          fontSize: "14px",
+          color: "#4A3728",
+          animation: "pulse 2s ease-in-out infinite",
+        }}
+      >
+        LOADING...
       </div>
 
       <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.7; transform: scale(1.15); }
-        }
+        ${generateKeyframes()}
         @keyframes pulse {
-          0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-          50% { opacity: 1; transform: translate(-50%, -50%) scale(1.25); }
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
         }
       `}</style>
     </div>
   );
 };
 
-// All clean pipeline presets point directly to the pure upgraded fullscreen spinner
 export const PageLoader = () => <LoadingSpinner />;
 export const ChartLoader = () => <LoadingSpinner />;
 export const DataLoader = () => <LoadingSpinner />;

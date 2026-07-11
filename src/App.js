@@ -38,6 +38,9 @@ import { LanguageProvider } from "./context/LanguageContext";
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const ChartListPage = React.lazy(() => import("./pages/ChartListPage"));
 const ChartPage = React.lazy(() => import("./pages/ChartPage"));
+const CategoryChartsPage = React.lazy(
+  () => import("./pages/CategoryChartsPage"),
+);
 const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const TemplatesPage = React.lazy(() => import("./pages/TemplatesPage"));
 const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
@@ -149,6 +152,7 @@ function App() {
           import("./pages/HomePage"),
           import("./pages/ChartListPage"),
           import("./pages/ChartPage"),
+          import("./pages/CategoryChartsPage"),
           import("./pages/AboutPage"),
           import("./pages/TemplatesPage"),
           import("./pages/SettingsPage"),
@@ -164,10 +168,10 @@ function App() {
   const handleSplashComplete = () => {
     setAppState("loading");
 
-    // Enforce an intentional delay of exactly 2.5 seconds (2500ms)
+    // Show the folder spinner for exactly 6 seconds
     setTimeout(() => {
       setAppState("ready");
-    }, 2500);
+    }, 6000);
   };
 
   // Smooth fade-in wrapper style for the ready application
@@ -205,16 +209,24 @@ function App() {
                       <Route path="/home" element={<HomeWrapper />} />
                       <Route path="/charts" element={<ChartListWrapper />} />
                       <Route
-                        path="/about"
+                        path="/category/:categoryId"
                         element={
                           <Suspense fallback={<PageLoader />}>
-                            <AboutPage />
+                            <CategoryChartsPage />
                           </Suspense>
                         }
                       />
                       <Route
                         path="/chart/:chartId?"
                         element={<ChartWrapper />}
+                      />
+                      <Route
+                        path="/about"
+                        element={
+                          <Suspense fallback={<PageLoader />}>
+                            <AboutPage />
+                          </Suspense>
+                        }
                       />
                       <Route
                         path="/templates"

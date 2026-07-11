@@ -1,11 +1,38 @@
 // src/components/home/CategoriesCard.jsx
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import lottie from "lottie-web";
+import heroAnimation from "../../assets/lootiefiles/MxoeM9KC8Y.json";
 import { CHART_CATEGORIES } from "../../utils/chartTypes";
 import FolderButton from "../common/FolderButton";
 
 const CategoriesCard = ({ categoryCounts }) => {
   const navigate = useNavigate();
+  const lottieContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (!lottieContainerRef.current) return;
+
+    let anim = null;
+    try {
+      anim = lottie.loadAnimation({
+        container: lottieContainerRef.current,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        animationData: heroAnimation,
+        rendererSettings: { preserveAspectRatio: "xMidYMid meet" },
+      });
+    } catch (err) {
+      console.error("CategoriesCard Lottie load error:", err);
+    }
+
+    return () => {
+      if (anim) {
+        anim.destroy();
+      }
+    };
+  }, []);
 
   const handleCategoryClick = (categoryId) => {
     navigate(`/charts?category=${categoryId}`);
@@ -26,40 +53,47 @@ const CategoriesCard = ({ categoryCounts }) => {
               {Object.keys(CHART_CATEGORIES).length} categories
             </span>
           </div>
-          <div style={categoryGridStyle}>
-            {Object.entries(CHART_CATEGORIES).map(([key, cat]) => {
-              const count = categoryCounts[key];
+          <div style={categoryInnerRowStyle}>
+            <div style={categoryGridStyle}>
+              {Object.entries(CHART_CATEGORIES).map(([key, cat]) => {
+                const count = categoryCounts[key];
 
-              return (
-                <div key={key} style={categoryCardWrapperStyle}>
-                  <FolderButton
-                    onClick={() => handleCategoryClick(key)}
-                    baseColor={cat.color}
-                    hoverColor="#0077C8"
-                    activeColor="#0077C8"
-                    bodyStyle={{
-                      padding: "12px 10px",
-                      minHeight: "60px",
-                      width: "100%",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "6px",
+                return (
+                  <div key={key} style={categoryCardWrapperStyle}>
+                    <FolderButton
+                      onClick={() => handleCategoryClick(key)}
+                      baseColor={cat.color}
+                      hoverColor="#0077C8"
+                      activeColor="#0077C8"
+                      bodyStyle={{
+                        padding: "12px 10px",
+                        minHeight: "60px",
+                        width: "100%",
                       }}
                     >
-                      <span style={{ ...categoryNumberStyle }}>{count}</span>
-                      <span style={{ ...categoryLabelStyle }}>
-                        {cat.label.replace(/[^\w\s]/g, "").trim()}
-                      </span>
-                    </div>
-                  </FolderButton>
-                </div>
-              );
-            })}
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <span style={{ ...categoryNumberStyle }}>{count}</span>
+                        <span style={{ ...categoryLabelStyle }}>
+                          {cat.label.replace(/[^\w\s]/g, "").trim()}
+                        </span>
+                      </div>
+                    </FolderButton>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Lottie Animation on the right side */}
+            <div style={lottieContainerStyle}>
+              <div ref={lottieContainerRef} style={lottieStyle} />
+            </div>
           </div>
         </div>
 
@@ -143,11 +177,32 @@ const categoryCountStyle = {
   fontFamily: "'Inter', 'Segoe UI', -apple-system, sans-serif",
 };
 
+const categoryInnerRowStyle = {
+  display: "flex",
+  alignItems: "center",
+  gap: "24px",
+};
+
 const categoryGridStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(3, 1fr)",
   gap: "10px",
   maxWidth: "420px",
+  flex: "0 0 auto",
+};
+
+const lottieContainerStyle = {
+  flex: "1",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "200px",
+};
+
+const lottieStyle = {
+  width: "100%",
+  maxWidth: "280px",
+  height: "280px",
 };
 
 const categoryCardWrapperStyle = {
@@ -156,47 +211,6 @@ const categoryCardWrapperStyle = {
   cursor: "pointer",
   transition: "transform 0.2s ease",
 };
-
-const categoryCardTabStyle = (color) => ({
-  position: "absolute",
-  top: "-6px",
-  left: "0",
-  height: "6px",
-  width: "50%",
-  background: color,
-  borderRadius: "3px 3px 0 0",
-  display: "flex",
-  alignItems: "center",
-  padding: "0 5px",
-  gap: "2px",
-  transition: "background 0.25s ease, border-color 0.25s ease",
-});
-
-const categoryDotSmallStyle = {
-  width: "2px",
-  height: "2px",
-  background: "rgba(255,255,255,0.6)",
-  borderRadius: "50%",
-};
-
-const categoryCardBodyStyle = (bgColor, borderColor, textColor, isHovered) => ({
-  background: bgColor,
-  border: `1px solid ${borderColor}`,
-  borderRadius: "0 4px 4px 4px",
-  padding: "12px 10px",
-  color: textColor,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "2px",
-  transition: "all 0.25s ease",
-  boxShadow: isHovered
-    ? `0 8px 24px ${borderColor}40`
-    : "0 2px 8px rgba(180,160,140,0.06)",
-  minHeight: "60px",
-  position: "relative",
-});
 
 const categoryNumberStyle = {
   fontSize: "22px",

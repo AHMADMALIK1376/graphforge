@@ -1,5 +1,5 @@
 // src/components/layout/Layout.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import Header from "./Header";
@@ -8,8 +8,15 @@ import Footer from "./Footer";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const { language, isRTL } = useLanguage();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { isRTL } = useLanguage();
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.innerWidth > 900;
+  });
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 900;
+  });
 
   const getCurrentPage = () => {
     const path = location.pathname;
@@ -22,6 +29,18 @@ const Layout = ({ children }) => {
   };
 
   const currentPage = getCurrentPage();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 900;
+      setIsMobile(mobile);
+      setSidebarOpen(!mobile);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -65,6 +84,7 @@ const Layout = ({ children }) => {
           height: "calc(100vh - 64px)",
           minHeight: 0,
           overflow: "hidden",
+          width: "100%",
         }}
       >
         {/* Sidebar */}
@@ -72,19 +92,23 @@ const Layout = ({ children }) => {
           currentPath={location.pathname}
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
+          isMobile={isMobile}
         />
 
         {/* Scrollable Content */}
         <main
+          className="page-main"
           style={{
             flex: 1,
-            padding: "24px 32px",
-            marginLeft: sidebarOpen ? "240px" : "0px",
+            padding: isMobile ? "16px 16px 24px" : "24px 32px",
+            marginLeft: isMobile ? "0px" : sidebarOpen ? "240px" : "0px",
             overflowY: "auto",
             overflowX: "hidden",
             background: "#F5EDE0",
             transition: "margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
             height: "100%",
+            width: "100%",
+            boxSizing: "border-box",
           }}
         >
           <div
