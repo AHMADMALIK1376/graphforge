@@ -197,7 +197,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
   const [showLabels, setShowLabels] = useState(true);
   const [labelSize, setLabelSize] = useState(11);
   const [showValues, setShowValues] = useState(true);
-  const [alignment, setAlignment] = useState("center");
   const [titleText, setTitleText] = useState("Sankey Diagram");
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedLink, setSelectedLink] = useState(null);
@@ -213,35 +212,76 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     return map;
   }, [data.nodes]);
 
+  // Filter out links that reference non-existent nodes
+  const validLinks = useMemo(() => {
+    return data.links.filter((link) => {
+      const sourceExists = nodeMap[link.source];
+      const targetExists = nodeMap[link.target];
+      if (!sourceExists)
+        console.warn(`Sankey: missing source "${link.source}"`);
+      if (!targetExists)
+        console.warn(`Sankey: missing target "${link.target}"`);
+      return sourceExists && targetExists;
+    });
+  }, [data.links, nodeMap]);
+
+  // Sankey layout calculation with INDEX-BASED links
   const sankeyLayout = useMemo(() => {
-    const layout = sankey()
-      .nodeWidth(nodeWidth)
-      .nodePadding(nodePadding)
-      .nodeAlign(sankeyCenter)
-      .extent([
-        [40, 50],
-        [860, 480],
-      ]);
+    if (data.nodes.length === 0 || validLinks.length === 0) {
+      return { nodes: [], links: [] };
+    }
 
-    // Deep clone data for the layout (it mutates)
-    const layoutData = {
-      nodes: data.nodes.map((n) => ({ ...n })),
-      links: data.links.map((l) => ({ ...l })),
-    };
+    try {
+      // Create node ID to index mapping
+      const nodeIndexMap = {};
+      data.nodes.forEach((n, i) => {
+        nodeIndexMap[n.id] = i;
+      });
 
-    const { nodes, links } = layout(layoutData);
-    return { nodes, links };
-  }, [data, nodeWidth, nodePadding]);
+      // Convert string source/target to numeric indices
+      const indexedLinks = validLinks.map((l) => ({
+        source: nodeIndexMap[l.source],
+        target: nodeIndexMap[l.target],
+        value: l.value,
+      }));
+
+      const layout = sankey()
+        .nodeWidth(nodeWidth)
+        .nodePadding(nodePadding)
+        .nodeAlign(sankeyCenter)
+        .extent([
+          [40, 50],
+          [860, 480],
+        ]);
+
+      const layoutData = {
+        nodes: data.nodes.map((n) => ({ ...n })),
+        links: indexedLinks,
+      };
+
+      const result = layout(layoutData);
+
+      if (!result || !result.nodes || !result.links) {
+        console.error("Sankey returned invalid result");
+        return { nodes: [], links: [] };
+      }
+
+      return result;
+    } catch (error) {
+      console.error("Sankey layout error:", error.message);
+      return { nodes: [], links: [] };
+    }
+  }, [data.nodes, validLinks, nodeWidth, nodePadding]);
 
   const totalFlow = useMemo(() => {
-    return data.links.reduce((sum, l) => sum + l.value, 0);
-  }, [data.links]);
+    return validLinks.reduce((sum, l) => sum + l.value, 0);
+  }, [validLinks]);
 
   const nodeConnections = useMemo(() => {
     const connections = {};
     data.nodes.forEach((n) => {
-      const inLinks = data.links.filter((l) => l.target === n.id);
-      const outLinks = data.links.filter((l) => l.source === n.id);
+      const inLinks = validLinks.filter((l) => l.target === n.id);
+      const outLinks = validLinks.filter((l) => l.source === n.id);
       connections[n.id] = {
         totalIn: inLinks.reduce((sum, l) => sum + l.value, 0),
         totalOut: outLinks.reduce((sum, l) => sum + l.value, 0),
@@ -250,7 +290,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
       };
     });
     return connections;
-  }, [data]);
+  }, [data.nodes, validLinks]);
 
   // ===== HANDLERS =====
   const handleNodeChange = useCallback((id, field, value) => {
@@ -306,9 +346,8 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     if (data.nodes.length < 2) return;
     const sourceIdx = Math.floor(Math.random() * data.nodes.length);
     let targetIdx = Math.floor(Math.random() * data.nodes.length);
-    while (targetIdx === sourceIdx) {
+    while (targetIdx === sourceIdx)
       targetIdx = Math.floor(Math.random() * data.nodes.length);
-    }
     setData((prev) => ({
       ...prev,
       links: [
@@ -382,7 +421,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     borderRadius: theme.borderRadius.md,
     border: `1px solid ${theme.colors.border.default}`,
   };
-
   const headerStyle = {
     display: "flex",
     alignItems: "center",
@@ -390,7 +428,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     flexWrap: "wrap",
     gap: "12px",
   };
-
   const titleInputStyle = {
     background: "transparent",
     border: "none",
@@ -404,7 +441,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     padding: "4px 0",
     width: "300px",
   };
-
   const chartContainerStyle = {
     background: "#0f172a",
     borderRadius: "8px",
@@ -413,7 +449,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     overflow: "hidden",
     position: "relative",
   };
-
   const controlsGridStyle = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
@@ -423,13 +458,11 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     borderRadius: "4px",
     border: `1px solid ${theme.colors.border.default}`,
   };
-
   const controlGroupStyle = {
     display: "flex",
     flexDirection: "column",
     gap: "6px",
   };
-
   const labelStyle = {
     color: theme.colors.text.muted,
     fontSize: "10px",
@@ -437,7 +470,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     textTransform: "uppercase",
     letterSpacing: "2px",
   };
-
   const selectStyle = {
     padding: "8px 12px",
     background: theme.colors.inputBg,
@@ -449,7 +481,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     outline: "none",
     cursor: "pointer",
   };
-
   const checkboxStyle = {
     display: "flex",
     alignItems: "center",
@@ -458,7 +489,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     fontSize: "12px",
     color: theme.colors.text.body,
   };
-
   const buttonStyle = {
     padding: "8px 16px",
     background: "transparent",
@@ -473,7 +503,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     textTransform: "uppercase",
     transition: "all 0.15s ease",
   };
-
   const deleteButtonStyle = {
     ...buttonStyle,
     border: `1px solid ${theme.colors.status.error}`,
@@ -481,7 +510,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     padding: "4px 8px",
     fontSize: "10px",
   };
-
   const dataTableContainerStyle = {
     background: theme.colors.cardBg,
     borderRadius: "4px",
@@ -489,13 +517,11 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     overflow: "auto",
     maxHeight: "400px",
   };
-
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
     fontSize: "12px",
   };
-
   const thStyle = {
     background: theme.colors.inputBg,
     color: theme.colors.text.muted,
@@ -509,12 +535,10 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     position: "sticky",
     top: 0,
   };
-
   const tdStyle = {
     padding: "8px 12px",
     borderBottom: `1px solid ${theme.colors.border.light}`,
   };
-
   const cellInputStyle = {
     padding: "6px 8px",
     background: theme.colors.inputBg,
@@ -528,9 +552,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     boxSizing: "border-box",
   };
 
-  // ============================================
-  // TOOLTIP COMPONENT
-  // ============================================
+  // ===== TOOLTIP =====
   const Tooltip = ({ info, pos }) => {
     if (!info || !pos) return null;
     return (
@@ -566,9 +588,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
     );
   };
 
-  // ============================================
-  // LEGEND
-  // ============================================
+  // ===== LEGEND =====
   const Legend = memo(() => (
     <div
       style={{
@@ -680,7 +700,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
               letterSpacing: "1px",
             }}
           >
-            {data.nodes.length} N · {data.links.length} L
+            {data.nodes.length} N · {validLinks.length} L
           </span>
         </div>
       </div>
@@ -689,155 +709,181 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
       <div id="chart-visual-area" style={chartContainerStyle}>
         <Legend />
         <Tooltip info={tooltip?.info} pos={tooltip?.position} />
-
         <svg width="940" height="530" viewBox="0 0 940 530">
-          {/* Background */}
           <rect width="940" height="530" fill="#0f172a" />
 
           {/* Links (Flows) */}
-          {sankeyLayout.links.map((link, i) => {
-            const sourceColor = nodeMap[link.source.id]?.color || "#64748b";
-            const isHighlighted =
-              selectedNode === null ||
-              selectedNode === link.source.id ||
-              selectedNode === link.target.id;
-            const isSelectedLink = selectedLink === i;
-            const linkPath = sankeyLinkHorizontal()(link);
-
-            return (
-              <g key={`link-${i}`}>
-                {/* Link glow */}
-                <path
-                  d={linkPath}
-                  fill="none"
-                  stroke={sourceColor}
-                  strokeWidth={Math.max(1, link.width + 6)}
-                  opacity={isHighlighted ? 0.12 : 0.02}
-                  style={{ pointerEvents: "stroke", cursor: "pointer" }}
-                  onClick={() => setSelectedLink(isSelectedLink ? null : i)}
-                />
-                {/* Main link */}
-                <path
-                  d={linkPath}
-                  fill="none"
-                  stroke={sourceColor}
-                  strokeWidth={Math.max(1, link.width)}
-                  opacity={isHighlighted ? linkOpacity : 0.08}
-                  style={{
-                    cursor: "pointer",
-                    transition: "opacity 0.3s ease",
-                  }}
-                  onClick={() => setSelectedLink(isSelectedLink ? null : i)}
-                  onMouseEnter={(e) => {
-                    const rect = e.target
-                      .closest("svg")
-                      .getBoundingClientRect();
-                    setTooltip({
-                      info: {
-                        source: link.source.id,
-                        target: link.target.id,
-                        value: link.value,
-                      },
-                      position: {
-                        x: e.clientX - rect.left,
-                        y: e.clientY - rect.top,
-                      },
-                    });
-                  }}
-                  onMouseMove={(e) => {
-                    const rect = e.target
-                      .closest("svg")
-                      .getBoundingClientRect();
-                    setTooltip((prev) => ({
-                      ...prev,
-                      position: {
-                        x: e.clientX - rect.left,
-                        y: e.clientY - rect.top,
-                      },
-                    }));
-                  }}
-                  onMouseLeave={() => setTooltip(null)}
-                />
-                {/* Value label on wide links */}
-                {showValues && link.width > 8 && isHighlighted && (
-                  <text
-                    x={link.source.x1 + (link.target.x0 - link.source.x1) / 2}
-                    y={link.y0 + link.width / 2 + 1}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fontSize={Math.min(10, link.width - 2)}
-                    fill="#ffffff"
-                    fontWeight={700}
-                    fontFamily={theme.typography.fontFamily.primary}
-                    style={{ pointerEvents: "none" }}
-                  >
-                    {link.value}
-                  </text>
-                )}
-              </g>
-            );
-          })}
+          {sankeyLayout.links && sankeyLayout.links.length > 0 ? (
+            sankeyLayout.links.map((link, i) => {
+              // After layout, source/target are node objects, not indices
+              const sourceNode =
+                typeof link.source === "object"
+                  ? link.source
+                  : sankeyLayout.nodes[link.source];
+              const targetNode =
+                typeof link.target === "object"
+                  ? link.target
+                  : sankeyLayout.nodes[link.target];
+              const sourceId = sourceNode?.id;
+              const targetId = targetNode?.id;
+              const sourceColor = nodeMap[sourceId]?.color || "#64748b";
+              const isHighlighted =
+                selectedNode === null ||
+                selectedNode === sourceId ||
+                selectedNode === targetId;
+              const isSelectedLink = selectedLink === i;
+              const linkPath = sankeyLinkHorizontal()(link);
+              return (
+                <g key={`link-${i}`}>
+                  <path
+                    d={linkPath}
+                    fill="none"
+                    stroke={sourceColor}
+                    strokeWidth={Math.max(1, link.width + 6)}
+                    opacity={isHighlighted ? 0.12 : 0.02}
+                    style={{ pointerEvents: "stroke", cursor: "pointer" }}
+                    onClick={() => setSelectedLink(isSelectedLink ? null : i)}
+                  />
+                  <path
+                    d={linkPath}
+                    fill="none"
+                    stroke={sourceColor}
+                    strokeWidth={Math.max(1, link.width)}
+                    opacity={isHighlighted ? linkOpacity : 0.08}
+                    style={{
+                      cursor: "pointer",
+                      transition: "opacity 0.3s ease",
+                    }}
+                    onClick={() => setSelectedLink(isSelectedLink ? null : i)}
+                    onMouseEnter={(e) => {
+                      const rect = e.target
+                        .closest("svg")
+                        .getBoundingClientRect();
+                      setTooltip({
+                        info: {
+                          source: sourceId,
+                          target: targetId,
+                          value: link.value,
+                        },
+                        position: {
+                          x: e.clientX - rect.left,
+                          y: e.clientY - rect.top,
+                        },
+                      });
+                    }}
+                    onMouseMove={(e) => {
+                      const rect = e.target
+                        .closest("svg")
+                        .getBoundingClientRect();
+                      setTooltip((prev) => ({
+                        ...prev,
+                        position: {
+                          x: e.clientX - rect.left,
+                          y: e.clientY - rect.top,
+                        },
+                      }));
+                    }}
+                    onMouseLeave={() => setTooltip(null)}
+                  />
+                  {showValues && link.width > 8 && isHighlighted && (
+                    <text
+                      x={link.source.x1 + (link.target.x0 - link.source.x1) / 2}
+                      y={link.y0 + link.width / 2 + 1}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontSize={Math.min(10, link.width - 2)}
+                      fill="#ffffff"
+                      fontWeight={700}
+                      fontFamily={theme.typography.fontFamily.primary}
+                      style={{ pointerEvents: "none" }}
+                    >
+                      {link.value}
+                    </text>
+                  )}
+                </g>
+              );
+            })
+          ) : (
+            <text
+              x="470"
+              y="265"
+              textAnchor="middle"
+              fontSize="14"
+              fill="#94a3b8"
+              fontFamily={theme.typography.fontFamily.primary}
+            >
+              No flow data to display
+            </text>
+          )}
 
           {/* Nodes (Rectangles) */}
-          {sankeyLayout.nodes.map((node, i) => {
-            const nodeData = data.nodes.find((n) => n.id === node.id);
-            const isSelected = selectedNode === node.id;
-            const color = nodeData?.color || "#64748b";
-
-            return (
-              <g
-                key={`node-${node.id}`}
-                style={{ cursor: "pointer" }}
-                onClick={() => handleNodeClick(node.id)}
-              >
-                {/* Node shadow */}
-                <rect
-                  x={node.x0 - 2}
-                  y={node.y0 - 2}
-                  width={node.x1 - node.x0 + 4}
-                  height={node.y1 - node.y0 + 4}
-                  fill={color}
-                  opacity={isSelected ? 0.3 : 0.1}
-                  rx={4}
-                  style={{ transition: "opacity 0.3s ease" }}
-                />
-                {/* Main node */}
-                <rect
-                  x={node.x0}
-                  y={node.y0}
-                  width={node.x1 - node.x0}
-                  height={Math.max(0, node.y1 - node.y0)}
-                  fill={color}
-                  opacity={selectedNode === null || isSelected ? 1 : 0.3}
-                  rx={3}
-                  style={{ transition: "opacity 0.3s ease" }}
-                />
-                {/* Label */}
-                {showLabels && (
-                  <text
-                    x={node.x0 < 470 ? node.x1 + 8 : node.x0 - 8}
-                    y={node.y0 + (node.y1 - node.y0) / 2 + 1}
-                    textAnchor={node.x0 < 470 ? "start" : "end"}
-                    dominantBaseline="central"
-                    fontSize={labelSize}
-                    fontFamily={theme.typography.fontFamily.primary}
-                    fill={isSelected ? "#ffffff" : "#cbd5e1"}
-                    fontWeight={isSelected ? 700 : 400}
-                    style={{ pointerEvents: "none" }}
-                  >
-                    {nodeData?.name || node.id}
-                    {showValues && ` (${node.value?.toLocaleString() || 0})`}
-                  </text>
-                )}
-              </g>
-            );
-          })}
+          {sankeyLayout.nodes && sankeyLayout.nodes.length > 0 ? (
+            sankeyLayout.nodes.map((node) => {
+              const nodeData = data.nodes.find((n) => n.id === node.id);
+              const isSelected = selectedNode === node.id;
+              const color = nodeData?.color || "#64748b";
+              return (
+                <g
+                  key={`node-${node.id}`}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleNodeClick(node.id)}
+                >
+                  <rect
+                    x={node.x0 - 2}
+                    y={node.y0 - 2}
+                    width={node.x1 - node.x0 + 4}
+                    height={node.y1 - node.y0 + 4}
+                    fill={color}
+                    opacity={isSelected ? 0.3 : 0.1}
+                    rx={4}
+                    style={{ transition: "opacity 0.3s ease" }}
+                  />
+                  <rect
+                    x={node.x0}
+                    y={node.y0}
+                    width={node.x1 - node.x0}
+                    height={Math.max(0, node.y1 - node.y0)}
+                    fill={color}
+                    opacity={selectedNode === null || isSelected ? 1 : 0.3}
+                    rx={3}
+                    style={{ transition: "opacity 0.3s ease" }}
+                  />
+                  {showLabels && (
+                    <text
+                      x={node.x0 < 470 ? node.x1 + 8 : node.x0 - 8}
+                      y={node.y0 + (node.y1 - node.y0) / 2 + 1}
+                      textAnchor={node.x0 < 470 ? "start" : "end"}
+                      dominantBaseline="central"
+                      fontSize={labelSize}
+                      fontFamily={theme.typography.fontFamily.primary}
+                      fill={isSelected ? "#ffffff" : "#cbd5e1"}
+                      fontWeight={isSelected ? 700 : 400}
+                      style={{ pointerEvents: "none" }}
+                    >
+                      {nodeData?.name || node.id}
+                      {showValues && ` (${node.value?.toLocaleString() || 0})`}
+                    </text>
+                  )}
+                </g>
+              );
+            })
+          ) : (
+            <text
+              x="470"
+              y="290"
+              textAnchor="middle"
+              fontSize="12"
+              fill="#64748b"
+              fontFamily={theme.typography.fontFamily.primary}
+            >
+              No nodes to display
+            </text>
+          )}
         </svg>
       </div>
 
       {/* CONTROLS */}
       <div style={controlsGridStyle}>
-        {/* Dataset */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>📊 Dataset</label>
           <select
@@ -849,8 +895,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             <option value="large">Budget Flow (12 Nodes)</option>
           </select>
         </div>
-
-        {/* Color Preset */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>🎨 Color Palette</label>
           <select
@@ -865,8 +909,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             ))}
           </select>
         </div>
-
-        {/* Node Width */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>📏 Node Width: {nodeWidth}</label>
           <input
@@ -878,8 +920,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             style={{ width: "100%", accentColor: data.nodes[0]?.color }}
           />
         </div>
-
-        {/* Node Padding */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>↕️ Node Padding: {nodePadding}</label>
           <input
@@ -891,8 +931,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             style={{ width: "100%", accentColor: data.nodes[0]?.color }}
           />
         </div>
-
-        {/* Link Opacity */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>👁️ Link Opacity: {linkOpacity}</label>
           <input
@@ -905,8 +943,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             style={{ width: "100%", accentColor: data.nodes[0]?.color }}
           />
         </div>
-
-        {/* Label Size */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>🔤 Label Size: {labelSize}</label>
           <input
@@ -918,8 +954,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             style={{ width: "100%", accentColor: data.nodes[0]?.color }}
           />
         </div>
-
-        {/* Toggles */}
         <div style={controlGroupStyle}>
           <label style={labelStyle}>👁️ Options</label>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -929,7 +963,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
                 checked={showLabels}
                 onChange={(e) => setShowLabels(e.target.checked)}
                 style={{ accentColor: data.nodes[0]?.color }}
-              />
+              />{" "}
               Show Labels
             </label>
             <label style={checkboxStyle}>
@@ -938,7 +972,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
                 checked={showValues}
                 onChange={(e) => setShowValues(e.target.checked)}
                 style={{ accentColor: data.nodes[0]?.color }}
-              />
+              />{" "}
               Show Values
             </label>
           </div>
@@ -949,7 +983,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
       <div
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
       >
-        {/* Nodes Table */}
         <div>
           <div
             style={{
@@ -960,14 +993,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             }}
           >
             <label style={labelStyle}>▊ Nodes</label>
-            <button
-              onClick={handleAddNode}
-              style={buttonStyle}
-              onMouseEnter={(e) =>
-                (e.target.style.background = `${data.nodes[0]?.color}20`)
-              }
-              onMouseLeave={(e) => (e.target.style.background = "transparent")}
-            >
+            <button onClick={handleAddNode} style={buttonStyle}>
               + Add Node
             </button>
           </div>
@@ -1061,8 +1087,6 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             </table>
           </div>
         </div>
-
-        {/* Links Table */}
         <div>
           <div
             style={{
@@ -1073,14 +1097,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
             }}
           >
             <label style={labelStyle}>➡️ Links</label>
-            <button
-              onClick={handleAddLink}
-              style={buttonStyle}
-              onMouseEnter={(e) =>
-                (e.target.style.background = `${data.nodes[0]?.color}20`)
-              }
-              onMouseLeave={(e) => (e.target.style.background = "transparent")}
-            >
+            <button onClick={handleAddLink} style={buttonStyle}>
               + Add Link
             </button>
           </div>
@@ -1181,7 +1198,7 @@ const SankeyDiagramComponent = ({ initialData = SMALL_DATA }) => {
         <span style={{ color: theme.colors.text.muted }}>
           Links:{" "}
           <strong style={{ color: theme.colors.text.heading }}>
-            {data.links.length}
+            {validLinks.length}
           </strong>
         </span>
         <span style={{ color: theme.colors.text.muted }}>

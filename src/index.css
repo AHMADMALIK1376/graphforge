@@ -35,6 +35,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
 /* ==============================================
@@ -53,6 +54,46 @@ body {
 /* ==============================================
    FIXED HEADER & SIDEBAR - CRITICAL FIX
    ============================================== */
+
+@media (max-width: 1024px) {
+  .page-main {
+    padding: 20px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .page-main {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-main {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+}
 
 /* Fixed Header - stays at top */
 .navbar-fixed {
