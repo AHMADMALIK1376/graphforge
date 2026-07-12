@@ -8,7 +8,7 @@ const categoryFolderColors = {
   correlation: "#F88379", // Coral Pink
   partToWhole: "#F2D24B", // Light Yellow
   temporal: "#D4A373", // Warm Brown
-  distribution: "#A9C632", // Tea Mist (NEW)
+  distribution: "hsl(72, 60%, 49%)", // Tea Mist (NEW)
   geospatial: "#D41F26", // New geospatial category color requested
 };
 

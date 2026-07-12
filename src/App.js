@@ -76,21 +76,13 @@ function ChartWrapper() {
   const chartId = pathSegments[pathSegments.length - 1];
   const selectedChartId = chartId && chartId !== "chart" ? chartId : null;
 
-  const handleBackToHome = () => {
-    navigate("/home");
-  };
-
   const handleSelectChart = (chartId) => {
     navigate(`/chart/${chartId}`);
   };
 
   return (
     <Suspense fallback={<PageLoader />}>
-      <ChartPage
-        chartId={selectedChartId}
-        onBack={handleBackToHome}
-        onSelectChart={handleSelectChart}
-      />
+      <ChartPage chartId={selectedChartId} onSelectChart={handleSelectChart} />
     </Suspense>
   );
 }
