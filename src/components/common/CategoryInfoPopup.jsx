@@ -92,9 +92,6 @@ const CategoryInfoPopup = ({ categoryId, onClose }) => {
           </button>
 
           <div style={contentStyle}>
-            <div style={iconCircleStyle}>
-              <span style={{ fontSize: "28px" }}>{category.icon || "📊"}</span>
-            </div>
             <h2 style={titleStyle}>{info.title}</h2>
             <p style={descStyle}>{info.description}</p>
 
@@ -193,17 +190,6 @@ const contentStyle = {
   gap: "12px",
 };
 
-const iconCircleStyle = {
-  width: "60px",
-  height: "60px",
-  borderRadius: "50%",
-  background: "rgba(255,255,255,0.2)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  marginBottom: "8px",
-};
-
 const titleStyle = {
   color: "#ffffff",
   fontSize: "18px",
@@ -232,10 +218,9 @@ const casesSectionStyle = {
   textAlign: "left",
 };
 
-// Reduced font weight for heading and list items
 const casesHeadingStyle = {
   fontSize: "12px",
-  fontWeight: 400, // was 700, now lighter
+  fontWeight: 400,
   color: "#ffffff",
   textTransform: "uppercase",
   letterSpacing: "1px",
@@ -247,7 +232,7 @@ const listStyle = { margin: 0, paddingLeft: "18px" };
 
 const listItemStyle = {
   fontSize: "13px",
-  fontWeight: 300, // was default, now explicitly lighter
+  fontWeight: 300,
   color: "#ffffff",
   marginBottom: "6px",
   fontFamily: "'Inter', sans-serif",

@@ -144,7 +144,6 @@ const ChartError = ({ name, error }) => (
 
 // ============================================
 // CHART COMPONENT MAP - ALL 77 CHARTS
-// Wrap each component in error boundary
 // ============================================
 const wrapComponent = (Component, chartName) => {
   if (!Component)
@@ -287,12 +286,14 @@ const ChartPage = ({ chartId, onBack, onSelectChart }) => {
   const effectiveChartId = chartId || getChartIdFromUrl();
   const chart = getChartById(effectiveChartId);
 
-  // Handle back navigation
+  // Handle back navigation — go to the category page, not home
   const handleBack = () => {
     if (onBack) {
       onBack();
+    } else if (chart && chart.categoryId) {
+      navigate(`/category/${chart.categoryId}`);
     } else {
-      navigate("/home");
+      navigate("/charts");
     }
   };
 

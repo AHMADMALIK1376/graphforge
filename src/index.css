@@ -39,6 +39,141 @@ body {
 }
 
 /* ==============================================
+   SIMPLE FONT FOR CHART DATA, TABLES & INPUTS
+   (Keeps Bungee for headings only)
+   ============================================== */
+
+/* Recharts chart labels, values, tooltips */
+.recharts-text,
+.recharts-label,
+.recharts-cartesian-axis-tick-value,
+.recharts-tooltip-item-list,
+.recharts-tooltip-label,
+.recharts-default-tooltip,
+.recharts-legend-item-text,
+.recharts-bar-label text,
+.recharts-pie-label-text,
+.recharts-label-list text {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* SVG text elements inside charts (data labels, values) */
+svg text {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif;
+}
+
+/* Data tables - body cells and inputs */
+table tbody td,
+table td:not(th),
+.data-table tbody td,
+.data-table td,
+#chart-data-table td,
+#chart-data-table input {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+  font-size: 12px;
+}
+
+/* Inputs inside data tables */
+#chart-data-table input[type="text"],
+#chart-data-table input[type="number"],
+table input[type="text"],
+table input[type="number"],
+[class*="cellInput"] input,
+[style*="cellInput"] input {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Chart control section labels and inputs */
+[class*="control"] label,
+[class*="Control"] label,
+[class*="controls"] span,
+[class*="Controls"] span {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Chart visual area - all text except explicit headings */
+#chart-visual-area text:not([font-family*="Bungee"]),
+[class*="chart"] text,
+.chart-container text {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif;
+}
+
+/* Tooltip content */
+[class*="tooltip"] p,
+[class*="tooltip"] span,
+[class*="Tooltip"] p,
+[class*="Tooltip"] span {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Chart axis labels */
+.recharts-xAxis .recharts-cartesian-axis-tick-value,
+.recharts-yAxis .recharts-cartesian-axis-tick-value {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Summary footer text in chart components */
+[class*="summary"] span,
+[class*="Summary"] span {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Select dropdowns inside chart controls */
+select {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* Any input inside the main content area */
+.page-main input,
+.page-main textarea {
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif !important;
+}
+
+/* ==============================================
    APP CONTAINER
    ============================================== */
 

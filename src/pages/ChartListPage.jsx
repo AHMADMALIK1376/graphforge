@@ -5,6 +5,9 @@ import lottie from "lottie-web";
 import forgeAnimation from "../assets/lootiefiles/MxoeM9KC8Y.json";
 import comparisonAnimation from "../assets/lootiefiles/JeSv7vYZBK.json";
 import correlationAnimation from "../assets/lootiefiles/nM3kWOM2IG.json";
+import temporalAnimation from "../assets/lootiefiles/4gAsmRXzsH.json";
+import distributionAnimation from "../assets/lootiefiles/1IGaSfzTek.json";
+import geospatialAnimation from "../assets/lootiefiles/spinyearth.json";
 import { CHART_CATEGORIES, getAllCharts } from "../utils/chartTypes";
 import Layout from "../components/layout/Layout";
 import SearchBar from "../components/common/SearchBar";
@@ -17,9 +20,9 @@ const categoryAnimations = {
   comparison: comparisonAnimation,
   correlation: correlationAnimation,
   partToWhole: forgeAnimation,
-  temporal: forgeAnimation,
-  distribution: forgeAnimation,
-  geospatial: forgeAnimation,
+  temporal: temporalAnimation,
+  distribution: distributionAnimation,
+  geospatial: geospatialAnimation,
 };
 
 const ChartListPage = ({ onSelectChart }) => {
@@ -289,7 +292,7 @@ const lottieContainerStyle = {
   alignItems: "center",
   justifyContent: "flex-end",
 };
-const lottieStyle = { width: "180px", height: "180px" };
+const lottieStyle = { width: "200px", height: "200px" };
 
 const categoryLinesStyle = {
   position: "absolute",
