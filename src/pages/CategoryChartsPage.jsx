@@ -5,10 +5,30 @@ import { CHART_CATEGORIES, getAllCharts } from "../utils/chartTypes";
 import Layout from "../components/layout/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
-const difficultyColors = {
-  easy: "#4CAF50",
-  medium: "#F2D24B",
-  hard: "#D15F55",
+// Map chart IDs to their custom logo paths - ALL 22 Comparison Charts
+const chartLogoPaths = {
+  barChart: require("../assets/logos/Chartslogos/comparisionsection/1barchart.png"),
+  columnChart: require("../assets/logos/Chartslogos/comparisionsection/2columnchart.png"),
+  groupedBar: require("../assets/logos/Chartslogos/comparisionsection/3groupedbar.png"),
+  lollipop: require("../assets/logos/Chartslogos/comparisionsection/4lolliupop.png"),
+  bullet: require("../assets/logos/Chartslogos/comparisionsection/5bulletchart.png"),
+  dotPlot: require("../assets/logos/Chartslogos/comparisionsection/6dotplot.png"),
+  dumbbell: require("../assets/logos/Chartslogos/comparisionsection/7dumblechart.png"),
+  pictogram: require("../assets/logos/Chartslogos/comparisionsection/8pictogram.png"),
+  iconChart: require("../assets/logos/Chartslogos/comparisionsection/9iconchart.png"),
+  rangeChart: require("../assets/logos/Chartslogos/comparisionsection/10rangechart.png"),
+  radialBar: require("../assets/logos/Chartslogos/comparisionsection/11radilabar.png"),
+  parallelCoordinates: require("../assets/logos/Chartslogos/comparisionsection/12parallelchart.png"),
+  radar: require("../assets/logos/Chartslogos/comparisionsection/13radarchart.png"),
+  nightingale: require("../assets/logos/Chartslogos/comparisionsection/14nightinglechart.png"),
+  waterfall: require("../assets/logos/Chartslogos/comparisionsection/15waterfallchart.png"),
+  matrix: require("../assets/logos/Chartslogos/comparisionsection/16matrixchart.png"),
+  smallMultiples: require("../assets/logos/Chartslogos/comparisionsection/17smallmultiple.png"),
+  wordCloud: require("../assets/logos/Chartslogos/comparisionsection/18wordchart.png"),
+  slope: require("../assets/logos/Chartslogos/comparisionsection/19slopchart.png"),
+  table: require("../assets/logos/Chartslogos/comparisionsection/20tablechart.png"),
+  categoricalScatter: require("../assets/logos/Chartslogos/comparisionsection/21CATEGORICALchart.png"),
+  quadrant: require("../assets/logos/Chartslogos/comparisionsection/22quadrantchart.png"),
 };
 
 const CategoryChartsPage = () => {
@@ -37,7 +57,6 @@ const CategoryChartsPage = () => {
   return (
     <Layout currentPath="/charts">
       <div style={pageStyle}>
-        {/* Breadcrumb */}
         <div style={breadcrumbStyle}>
           <button
             onClick={() => navigate("/charts")}
@@ -54,7 +73,6 @@ const CategoryChartsPage = () => {
           </span>
         </div>
 
-        {/* Folder header */}
         <div style={folderWrapperStyle}>
           <div style={folderTabStyle(category.color)}>
             <span style={tabDotStyle} />
@@ -73,42 +91,51 @@ const CategoryChartsPage = () => {
           </div>
         </div>
 
-        {/* Charts grid */}
         <div style={gridStyle}>
-          {charts.map((chart) => (
-            <div
-              key={chart.id}
-              onClick={() => navigate(`/chart/${chart.id}`)}
-              style={fileCardStyle(category.color)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-3px)";
-                e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.05)";
-              }}
-            >
-              {/* Folded corner */}
-              <div style={fileCornerStyle(category.color)} />
-              <div style={{ fontSize: "36px", marginTop: "8px" }}>
-                {chart.icon}
-              </div>
-              <div style={chartNameStyle}>{chart.name}</div>
-              {chart.description && (
-                <div style={chartDescStyle}>{chart.description}</div>
-              )}
-              <span
-                style={{
-                  ...difficultyBadgeStyle,
-                  color: difficultyColors[chart.difficulty] || "#8A7A6A",
-                  background: `${difficultyColors[chart.difficulty] || "#8A7A6A"}15`,
+          {charts.map((chart) => {
+            const customLogo = chartLogoPaths[chart.id];
+            return (
+              <div
+                key={chart.id}
+                onClick={() => navigate(`/chart/${chart.id}`)}
+                style={fileCardStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 25px rgba(0,0,0,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 2px 8px rgba(0,0,0,0.06)";
                 }}
               >
-                {chart.difficulty?.toUpperCase()}
-              </span>
-            </div>
-          ))}
+                <div style={fileCornerStyle(category.color)} />
+                <div style={chartIconStyle}>
+                  {customLogo ? (
+                    <img
+                      src={customLogo}
+                      alt={chart.name}
+                      style={logoImageStyle}
+                    />
+                  ) : (
+                    chart.icon
+                  )}
+                </div>
+                <div style={lineStyle} />
+                <div style={lineStyle} />
+                <div style={lineStyle} />
+                {chart.description && (
+                  <div style={chartDescStyle}>{chart.description}</div>
+                )}
+                <div
+                  style={{ ...labelBarStyle, backgroundColor: category.color }}
+                >
+                  {chart.name.toUpperCase()}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {charts.length === 0 && (
@@ -122,13 +149,11 @@ const CategoryChartsPage = () => {
   );
 };
 
-// ===== STYLES =====
 const pageStyle = {
   maxWidth: "1200px",
   margin: "0 auto",
   padding: "24px 16px",
 };
-
 const errorStyle = { textAlign: "center", padding: "100px 0" };
 const backButtonStyle = {
   marginTop: "16px",
@@ -141,7 +166,6 @@ const backButtonStyle = {
   fontFamily: "'Bungee', cursive",
   letterSpacing: "1px",
 };
-
 const breadcrumbStyle = {
   display: "flex",
   alignItems: "center",
@@ -165,7 +189,6 @@ const breadcrumbActiveStyle = {
   letterSpacing: "1px",
   fontFamily: "'Bungee', cursive",
 };
-
 const folderWrapperStyle = { position: "relative", marginBottom: "32px" };
 const folderTabStyle = (color) => ({
   position: "absolute",
@@ -215,53 +238,77 @@ const folderCountStyle = {
   fontSize: "12px",
   fontFamily: "'Inter', sans-serif",
 };
-
 const gridStyle = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-  gap: "20px",
+  gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+  gap: "24px",
 };
-
-const fileCardStyle = (color) => ({
-  background: "#FFFFFF",
-  border: `1px solid ${color}33`,
-  borderRadius: "8px",
-  padding: "20px 16px 16px",
-  textAlign: "center",
+const fileCardStyle = {
+  position: "relative",
+  width: "100%",
+  minHeight: "220px",
+  backgroundColor: "#f9f9f9",
+  border: "1px solid #e0e0e0",
+  borderRadius: "2px 18px 2px 2px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  padding: "16px 10px 0",
+  gap: "6px",
   cursor: "pointer",
   transition: "all 0.2s ease",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-  position: "relative",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
   overflow: "hidden",
-});
+};
 const fileCornerStyle = (color) => ({
   position: "absolute",
   top: 0,
   right: 0,
-  width: "20px",
-  height: "20px",
+  width: "28px",
+  height: "28px",
   background: `linear-gradient(135deg, transparent 50%, ${color} 50%)`,
-  borderRadius: "0 0 0 4px",
+  borderBottomLeftRadius: "2px",
+  zIndex: 2,
+  boxShadow: "-2px 2px 4px rgba(0,0,0,0.2)",
 });
-const chartNameStyle = {
-  fontSize: "14px",
-  fontWeight: 700,
-  color: "#4A3728",
-  margin: "8px 0 4px",
+const chartIconStyle = {
+  fontSize: "32px",
+  marginTop: "4px",
+  zIndex: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+const logoImageStyle = { width: "50px", height: "50px", objectFit: "contain" };
+const lineStyle = {
+  width: "65%",
+  height: "2px",
+  backgroundColor: "#e0e0e0",
+  borderRadius: "1px",
 };
 const chartDescStyle = {
-  fontSize: "10px",
-  color: "#8A7A6A",
-  marginBottom: "8px",
-  lineHeight: 1.3,
-};
-const difficultyBadgeStyle = {
   fontSize: "9px",
-  fontWeight: 700,
+  color: "#8A7A6A",
+  textAlign: "center",
+  lineHeight: 1.3,
+  padding: "0 6px",
+  minHeight: "26px",
+};
+const labelBarStyle = {
+  width: "110%",
+  padding: "8px 8px 6px",
+  color: "#ffffff",
+  textAlign: "center",
+  fontWeight: 400,
+  fontSize: "13.5px",
   letterSpacing: "1px",
-  padding: "2px 8px",
-  borderRadius: "20px",
-  display: "inline-block",
+  fontFamily: "'Bungee', cursive",
+  boxShadow: "0 -2px 6px rgba(0,0,0,0.1)",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  marginTop: "8px",
 };
 const emptyStyle = { textAlign: "center", padding: "80px 0" };
 
