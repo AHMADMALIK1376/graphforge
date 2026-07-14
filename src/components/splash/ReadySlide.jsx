@@ -1,7 +1,7 @@
 // src/components/splash/ReadySlide.jsx
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import readyAnimation from "../../assets/lootiefiles/kkqPAoOxzh.json";
+import readyAnimation from "../../assets/lootiefiles/0ero7Y1cSM.json";
 
 const ReadySlide = () => {
   const animationRef = useRef(null);

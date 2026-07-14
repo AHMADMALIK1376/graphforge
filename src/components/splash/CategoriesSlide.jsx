@@ -1,7 +1,7 @@
 // src/components/splash/CategoriesSlide.jsx
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import categoriesAnimation from "../../assets/lootiefiles/Charts.json";
+import categoriesAnimation from "../../assets/lootiefiles/CIIvqoILHV.json";
 
 const CategoriesSlide = ({ currentPage, totalPages }) => {
   const animationRef = useRef(null);
