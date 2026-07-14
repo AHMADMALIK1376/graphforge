@@ -1,7 +1,7 @@
 // src/components/home/VisualsCard.jsx
 import React, { useState, useRef, useEffect } from "react";
 import lottie from "lottie-web";
-import heroAnimation from "../../assets/lootiefiles/MxoeM9KC8Y.json";
+import heroAnimation from "../../assets/lootiefiles/0RML0b5L9w.json";
 
 const VisualsCard = () => {
   const [featureHovered, setFeatureHovered] = useState(null);

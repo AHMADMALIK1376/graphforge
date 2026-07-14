@@ -1,7 +1,7 @@
 // src/components/splash/ChartTypesSlide.jsx
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import chartsAnimation from "../../assets/lootiefiles/3tXqwvVtAd.json";
+import chartsAnimation from "../../assets/lootiefiles/vA2pio0Ayy.json";
 
 const ChartTypesSlide = ({ currentPage, totalPages }) => {
   const animationRef = useRef(null);

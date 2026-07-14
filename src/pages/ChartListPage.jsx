@@ -5,7 +5,7 @@ import lottie from "lottie-web";
 import forgeAnimation from "../assets/lootiefiles/MxoeM9KC8Y.json";
 import comparisonAnimation from "../assets/lootiefiles/JeSv7vYZBK.json";
 import correlationAnimation from "../assets/lootiefiles/nM3kWOM2IG.json";
-import temporalAnimation from "../assets/lootiefiles/4gAsmRXzsH.json";
+import temporalAnimation from "../assets/lootiefiles/7cpLM27kWJ.json";
 import distributionAnimation from "../assets/lootiefiles/1IGaSfzTek.json";
 import geospatialAnimation from "../assets/lootiefiles/spinyearth.json";
 import { CHART_CATEGORIES, getAllCharts } from "../utils/chartTypes";
